@@ -20,10 +20,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
 
   <style>
+    /* ── BRIGHT ARCADE x DIETER RAMS ─────────────────────────────────────────
+     * Less but better. Every element earns its place.
+     * Warm, bright, alive. Chunky. Instant feedback. Fun.
+     * ───────────────────────────────────────────────────────────────────── */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body {
       font-family: 'Roboto', sans-serif;
-      background: #111;
+      background: #FFF5E1;
       color: #222;
       height: 100%;
       -webkit-font-smoothing: antialiased;
@@ -33,7 +37,7 @@
       width: 100%;
       max-width: 480px;
       margin: 0 auto;
-      background: #FAF8F5;
+      background: #FFF5E1;
       height: 100dvh;
       display: flex;
       flex-direction: column;
@@ -41,55 +45,54 @@
     }
 
     /* ── HEADER ── */
-    .hdr { background: #111; padding: 0; flex-shrink: 0; text-align: center; position: relative; overflow: hidden; }
-    .hdr-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.4; pointer-events: none; }
-    .hdr-overlay { position: relative; z-index: 1; padding: 24px 20px 16px; background: linear-gradient(to bottom, rgba(0,0,0,.3) 0%, rgba(0,0,0,.6) 100%); }
-    .hdr-wordmark { font-size: 28px; font-weight: 700; color: #fff; letter-spacing: 1px; }
-    .hdr-wordmark span { color: #E94560; }
-    .hdr-tagline { font-size: 13px; font-weight: 300; color: rgba(255,255,255,.85); margin-top: 4px; letter-spacing: 0.3px; }
-    .hdr-date { font-size: 11px; font-weight: 400; color: rgba(255,255,255,.6); margin-top: 10px; }
+    .hdr { background: #E94560; padding: 0; flex-shrink: 0; text-align: center; position: relative; overflow: hidden; }
+    .hdr-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.15; pointer-events: none; }
+    .hdr-overlay { position: relative; z-index: 1; padding: 18px 20px 14px; }
+    .hdr-wordmark { font-size: 26px; font-weight: 700; color: #fff; letter-spacing: 1px; }
+    .hdr-wordmark span { color: #fff; }
+    .hdr-tagline { font-size: 10px; font-weight: 500; color: rgba(255,255,255,.8); margin-top: 3px; letter-spacing: 1.5px; text-transform: uppercase; }
 
     /* ── TABS ── */
-    .tabs { display: flex; background: #fff; flex-shrink: 0; position: sticky; top: 0; z-index: 10; border-bottom: 2px solid #f0ede8; }
-    .tab { flex: 1; padding: 10px 2px 8px; border: none; background: none; cursor: pointer; font-family: 'Roboto', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.3px; color: #999; border-bottom: 3px solid transparent; transition: all .2s; text-align: center; }
-    .tab:hover { color: #555; }
-    .tab.on { color: #E94560; font-weight: 600; border-bottom-color: #E94560; }
-    .tab-emoji { display: block; font-size: 18px; margin-bottom: 2px; }
+    .tabs { display: flex; background: #fff; flex-shrink: 0; position: sticky; top: 0; z-index: 10; border-bottom: 3px solid #FFF5E1; }
+    .tab { flex: 1; padding: 12px 2px 10px; border: none; background: none; cursor: pointer; font-family: 'Roboto', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; color: #ccc; border-bottom: 3px solid transparent; transition: all .15s; text-align: center; text-transform: uppercase; }
+    .tab:hover { color: #999; }
+    .tab.on { color: #E94560; border-bottom-color: #E94560; }
 
     /* ── SCROLL ── */
     .scr { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; }
     .scr::-webkit-scrollbar { width: 0; }
 
     /* ── SHARED ── */
-    .lbl { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; color: #888; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
-    .lbl::after { content: ''; flex: 1; height: 1px; background: #e8e4df; }
-    .sec { padding: 20px 20px 0; }
-    .intro { font-size: 14px; font-weight: 300; color: #666; line-height: 1.7; margin-bottom: 16px; }
+    .lbl { font-size: 10px; font-weight: 700; letter-spacing: 2px; color: #C77737; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .lbl::after { content: ''; flex: 1; height: 2px; background: #F0E6D3; }
+    .sec { padding: 20px 16px 0; }
+    .intro { font-size: 13px; font-weight: 400; color: #888; line-height: 1.7; margin-bottom: 16px; }
 
     /* ── QUOTE HERO ── */
-    .quote-hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); padding: 16px 20px; border-radius: 12px; margin: 12px 20px 0; }
-    .quote-label { font-size: 9px; font-weight: 500; letter-spacing: 2px; color: #E94560; text-transform: uppercase; margin-bottom: 8px; }
-    .quote-text { font-size: 15px; font-weight: 300; font-style: italic; color: #fff; line-height: 1.65; margin-bottom: 8px; }
-    .quote-attr { font-size: 12px; font-weight: 500; color: rgba(255,255,255,.85); }
-    .quote-src { font-size: 10px; font-weight: 300; color: rgba(255,255,255,.5); margin-top: 2px; line-height: 1.4; }
+    .quote-hero { background: #111; padding: 16px 18px; border-radius: 12px; margin: 12px 16px 0; }
+    .quote-label { font-size: 9px; font-weight: 600; letter-spacing: 2px; color: #E94560; text-transform: uppercase; margin-bottom: 8px; }
+    .quote-text { font-size: 15px; font-weight: 300; font-style: italic; color: rgba(255,255,255,.9); line-height: 1.65; margin-bottom: 8px; }
+    .quote-attr { font-size: 12px; font-weight: 500; color: rgba(255,255,255,.7); }
+    .quote-src { font-size: 10px; font-weight: 300; color: rgba(255,255,255,.35); margin-top: 2px; line-height: 1.4; }
     .quote-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
 
     /* ── ORIGIN BADGES ── */
-    .origin { font-size: 9px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; padding: 4px 10px; border-radius: 100px; display: inline-block; }
-    .origin.aotearoa { background: rgba(27,67,50,.15); color: #1B4560; }
-    .origin.pacific { background: rgba(26,58,92,.15); color: #1A3A5C; }
-    .origin.indigenous { background: rgba(183,121,31,.15); color: #8B6914; }
-    .origin.intl { background: rgba(0,0,0,.06); color: #888; }
+    .origin { font-size: 8px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 100px; display: inline-block; }
+    .origin.aotearoa { background: #E8F5EE; color: #1B5E3A; }
+    .origin.pacific { background: #E3F2FD; color: #1565C0; }
+    .origin.indigenous { background: #FFF3E0; color: #E65100; }
+    .origin.intl { background: #F5F5F5; color: #888; }
 
     /* ── SHARE BUTTON ── */
-    .share-btn { display: inline-flex; align-items: center; gap: 6px; background: #E94560; border: none; color: #fff; font-family: 'Roboto', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.5px; padding: 8px 16px; border-radius: 100px; cursor: pointer; transition: all .15s; }
-    .share-btn:hover { filter: brightness(1.15); transform: scale(1.02); }
-    .share-btn-outline { background: none; border: 1.5px solid #ddd; color: #666; }
-    .share-btn-outline:hover { border-color: #E94560; color: #E94560; background: rgba(233,69,96,.05); }
+    .share-btn { display: inline-flex; align-items: center; gap: 6px; background: #E94560; border: none; color: #fff; font-family: 'Roboto', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; padding: 9px 18px; border-radius: 100px; cursor: pointer; transition: all .1s; }
+    .share-btn:hover { filter: brightness(1.1); }
+    .share-btn:active { transform: scale(0.96); }
+    .share-btn-outline { background: #fff; border: 2px solid #eee; color: #999; }
+    .share-btn-outline:hover { border-color: #E94560; color: #E94560; }
 
     /* ── BILL CARDS ── */
-    .bill-card { padding: 16px; background: #fff; border-radius: 12px; margin-bottom: 10px; }
-    .bill-name { font-size: 16px; font-weight: 500; color: #222; line-height: 1.35; margin-bottom: 6px; }
+    .bill-card { padding: 16px; background: #fff; border-radius: 12px; margin-bottom: 8px; }
+    .bill-name { font-size: 16px; font-weight: 600; color: #222; line-height: 1.35; margin-bottom: 6px; }
     .bill-meta { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; flex-wrap: wrap; }
     .bill-badge { font-size: 9px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; padding: 4px 10px; border-radius: 100px; white-space: nowrap; }
     .bill-badge.select-committee { background: #FFF3CD; color: #856404; }
@@ -104,7 +107,7 @@
     .bill-link:hover { background: #E94560; color: #fff; }
 
     /* ── TOOLKIT CARDS ── */
-    .tk-card { background: #fff; border-radius: 12px; margin-bottom: 10px; overflow: hidden; }
+    .tk-card { background: #fff; border-radius: 12px; margin-bottom: 8px; overflow: hidden; }
     .tk-header { display: flex; justify-content: space-between; align-items: center; padding: 16px; cursor: pointer; }
     .tk-topic { font-size: 15px; font-weight: 500; color: #222; }
     .tk-emoji { font-size: 20px; margin-right: 10px; }
@@ -143,7 +146,7 @@
     .tl-desc { font-size: 12px; font-weight: 400; color: #777; line-height: 1.65; }
 
     /* ── PARTY SCORECARD ── */
-    .party-card { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 10px; }
+    .party-card { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 8px; }
     .party-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
     .party-name { font-size: 16px; font-weight: 500; color: #222; }
     .party-score-num { font-size: 15px; font-weight: 700; }
@@ -157,7 +160,7 @@
     .party-source { font-size: 10px; font-weight: 400; color: #bbb; margin-top: 8px; }
 
     /* ── GUIDE ── */
-    .guide-card { background: #fff; border-radius: 12px; margin-bottom: 10px; overflow: hidden; }
+    .guide-card { background: #fff; border-radius: 12px; margin-bottom: 8px; overflow: hidden; }
     .guide-header { display: flex; justify-content: space-between; align-items: center; padding: 16px; cursor: pointer; }
     .guide-emoji { font-size: 20px; margin-right: 10px; }
     .guide-title { font-size: 14px; font-weight: 500; color: #222; flex: 1; }
@@ -171,17 +174,19 @@
     .guide-text li { margin-bottom: 6px; }
 
     /* ── POLL ── */
-    .poll-issue { background: #fff; border-radius: 12px; margin-bottom: 10px; padding: 16px; cursor: pointer; transition: all .15s; border: 2px solid transparent; }
+    .poll-issue { background: #fff; border-radius: 12px; margin-bottom: 8px; padding: 16px; cursor: pointer; transition: all .1s; border: 2px solid transparent; }
     .poll-issue:hover { border-color: #E94560; }
-    .poll-issue.selected { border-color: #E94560; background: #FFF5F7; }
-    .poll-issue-name { font-size: 15px; font-weight: 500; color: #222; margin-bottom: 2px; }
+    .poll-issue:active { transform: scale(0.98); }
+    .poll-issue.selected { border-color: #E94560; background: #FFF0F3; }
+    .poll-issue-name { font-size: 15px; font-weight: 600; color: #222; margin-bottom: 2px; }
     .poll-issue-desc { font-size: 12px; font-weight: 400; color: #888; line-height: 1.5; }
     .poll-issue .check { float: right; width: 24px; height: 24px; border-radius: 50%; border: 2px solid #ddd; display: flex; align-items: center; justify-content: center; font-size: 14px; color: transparent; transition: all .15s; flex-shrink: 0; }
     .poll-issue.selected .check { background: #E94560; border-color: #E94560; color: #fff; }
-    .poll-go { width: 100%; padding: 14px; border: none; background: #E94560; color: #fff; font-family: 'Roboto', sans-serif; font-size: 15px; font-weight: 500; border-radius: 10px; cursor: pointer; transition: filter .15s; margin-top: 16px; }
-    .poll-go:hover { filter: brightness(1.15); }
-    .poll-go:disabled { background: #ddd; color: #999; cursor: default; filter: none; }
-    .poll-result { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 10px; }
+    .poll-go { width: 100%; padding: 14px; border: none; background: #E94560; color: #fff; font-family: 'Roboto', sans-serif; font-size: 15px; font-weight: 600; border-radius: 12px; cursor: pointer; transition: all .1s; margin-top: 16px; letter-spacing: 0.3px; }
+    .poll-go:hover { filter: brightness(1.1); }
+    .poll-go:active { transform: scale(0.98); }
+    .poll-go:disabled { background: #F0E6D3; color: #C4A882; cursor: default; filter: none; transform: none; }
+    .poll-result { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 8px; }
     .poll-result-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
     .poll-result-name { font-size: 16px; font-weight: 500; color: #222; }
     .poll-result-pct { font-size: 18px; font-weight: 700; }
@@ -193,7 +198,7 @@
     .poll-reset:hover { border-color: #E94560; color: #E94560; }
 
     /* ── PROFILE CARD (Pokémon style) ── */
-    .card { margin: 16px 20px; border-radius: 20px; overflow: hidden; background: linear-gradient(145deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%); border: 3px solid #E94560; box-shadow: 0 8px 32px rgba(233,69,96,.15), 0 2px 8px rgba(0,0,0,.1); }
+    .card { margin: 12px 16px; border-radius: 16px; overflow: hidden; background: #111; border: 3px solid #E94560; }
     .card-inner { padding: 20px; }
     .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
     .card-type { font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #E94560; }
@@ -227,8 +232,8 @@
     .stance strong { font-weight: 600; color: #95D5B2; }
 
     /* ── SIGNUP ── */
-    .signup-sec { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); padding: 28px 24px; margin: 20px 20px 0; border-radius: 16px; }
-    .signup-emoji { font-size: 32px; margin-bottom: 10px; }
+    .signup-sec { background: #111; padding: 24px 20px; margin: 20px 16px 0; border-radius: 12px; }
+    .signup-emoji { font-size: 28px; margin-bottom: 8px; }
     .signup-title { font-size: 18px; font-weight: 500; color: #fff; margin-bottom: 4px; }
     .signup-sub { font-size: 13px; font-weight: 300; color: rgba(255,255,255,.65); margin-bottom: 16px; line-height: 1.6; }
     .signup-form { display: none; }
@@ -245,7 +250,7 @@
 
     /* ── FOOTER ── */
     .foot { padding: 20px 20px 30px; text-align: center; }
-    .foot-text { font-size: 11px; font-weight: 300; color: #bbb; }
+    .foot-text { font-size: 10px; font-weight: 500; color: #C4A882; letter-spacing: 0.5px; }
 
     /* ── ACADEMIC INSIGHT ── */
     .insight-card { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 10px; }
@@ -1116,42 +1121,46 @@ function answerQ(score) {
   answers.push({ qIdx: currentQ, score });
 
   const container = document.getElementById('poll-step2');
-
-  let h = `<div style="font-size:15px;font-weight:400;color:#555;line-height:1.6;margin-bottom:14px;font-style:italic;">\u201C${q.q}\u201D</div>`;
-
   const labels = ['Strongly disagreed','Disagreed','Were neutral','Agreed','Strongly agreed'];
-  const cols = ['#B71C1C','#E65100','#888','#4CAF50','#1B5E3A'];
-  h += `<div style="font-size:13px;font-weight:600;color:${cols[score]};margin-bottom:14px;">You ${labels[score].toLowerCase()}</div>`;
+  const cols = ['#E94560','#E94560','#888','#4CAF50','#4CAF50'];
 
-  h += `<div style="background:#F0FFF4;border-radius:10px;padding:14px;margin-bottom:16px;border-left:3px solid #2E7D32;">
-    <div style="font-size:11px;font-weight:600;letter-spacing:1px;color:#2E7D32;text-transform:uppercase;margin-bottom:6px;">Did you consider?</div>
-    <div style="font-size:13px;font-weight:400;color:#333;line-height:1.75;">${q.consider}</div>
-  </div>`;
+  let h = '';
 
+  // Your answer
+  h += `<div style="font-size:14px;font-weight:400;color:#777;line-height:1.5;margin-bottom:6px;font-style:italic;">\u201C${q.q}\u201D</div>`;
+  h += `<div style="font-size:15px;font-weight:600;color:${cols[score]};margin-bottom:16px;">You ${labels[score].toLowerCase()}</div>`;
+
+  // Party alignment FIRST (moved above did-you-consider)
   if (chosenParty && chosenParty !== 'unsure') {
     const partyInfo = PARTY_KEYS.find(p => p.key === chosenParty);
     const partyScore = q.scores[chosenParty];
     const partyStance = partyScore === 3 ? 'supports this' : partyScore === 2 ? 'partially supports this' : partyScore === 1 ? 'is unclear on this' : 'opposes this';
-    const partyCol = partyScore >= 2 ? '#2E7D32' : partyScore === 1 ? '#F9A825' : '#C62828';
+    const partyCol = partyScore >= 2 ? '#4CAF50' : partyScore === 1 ? '#F9A825' : '#E94560';
     const userNorm = score / 4;
     const partyNorm = partyScore / 3;
     const match = Math.abs(userNorm - partyNorm) < 0.3;
 
-    h += `<div style="background:#fff;border-radius:10px;padding:14px;margin-bottom:16px;">
-      <div style="font-size:13px;font-weight:400;color:#555;line-height:1.6;">
+    h += `<div style="background:#111;border-radius:10px;padding:14px;margin-bottom:14px;">
+      <div style="font-size:14px;font-weight:400;color:#fff;line-height:1.6;">
         <strong style="color:${partyInfo.colour}">${partyInfo.name}</strong> <span style="color:${partyCol};font-weight:500;">${partyStance}</span>.
-        ${match ? '<span style="color:#2E7D32;"> You\u2019re aligned here.</span>' : '<span style="color:#C62828;"> That\u2019s a gap between you and your party.</span>'}
+        ${match ? '<span style="color:#4CAF50;font-weight:500;"> You\u2019re aligned.</span>' : '<span style="color:#E94560;font-weight:500;"> Gap detected.</span>'}
       </div>
     </div>`;
   }
 
-  // Salience weighting (VAA methodology)
-  h += `<div style="background:#FAF7F4;border-radius:10px;padding:14px;margin-bottom:16px;">
-    <div style="font-size:12px;font-weight:500;color:#555;margin-bottom:8px;">How much does this issue matter to you?</div>
-    <div style="display:flex;gap:8px;">
-      <button onclick="setSalience(1)" style="flex:1;padding:10px;border:1.5px solid #ddd;background:none;color:#888;font-family:'Roboto',sans-serif;font-size:12px;border-radius:8px;cursor:pointer;">A little</button>
-      <button onclick="setSalience(2)" style="flex:1;padding:10px;border:1.5px solid #ddd;background:none;color:#666;font-family:'Roboto',sans-serif;font-size:12px;border-radius:8px;cursor:pointer;">Quite a bit</button>
-      <button onclick="setSalience(3)" style="flex:1;padding:10px;border:1.5px solid #E94560;background:rgba(233,69,96,.05);color:#E94560;font-family:'Roboto',sans-serif;font-size:12px;font-weight:500;border-radius:8px;cursor:pointer;">A lot</button>
+  // Did you consider? SECOND
+  h += `<div style="background:#1B4332;border-radius:10px;padding:14px;margin-bottom:14px;">
+    <div style="font-size:10px;font-weight:600;letter-spacing:1.5px;color:#95D5B2;text-transform:uppercase;margin-bottom:6px;">Did you consider?</div>
+    <div style="font-size:13px;font-weight:400;color:rgba(255,255,255,.9);line-height:1.75;">${q.consider}</div>
+  </div>`;
+
+  // Salience weighting
+  h += `<div style="margin-bottom:14px;">
+    <div style="font-size:12px;font-weight:500;color:#555;margin-bottom:8px;">How much does this matter to you?</div>
+    <div style="display:flex;gap:6px;">
+      <button onclick="setSalience(1)" style="flex:1;padding:10px;border:2px solid #ddd;background:none;color:#888;font-family:'Roboto',sans-serif;font-size:12px;border-radius:8px;cursor:pointer;">A little</button>
+      <button onclick="setSalience(2)" style="flex:1;padding:10px;border:2px solid #ddd;background:none;color:#666;font-family:'Roboto',sans-serif;font-size:12px;border-radius:8px;cursor:pointer;">Quite a bit</button>
+      <button onclick="setSalience(3)" style="flex:1;padding:10px;border:2px solid #E94560;background:rgba(233,69,96,.08);color:#E94560;font-family:'Roboto',sans-serif;font-size:12px;font-weight:500;border-radius:8px;cursor:pointer;">A lot</button>
     </div>
   </div>`;
 
