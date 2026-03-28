@@ -182,6 +182,8 @@
     .poll-issue-desc { font-size: 12px; font-weight: 400; color: #888; line-height: 1.5; }
     .poll-issue .check { float: right; width: 24px; height: 24px; border-radius: 50%; border: 2px solid #ddd; display: flex; align-items: center; justify-content: center; font-size: 14px; color: transparent; transition: all .15s; flex-shrink: 0; }
     .poll-issue.selected .check { background: #E94560; border-color: #E94560; color: #fff; }
+    input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 28px; height: 28px; background: #fff; border: 3px solid #222; border-radius: 50%; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,.2); }
+    input[type="range"]::-moz-range-thumb { width: 28px; height: 28px; background: #fff; border: 3px solid #222; border-radius: 50%; cursor: pointer; }
     .poll-go { width: 100%; padding: 14px; border: none; background: #E94560; color: #fff; font-family: 'Roboto', sans-serif; font-size: 15px; font-weight: 600; border-radius: 12px; cursor: pointer; transition: all .1s; margin-top: 16px; letter-spacing: 0.3px; }
     .poll-go:hover { filter: brightness(1.1); }
     .poll-go:active { transform: scale(0.98); }
@@ -831,7 +833,7 @@ function renderOnboarding() {
     <div class="poll-issue-name" style="color:#888;">Not sure yet / didn\u2019t vote</div>
   </div></div>`;
   h += `<div class="sec" id="poll-step2" style="display:none;"></div>`;
-  return h + signupFooter();
+  return h;
 }
 
 function renderCard(profile) {
@@ -954,7 +956,7 @@ function renderCard(profile) {
   h += `</div>`;
   h += `<div style="text-align:center;padding-bottom:20px;"><button class="poll-reset" onclick="clearProfile()">Start fresh</button></div>`;
 
-  return h + signupFooter();
+  return h;
 }
 
 /* ── POLL STATE ── */
@@ -974,21 +976,21 @@ function pickParty(key) {
   const container = document.getElementById('poll-step2');
   container.style.display = 'block';
   container.innerHTML = `
-    <div style="text-align:center;padding:30px 0 10px;">
-      <div style="font-size:36px;margin-bottom:12px;">\u2764\uFE0F</div>
-      <div style="font-size:20px;font-weight:500;color:#222;margin-bottom:8px;">Nice!</div>
-      <div style="font-size:15px;font-weight:300;color:#555;line-height:1.7;margin-bottom:20px;">
-        ${partyInfo ? `You picked <strong style="color:${partyInfo.colour}">${partyName}</strong>.` : 'No worries,that\u2019s what we\u2019re here to figure out.'}
+    <div style="text-align:center;padding:24px 4px 16px;">
+      <div style="font-size:32px;margin-bottom:10px;">\u2764\uFE0F</div>
+      <div style="font-size:20px;font-weight:600;color:#222;margin-bottom:6px;">Nice!</div>
+      <div style="font-size:14px;font-weight:400;color:#666;line-height:1.6;margin-bottom:20px;">
+        ${partyInfo ? `You picked <strong style="color:${partyInfo.colour}">${partyName}</strong>.` : 'No worries, that\u2019s what we\u2019re here to figure out.'}
       </div>
-      <div style="background:#FAF7F4;border-radius:12px;padding:18px;text-align:left;margin-bottom:24px;">
-        <div style="font-size:14px;font-weight:400;color:#444;line-height:1.75;">
+      <div style="background:#fff;border-radius:12px;padding:16px;text-align:left;margin-bottom:20px;">
+        <div style="font-size:14px;font-weight:400;color:#444;line-height:1.7;">
           Each day, I\u2019ll ask you <strong>one question</strong> as we lead up to the election. This will help you see whether ${partyInfo ? partyName : 'any party'} actually reflects what you care about.
         </div>
-        <div style="font-size:13px;font-weight:400;color:#888;line-height:1.7;margin-top:10px;">
-          Not here to change your mind. Just here to show you what parties actually stand for, soyou can vote knowing, not guessing.
+        <div style="font-size:13px;font-weight:400;color:#999;line-height:1.6;margin-top:8px;">
+          Not here to change your mind. Just here to show you what parties actually stand for, so you can vote knowing, not guessing.
         </div>
       </div>
-      <button class="poll-go" onclick="showQuestion()">Let\u2019s start</button>
+      <button class="poll-go" style="margin-top:0;" onclick="showQuestion()">Let\u2019s start</button>
     </div>`;
   document.getElementById('scr').scrollTop = 0;
 }
@@ -1090,22 +1092,31 @@ function showQuestion() {
 
   h += `<div style="font-size:17px;font-weight:400;color:#222;line-height:1.6;margin-bottom:24px;">\u201C${q.q}\u201D</div>`;
 
-  // 5-point Likert scale (VAA methodology)
-  h += `<div style="display:flex;gap:6px;margin-bottom:12px;">
-    <button class="poll-go" style="flex:1;background:#1B5E3A;font-size:12px;padding:12px 4px;" onclick="answerQ(4)">Strongly<br>agree</button>
-    <button class="poll-go" style="flex:1;background:#4CAF50;font-size:12px;padding:12px 4px;" onclick="answerQ(3)">Agree</button>
-    <button class="poll-go" style="flex:1;background:#888;font-size:12px;padding:12px 4px;" onclick="answerQ(2)">Neutral</button>
-    <button class="poll-go" style="flex:1;background:#E65100;font-size:12px;padding:12px 4px;" onclick="answerQ(1)">Disagree</button>
-    <button class="poll-go" style="flex:1;background:#B71C1C;font-size:12px;padding:12px 4px;" onclick="answerQ(0)">Strongly<br>disagree</button>
+  // Spectrum slider (VAA methodology, arcade feel)
+  h += `<div style="background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;">
+    <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+      <span style="font-size:10px;font-weight:600;color:#E94560;letter-spacing:0.5px;">DISAGREE</span>
+      <span style="font-size:10px;font-weight:600;color:#4CAF50;letter-spacing:0.5px;">AGREE</span>
+    </div>
+    <input type="range" id="q-slider" min="0" max="4" value="2" style="width:100%;height:8px;-webkit-appearance:none;appearance:none;background:linear-gradient(to right,#E94560,#F9A825,#4CAF50);border-radius:100px;outline:none;cursor:pointer;" oninput="updateSliderLabel(this.value)">
+    <div id="slider-label" style="text-align:center;font-size:13px;font-weight:500;color:#888;margin-top:8px;">Neutral</div>
+    <button class="poll-go" style="margin-top:12px;" onclick="answerQ(parseInt(document.getElementById('q-slider').value))">Lock it in</button>
   </div>`;
 
   // Skip option (Kaupapa M\u0101ori: silence is valid)
   h += `<div style="text-align:center;">
-    <button onclick="skipQ()" style="background:none;border:none;color:#aaa;font-family:'Roboto',sans-serif;font-size:12px;cursor:pointer;padding:8px;">Not today,skip this one</button>
+    <button onclick="skipQ()" style="background:none;border:none;color:#ccc;font-family:'Roboto',sans-serif;font-size:12px;cursor:pointer;padding:8px;">Not today, skip this one</button>
   </div>`;
 
   container.innerHTML = h;
   document.getElementById('scr').scrollTop = 0;
+}
+
+function updateSliderLabel(val) {
+  const labels = ['Strongly disagree','Disagree','Neutral','Agree','Strongly agree'];
+  const cols = ['#E94560','#E65100','#888','#4CAF50','#1B5E3A'];
+  const el = document.getElementById('slider-label');
+  if (el) { el.textContent = labels[val]; el.style.color = cols[val]; }
 }
 
 function skipQ() {
