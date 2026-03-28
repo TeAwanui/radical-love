@@ -1,0 +1,23 @@
+{
+  "bills": [
+    {
+      "id": "treaty-principles",
+      "name": "Treaty Principles Bill",
+      "party": "ACT",
+      "stage": "select-committee",
+      "summary": "Seeks to redefine Treaty of Waitangi principles in legislation, effectively reducing Māori rights guaranteed under Te Tiriti.",
+      "submissionUrl": "https://www.parliament.nz/en/pb/sc/make-a-submission/",
+      "introduced": "2024-11-14"
+    },
+    {
+      "id": "fast-track-approvals",
+      "name": "Fast-Track Approvals Bill",
+      "party": "National",
+      "stage": "passed",
+      "summary": "Bypasses standard environmental review for major development projects.",
+      "submissionUrl": "",
+      "introduced": "2024-03-14"
+    }
+  ],
+  "updated": "2026-03-28T00:00:00Z"
+}

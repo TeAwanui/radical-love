@@ -1,0 +1,18 @@
+{
+  "name": "radical-love",
+  "version": "1.0.0",
+  "description": "Radical Love — civics, organising, and indigenous knowledge for Aotearoa",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'Static build — no compilation needed'"
+  },
+  "dependencies": {
+    "@vercel/og": "^0.6.0",
+    "node-fetch": "^3.3.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

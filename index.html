@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Radical Love">
+  <meta name="theme-color" content="#111111">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icon.png">
+  <title>Radical Love — Know more. Do more.</title>
+  <meta name="description" content="Your daily dose of civic power. Know the system, share the knowledge, organise with aroha.">
+
+  <meta property="og:title"       content="Radical Love">
+  <meta property="og:description" content="Your daily dose of civic power. Know the system, share the knowledge, organise with aroha.">
+  <meta property="og:type"        content="website">
+  <meta property="og:locale"      content="en_NZ">
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      font-family: 'Roboto', sans-serif;
+      background: #111;
+      color: #222;
+      height: 100%;
+      -webkit-font-smoothing: antialiased;
+      overscroll-behavior: none;
+    }
+    #app {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      background: #FAF8F5;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── HEADER ── */
+    .hdr { background: #111; padding: 0; flex-shrink: 0; text-align: center; position: relative; overflow: hidden; }
+    .hdr-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.4; pointer-events: none; }
+    .hdr-overlay { position: relative; z-index: 1; padding: 24px 20px 16px; background: linear-gradient(to bottom, rgba(0,0,0,.3) 0%, rgba(0,0,0,.6) 100%); }
+    .hdr-wordmark { font-size: 28px; font-weight: 700; color: #fff; letter-spacing: 1px; }
+    .hdr-wordmark span { color: #E94560; }
+    .hdr-tagline { font-size: 13px; font-weight: 300; color: rgba(255,255,255,.85); margin-top: 4px; letter-spacing: 0.3px; }
+    .hdr-date { font-size: 11px; font-weight: 400; color: rgba(255,255,255,.6); margin-top: 10px; }
+
+    /* ── TABS ── */
+    .tabs { display: flex; background: #fff; flex-shrink: 0; position: sticky; top: 0; z-index: 10; border-bottom: 2px solid #f0ede8; }
+    .tab { flex: 1; padding: 10px 2px 8px; border: none; background: none; cursor: pointer; font-family: 'Roboto', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.3px; color: #999; border-bottom: 3px solid transparent; transition: all .2s; text-align: center; }
+    .tab:hover { color: #555; }
+    .tab.on { color: #E94560; font-weight: 600; border-bottom-color: #E94560; }
+    .tab-emoji { display: block; font-size: 18px; margin-bottom: 2px; }
+
+    /* ── SCROLL ── */
+    .scr { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    .scr::-webkit-scrollbar { width: 0; }
+
+    /* ── SHARED ── */
+    .lbl { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; color: #888; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .lbl::after { content: ''; flex: 1; height: 1px; background: #e8e4df; }
+    .sec { padding: 20px 20px 0; }
+    .intro { font-size: 14px; font-weight: 300; color: #666; line-height: 1.7; margin-bottom: 16px; }
+
+    /* ── QUOTE HERO ── */
+    .quote-hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); padding: 28px 24px; border-radius: 16px; margin: 16px 20px 0; }
+    .quote-label { font-size: 10px; font-weight: 500; letter-spacing: 2px; color: #E94560; text-transform: uppercase; margin-bottom: 14px; }
+    .quote-text { font-size: 20px; font-weight: 300; font-style: italic; color: #fff; line-height: 1.7; margin-bottom: 16px; }
+    .quote-attr { font-size: 13px; font-weight: 500; color: rgba(255,255,255,.85); }
+    .quote-src { font-size: 11px; font-weight: 300; color: rgba(255,255,255,.5); margin-top: 4px; line-height: 1.5; }
+    .quote-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; }
+
+    /* ── ORIGIN BADGES ── */
+    .origin { font-size: 9px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; padding: 4px 10px; border-radius: 100px; display: inline-block; }
+    .origin.aotearoa { background: rgba(27,67,50,.15); color: #1B4560; }
+    .origin.pacific { background: rgba(26,58,92,.15); color: #1A3A5C; }
+    .origin.indigenous { background: rgba(183,121,31,.15); color: #8B6914; }
+    .origin.intl { background: rgba(0,0,0,.06); color: #888; }
+
+    /* ── SHARE BUTTON ── */
+    .share-btn { display: inline-flex; align-items: center; gap: 6px; background: #E94560; border: none; color: #fff; font-family: 'Roboto', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.5px; padding: 8px 16px; border-radius: 100px; cursor: pointer; transition: all .15s; }
+    .share-btn:hover { filter: brightness(1.15); transform: scale(1.02); }
+    .share-btn-outline { background: none; border: 1.5px solid #ddd; color: #666; }
+    .share-btn-outline:hover { border-color: #E94560; color: #E94560; background: rgba(233,69,96,.05); }
+
+    /* ── BILL CARDS ── */
+    .bill-card { padding: 16px; background: #fff; border-radius: 12px; margin-bottom: 10px; }
+    .bill-name { font-size: 16px; font-weight: 500; color: #222; line-height: 1.35; margin-bottom: 6px; }
+    .bill-meta { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; flex-wrap: wrap; }
+    .bill-badge { font-size: 9px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; padding: 4px 10px; border-radius: 100px; white-space: nowrap; }
+    .bill-badge.select-committee { background: #FFF3CD; color: #856404; }
+    .bill-badge.passed { background: #F8D7DA; color: #721C24; }
+    .bill-badge.first-reading { background: #D1ECF1; color: #0C5460; }
+    .bill-badge.second-reading { background: #FFE0B2; color: #E65100; }
+    .bill-badge.third-reading { background: #C8E6C9; color: #2E7D32; }
+    .bill-badge.party { background: #f5f2ed; color: #888; }
+    .bill-summary { font-size: 13px; font-weight: 400; color: #555; line-height: 1.75; margin-bottom: 10px; }
+    .bill-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .bill-link { font-size: 11px; font-weight: 500; color: #E94560; text-decoration: none; padding: 6px 14px; border: 1.5px solid #E94560; border-radius: 100px; transition: all .15s; }
+    .bill-link:hover { background: #E94560; color: #fff; }
+
+    /* ── TOOLKIT CARDS ── */
+    .tk-card { background: #fff; border-radius: 12px; margin-bottom: 10px; overflow: hidden; }
+    .tk-header { display: flex; justify-content: space-between; align-items: center; padding: 16px; cursor: pointer; }
+    .tk-topic { font-size: 15px; font-weight: 500; color: #222; }
+    .tk-emoji { font-size: 20px; margin-right: 10px; }
+    .tk-arrow { font-size: 14px; color: #ccc; transition: transform .25s; }
+    .tk-arrow.open { transform: rotate(180deg); color: #E94560; }
+    .tk-body { display: none; padding: 0 16px 16px; }
+    .tk-body.open { display: block; }
+    .tk-they-say { font-size: 14px; font-weight: 400; font-style: italic; color: #888; line-height: 1.65; margin-bottom: 14px; padding: 12px 14px; background: #faf7f4; border-radius: 8px; border-left: 3px solid #ddd; }
+    .tk-reality-lbl { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; color: #E94560; text-transform: uppercase; margin-bottom: 6px; }
+    .tk-reality { font-size: 13px; font-weight: 400; color: #444; line-height: 1.75; margin-bottom: 16px; }
+    .tk-stat-box { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 12px; padding: 20px; margin-bottom: 12px; text-align: center; }
+    .tk-stat { font-size: 52px; font-weight: 300; color: #fff; letter-spacing: -2px; line-height: 1.1; }
+    .tk-stat-ctx { font-size: 13px; font-weight: 400; color: rgba(255,255,255,.8); line-height: 1.5; margin-top: 6px; }
+    .tk-source { font-size: 10px; font-weight: 400; color: #aaa; line-height: 1.5; margin-bottom: 10px; }
+
+    /* ── TIRITI ── */
+    .tiriti-hero { background: linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%); padding: 28px 24px; border-radius: 16px; margin: 16px 20px 0; }
+    .tiriti-hero-lbl { font-size: 10px; font-weight: 500; letter-spacing: 2px; color: #95D5B2; text-transform: uppercase; margin-bottom: 10px; }
+    .tiriti-hero-title { font-size: 18px; font-weight: 500; color: #fff; line-height: 1.4; margin-bottom: 6px; }
+    .tiriti-hero-sub { font-size: 13px; font-weight: 300; color: rgba(255,255,255,.7); margin-bottom: 12px; }
+    .tiriti-hero-body { font-size: 13px; font-weight: 400; color: rgba(255,255,255,.9); line-height: 1.75; }
+    .tiriti-hero-src { font-size: 10px; font-weight: 300; color: rgba(255,255,255,.5); margin-top: 10px; }
+
+    .tiriti-article { background: #fff; border-radius: 12px; margin-bottom: 10px; padding: 16px; }
+    .tiriti-num { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; color: #1B4332; text-transform: uppercase; margin-bottom: 8px; }
+    .tiriti-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+    .tiriti-col-lbl { font-size: 9px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #aaa; margin-bottom: 4px; }
+    .tiriti-text { font-size: 12px; font-weight: 400; color: #555; line-height: 1.7; }
+    .tiriti-diff { font-size: 13px; font-weight: 400; color: #333; line-height: 1.75; padding: 12px; background: #FFF8E1; border-radius: 8px; border-left: 3px solid #F9A825; }
+    .tiriti-diff strong { font-weight: 500; color: #E65100; }
+
+    /* ── TIMELINE ── */
+    .tl-item { padding: 14px 16px; background: #fff; border-radius: 12px; margin-bottom: 8px; }
+    .tl-year { font-size: 12px; font-weight: 700; color: #E94560; margin-bottom: 2px; }
+    .tl-event { font-size: 14px; font-weight: 500; color: #222; line-height: 1.4; margin-bottom: 4px; }
+    .tl-desc { font-size: 12px; font-weight: 400; color: #777; line-height: 1.65; }
+
+    /* ── PARTY SCORECARD ── */
+    .party-card { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 10px; }
+    .party-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .party-name { font-size: 16px; font-weight: 500; color: #222; }
+    .party-score-num { font-size: 15px; font-weight: 700; }
+    .party-bar { height: 8px; background: #f0ede8; border-radius: 100px; margin-bottom: 12px; overflow: hidden; }
+    .party-bar-fill { height: 100%; border-radius: 100px; transition: width .3s; }
+    .party-vote { font-size: 12px; font-weight: 400; color: #555; line-height: 1.8; }
+    .party-vote .y { color: #2E7D32; font-weight: 600; }
+    .party-vote .n { color: #C62828; font-weight: 600; }
+    .party-donors-lbl { font-size: 9px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #aaa; margin: 10px 0 4px; }
+    .party-donor { font-size: 12px; font-weight: 400; color: #777; line-height: 1.7; }
+    .party-source { font-size: 10px; font-weight: 400; color: #bbb; margin-top: 8px; }
+
+    /* ── GUIDE ── */
+    .guide-card { background: #fff; border-radius: 12px; margin-bottom: 10px; overflow: hidden; }
+    .guide-header { display: flex; justify-content: space-between; align-items: center; padding: 16px; cursor: pointer; }
+    .guide-emoji { font-size: 20px; margin-right: 10px; }
+    .guide-title { font-size: 14px; font-weight: 500; color: #222; flex: 1; }
+    .guide-arrow { font-size: 14px; color: #ccc; transition: transform .25s; }
+    .guide-arrow.open { transform: rotate(180deg); color: #E94560; }
+    .guide-body { display: none; padding: 0 16px 16px; }
+    .guide-body.open { display: block; }
+    .guide-text { font-size: 13px; font-weight: 400; color: #555; line-height: 1.8; }
+    .guide-text strong { font-weight: 600; color: #333; }
+    .guide-text ul { margin: 8px 0 8px 18px; }
+    .guide-text li { margin-bottom: 6px; }
+
+    /* ── STANCE ── */
+    .stance { font-size: 13px; font-weight: 400; color: #555; line-height: 1.75; padding: 16px; background: linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%); border-radius: 12px; margin-bottom: 16px; color: rgba(255,255,255,.9); }
+    .stance strong { font-weight: 600; color: #95D5B2; }
+
+    /* ── SIGNUP ── */
+    .signup-sec { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); padding: 28px 24px; margin: 20px 20px 0; border-radius: 16px; }
+    .signup-emoji { font-size: 32px; margin-bottom: 10px; }
+    .signup-title { font-size: 18px; font-weight: 500; color: #fff; margin-bottom: 4px; }
+    .signup-sub { font-size: 13px; font-weight: 300; color: rgba(255,255,255,.65); margin-bottom: 16px; line-height: 1.6; }
+    .signup-form { display: none; }
+    .signup-form.open { display: block; }
+    .signup-row { margin-bottom: 10px; }
+    .signup-input { width: 100%; padding: 12px 14px; border: none; background: rgba(255,255,255,.1); color: #fff; font-family: 'Roboto', sans-serif; font-size: 14px; font-weight: 400; border-radius: 8px; outline: none; }
+    .signup-input::placeholder { color: rgba(255,255,255,.4); }
+    .signup-input:focus { background: rgba(255,255,255,.15); }
+    .signup-submit { width: 100%; padding: 13px; border: none; background: #E94560; color: #fff; font-family: 'Roboto', sans-serif; font-size: 14px; font-weight: 500; border-radius: 8px; cursor: pointer; transition: filter .15s; }
+    .signup-submit:hover { filter: brightness(1.15); }
+    .signup-trigger { background: rgba(255,255,255,.1); border: none; color: #fff; font-family: 'Roboto', sans-serif; font-size: 14px; font-weight: 500; padding: 12px 24px; border-radius: 100px; cursor: pointer; transition: all .15s; }
+    .signup-trigger:hover { background: rgba(255,255,255,.2); }
+    .signup-ok { font-size: 15px; font-weight: 400; color: #fff; line-height: 1.6; }
+
+    /* ── FOOTER ── */
+    .foot { padding: 20px 20px 30px; text-align: center; }
+    .foot-text { font-size: 11px; font-weight: 300; color: #bbb; }
+
+    /* ── ACADEMIC INSIGHT ── */
+    .insight-card { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 10px; }
+    .insight-quote { font-size: 13px; font-weight: 400; color: #444; line-height: 1.75; font-style: italic; margin-bottom: 8px; }
+    .insight-author { font-size: 12px; font-weight: 600; color: #1B4332; }
+    .insight-src { font-size: 10px; font-weight: 400; color: #aaa; line-height: 1.5; }
+  </style>
+</head>
+<body>
+
+<div id="app">
+  <div class="hdr">
+    <video class="hdr-video" autoplay muted loop playsinline>
+      <source src="https://videos.pexels.com/video-files/4793578/4793578-uhd_1440_2560_30fps.mp4" type="video/mp4">
+    </video>
+    <div class="hdr-overlay">
+      <div class="hdr-wordmark">Radical <span>Love</span></div>
+      <div class="hdr-tagline">Know more. Do more. Love harder.</div>
+      <div class="hdr-date" id="hdr-date"></div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab on" onclick="go(0,this)"><span class="tab-emoji">&#x1F525;</span>Today</button>
+    <button class="tab" onclick="go(1,this)"><span class="tab-emoji">&#x1F4AC;</span>Toolkit</button>
+    <button class="tab" onclick="go(2,this)"><span class="tab-emoji">&#x1F4DC;</span>Te Tiriti</button>
+    <button class="tab" onclick="go(3,this)"><span class="tab-emoji">&#x270A;</span>Action</button>
+    <button class="tab" onclick="go(4,this)"><span class="tab-emoji">&#x1F441;</span>Watch</button>
+  </div>
+
+  <div class="scr" id="scr"></div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════════════════
+ * DATA
+ * ══════════════════════════════════════════════════════════════════════════════ */
+
+const RA = ['R\u0101tapu','R\u0101hina','R\u0101t\u016b','R\u0101apa','R\u0101pare','R\u0101mere','R\u0101horoi'];
+const MARAMA = ['Kohit\u0101tea','Hui-tanguru','Pout\u016b-te-rangi','Paenga-wh\u0101wh\u0101','Haratua','Pipiri','H\u014dngongoi','Here-turi-k\u014dk\u0101','Mahuru','Whiringa-\u0101-nuku','Whiringa-\u0101-rangi','Hakihea'];
+
+const QUOTES = [
+  { q: "The Treaty is not a political plaything. It is the foundation of a nation.", a: "Moana Jackson", src: "Address to the NZ Law Society Conference, 2010", origin: "aotearoa" },
+  { q: "We are not asking for the world. We are asking for our world back.", a: "Eva Rickard", src: "Raglan Golf Course Occupation, 1978", origin: "aotearoa" },
+  { q: "Do not listen to those who tell you it cannot be done. We have already begun.", a: "Dame Whina Cooper", src: "Land March, 1975", origin: "aotearoa" },
+  { q: "Colonisation is not an event. It is a structure. And structures can be dismantled.", a: "Moana Jackson", src: "Matike Mai Aotearoa Report, 2016", origin: "aotearoa" },
+  { q: "Our identity as M\u0101ori is not a problem to be solved. It is a gift to be celebrated.", a: "Dr Leonie Pihama", src: "Kaupapa M\u0101ori: Theory and Praxis, 2019", origin: "aotearoa" },
+  { q: "Tino rangatiratanga is not a concept to be negotiated. It is a right to be exercised.", a: "Ani Mikaere", src: "Colonising Myths \u2014 M\u0101ori Realities, 2011", origin: "aotearoa" },
+  { q: "The struggle for justice is not a M\u0101ori issue. It is a human issue.", a: "Syd Jackson", src: "Ng\u0101 Tamatoa protest, 1971", origin: "aotearoa" },
+  { q: "He aha te mea nui o te ao? He tangata, he tangata, he tangata.", a: "Whakat\u0101uk\u012b", src: "What is the greatest thing? It is people, it is people, it is people.", origin: "aotearoa" },
+  { q: "The function of rangatiratanga is not to rule over, but to weave together.", a: "T\u0101 Mason Durie", src: "Te Mana, Te K\u0101wanatanga, 1998", origin: "aotearoa" },
+  { q: "If you want to change the future, you have to understand the past they are trying to erase.", a: "Professor Margaret Mutu", src: "The State of M\u0101ori Rights, 2011", origin: "aotearoa" },
+  { q: "We are the sea. We are the ocean. We must wake up to this ancient truth.", a: "Epeli Hau\u2018ofa", src: "'Our Sea of Islands', The Contemporary Pacific, 1994", origin: "pacific" },
+  { q: "You cannot understand a Pacific person without understanding their relationships.", a: "Konai Helu Thaman", src: "'Decolonizing Pacific Studies', The Contemporary Pacific, 2003", origin: "pacific" },
+  { q: "Culture is the foundation upon which Pacific health is built.", a: "Fuimaono Karl Pulotu-Endemann", src: "Fonofale Model of Health, 2001", origin: "pacific" },
+  { q: "Talanoa is not small talk. It is the deepest form of human connection.", a: "Timote Vaioleti", src: "'Talanoa Research Methodology', AlterNative, 2006", origin: "pacific" },
+  { q: "The Pacific is not small islands in a far sea. It is a sea of islands, connected.", a: "Epeli Hau\u2018ofa", src: "'Our Sea of Islands', The Contemporary Pacific, 1994", origin: "pacific" },
+  { q: "They tried to bury us. They did not know we were seeds.", a: "Mexican proverb", src: "Traditional, adopted by the Zapatista movement", origin: "indigenous" },
+  { q: "Our struggle is the continuation of our ancestors' struggle. We have never stopped.", a: "Rigoberta Mench\u00fa", src: "Nobel Peace Prize Lecture, 1992", origin: "indigenous" },
+  { q: "Somebody needs to have the courage to stand up and say that what\u2019s wrong is wrong.", a: "Wangari Maathai", src: "Unbowed: A Memoir, 2006", origin: "indigenous" },
+  { q: "Give me your tired, your poor, and I will give them sovereignty.", a: "Berta C\u00e1ceres", src: "Goldman Environmental Prize Address, 2015", origin: "indigenous" },
+  { q: "The land is not something we inherited. It is something we borrow from our children.", a: "Indigenous proverb", src: "Attributed across multiple indigenous traditions", origin: "indigenous" },
+  { q: "If you are neutral in situations of injustice, you have chosen the side of the oppressor.", a: "Desmond Tutu", src: "University of Cape Town, 1984", origin: "intl" },
+  { q: "The master\u2019s tools will never dismantle the master\u2019s house.", a: "Audre Lorde", src: "Sister Outsider, 1984", origin: "intl" },
+  { q: "Education either functions as an instrument of conformity or it becomes the practice of freedom.", a: "Paulo Freire", src: "Pedagogy of the Oppressed, 1968", origin: "intl" },
+  { q: "I am no longer accepting the things I cannot change. I am changing the things I cannot accept.", a: "Angela Davis", src: "Widely attributed, 1970s", origin: "intl" },
+  { q: "Not everything that is faced can be changed, but nothing can be changed until it is faced.", a: "James Baldwin", src: "The New York Times, 1962", origin: "intl" },
+  { q: "When the whole world is silent, even one voice becomes powerful.", a: "Malala Yousafzai", src: "I Am Malala, 2013", origin: "intl" },
+  { q: "Those who do not move do not notice their chains.", a: "Rosa Luxemburg", src: "Attributed, 1919", origin: "intl" },
+  { q: "Another world is not only possible, she is on her way. On a quiet day, I can hear her breathing.", a: "Arundhati Roy", src: "War Talk, 2003", origin: "intl" },
+  { q: "No one is free until we are all free.", a: "Dr Martin Luther King Jr", src: "Letter from Birmingham Jail, 1963", origin: "intl" },
+  { q: "The cost of liberty is less than the price of repression.", a: "W.E.B. Du Bois", src: "John Brown, 1909", origin: "intl" },
+];
+
+const TALKING_POINTS = [
+  { id:'economy', emoji:'\u{1F4B0}', topic:'The Economy', theySay:'\u201CThe economy is strong. Tax cuts put more money in your pocket.\u201D', reality:'Tax cuts mostly benefit the top earners. The top 10% of NZ households hold more wealth than the bottom 70% combined. GDP growth doesn\u2019t tell you who\u2019s winning \u2014 wages for most people have barely kept up with living costs, while corporate profits have surged.', keyStat:'70%', keyStatCtx:'of NZ\u2019s wealth is held by the top 10%', source:'Stats NZ, Household Economic Survey 2022; NZIER, Income Inequality in Aotearoa, 2023' },
+  { id:'immigration', emoji:'\u{1F30F}', topic:'Immigration', theySay:'\u201CImmigrants take our jobs and strain services.\u201D', reality:'Immigrants are net contributors \u2014 they pay more in tax than they receive in services. NZ relies on migrant labour in healthcare, construction, and agriculture. Housing pressure comes from speculation and underbuilding, not immigration.', keyStat:'$2.9B', keyStatCtx:'annual net fiscal contribution of recent migrants', source:'MBIE, Migration and Labour Market Outcomes, 2023; Treasury, Long-Term Fiscal Model, 2022' },
+  { id:'maori-privilege', emoji:'\u{1F91D}', topic:'\u201CM\u0101ori Get Special Treatment\u201D', theySay:'\u201CWe should all be treated the same. No race-based policies.\u201D', reality:'Te Tiriti is not race-based \u2014 it\u2019s a constitutional partnership. M\u0101ori rights are partnership rights, not privileges. The 7-year life expectancy gap isn\u2019t because of culture \u2014 it\u2019s because of 180+ years of colonisation.', keyStat:'7 yrs', keyStatCtx:'life expectancy gap between M\u0101ori and non-M\u0101ori', source:'Ministry of Health, 2023; Waitangi Tribunal, Hauora Report (Wai 2575), 2019' },
+  { id:'taxpayer', emoji:'\u{1F4CA}', topic:'Taxpayer Money', theySay:'\u201CGovernment wastes our money on handouts.\u201D', reality:'The biggest spend is health, education, and super \u2014 stuff everyone uses. NZ Super alone costs $18.6B \u2014 more than all welfare benefits combined. Corporate tax breaks get way less scrutiny.', keyStat:'$18.6B', keyStatCtx:'spent on NZ Super in 2023 \u2014 more than all benefits combined', source:'Treasury, Budget Economic and Fiscal Update, 2023' },
+  { id:'crime', emoji:'\u{1F6A8}', topic:'Crime', theySay:'\u201CCrime is out of control. We need tougher sentences.\u201D', reality:'Violent crime has been declining since the 1990s. What\u2019s increased is media reporting. Longer sentences don\u2019t reduce reoffending \u2014 addressing poverty, housing, and mental health does. M\u0101ori are imprisoned at 6x the rate of non-M\u0101ori.', keyStat:'52%', keyStatCtx:'of NZ\u2019s prison population is M\u0101ori (17% of total population)', source:'Dept of Corrections, 2023; NZ Crime and Victims Survey, Ministry of Justice, 2022' },
+  { id:'housing', emoji:'\u{1F3E0}', topic:'Housing', theySay:'\u201CJust build more houses and prices will drop.\u201D', reality:'The crisis is driven by speculation, not just supply. NZ let property investors claim tax deductions on interest while paying no capital gains tax \u2014 virtually unique in the OECD. Median house price is 8.3x median income.', keyStat:'8.3x', keyStatCtx:'NZ\u2019s house price-to-income ratio \u2014 among the worst in the OECD', source:'Demographia International Housing Affordability, 2023; RBNZ, 2023' },
+  { id:'free-speech', emoji:'\u{1F5E3}', topic:'Free Speech', theySay:'\u201CYou can\u2019t say anything anymore.\u201D', reality:'The Bill of Rights protects your speech. What\u2019s changed is that people with less power now have platforms to respond. The most extreme speech restrictions in NZ history were imposed on M\u0101ori: the Tohunga Suppression Act (1907) literally criminalised M\u0101ori knowledge holders.', keyStat:'1907', keyStatCtx:'Tohunga Suppression Act \u2014 M\u0101ori healers were criminalised', source:'NZ Bill of Rights Act 1990, s14; Te Ara, 2017' },
+  { id:'one-nz', emoji:'\u{1F1F3}\u{1F1FF}', topic:'\u201CWe\u2019re All New Zealanders\u201D', theySay:'\u201CStop dividing people by race. We\u2019re all one country.\u201D', reality:'Colour-blindness doesn\u2019t create equality \u2014 it erases specific harms done to specific peoples. M\u0101ori are tangata whenua with a constitutional relationship through Te Tiriti. Unity requires justice first \u2014 not the silence of those seeking it.', keyStat:'$100B+', keyStatCtx:'estimated value of confiscated M\u0101ori land \u2014 less than 3% returned', source:'Waitangi Tribunal; Boast, R. "Buying the Land", Victoria University Press, 2008' },
+];
+
+const TIRITI = {
+  whakaputanga: { year:1835, title:'He Whakap\u016btanga o te Rangatiratanga o Nu T\u012breni', english:'The Declaration of Independence of New Zealand', explanation:'Signed by 34 rangatira (eventually 52), He Whakap\u016btanga declared New Zealand as an independent sovereign state under the authority of the united chiefs. Acknowledged by King William IV. This declaration has never been revoked. It established that sovereignty \u2014 rangatiratanga \u2014 resided with M\u0101ori.', source:'Waitangi Tribunal, He Whakap\u016btanga me te Tiriti (Wai 1040), 2014' },
+  articles: [
+    { num:'Te Tuatahi \u2014 Article 1', teReo:'Ko ng\u0101 Rangatira o te Wakaminenga me ng\u0101 Rangatira katoa hoki\u2026 ka tuku rawa atu ki te Kuini o Ingarani te Kawanatanga katoa o \u014d r\u0101tou wenua.', english:'The Chiefs\u2026 cede to Her Majesty the Queen of England absolutely and without reservation all the rights and powers of Sovereignty.', difference:'The te reo M\u0101ori text used \u201Ckawanatanga\u201D (governance) \u2014 not sovereignty. Rangatira understood they were sharing governance. The English text claims total sovereignty.' },
+    { num:'Te Tuarua \u2014 Article 2', teReo:'Ko te Kuini o Ingarani ka wakarite ka wakaae ki ng\u0101 Rangatira\u2026 te tino rangatiratanga o \u014d r\u0101tou wenua \u014d r\u0101tou k\u0101inga me \u014d r\u0101tou taonga katoa.', english:'Her Majesty confirms and guarantees to the Chiefs\u2026 the full exclusive and undisturbed possession of their Lands and Estates Forests Fisheries and other properties.', difference:'The te reo version guarantees <strong>tino rangatiratanga</strong> \u2014 absolute chieftainship. The English downgrades this to mere \u201Cpossession.\u201D This is the critical article.' },
+    { num:'Te Tuatoru \u2014 Article 3', teReo:'\u2026ka tiakina e te Kuini o Ingarani ng\u0101 t\u0101ngata m\u0101ori katoa o Nu T\u012breni ka tukua ki a r\u0101tou ng\u0101 tikanga katoa rite tahi ki \u0101na mea ki ng\u0101 t\u0101ngata o Ingarani.', english:'\u2026Her Majesty extends to the Natives of New Zealand all the Rights and Privileges of British Subjects.', difference:'Both versions agree: M\u0101ori were granted British rights. But this was an <strong>addition</strong> to existing rights, not a replacement.' },
+    { num:'Te Tuawh\u0101 \u2014 The Oral Article', teReo:'E mea ana te Kawana ko ng\u0101 whakapono katoa o Ingarani\u2026 ka tiakina ngatahitia.', english:'Governor Hobson verbally promised protection of M\u0101ori customs and spiritual practices.', difference:'Spoken at the signing and recorded by witnesses. Guaranteed protection of <strong>wairuatanga</strong> and <strong>tikanga</strong>. Oral promises carry weight in te ao M\u0101ori and in law.' },
+  ],
+  timeline: [
+    { year:1840, event:'Te Tiriti o Waitangi signed', desc:'Rangatira and the Crown enter a partnership. Breaches begin within years.' },
+    { year:1845, event:'Hone Heke fells the flagpole', desc:'First organised resistance to Crown overreach, at Koror\u0101reka.' },
+    { year:1860, event:'Taranaki Wars begin', desc:'The Crown attacks M\u0101ori communities to seize land.' },
+    { year:1863, event:'NZ Settlements Act', desc:'Legalised confiscation of M\u0101ori land as punishment for \u201Crebellion.\u201D' },
+    { year:1867, event:'Native Schools Act', desc:'English-only schooling. Te reo beaten out of children for a century.' },
+    { year:1907, event:'Tohunga Suppression Act', desc:'Criminalised M\u0101ori healers and knowledge holders.' },
+    { year:1975, event:'M\u0101ori Land March', desc:'Dame Whina Cooper leads 5,000+ from Te H\u0101pua to Parliament.' },
+    { year:1977, event:'Bastion Point occupation', desc:'Ng\u0101ti Wh\u0101tua occupy ancestral land for 506 days.' },
+    { year:2004, event:'Foreshore and Seabed Act', desc:'Crown extinguishes M\u0101ori customary rights to coastline.' },
+    { year:2024, event:'Treaty Principles Bill', desc:'ACT introduces a bill to redefine Treaty principles, diminishing M\u0101ori rights.' },
+  ],
+  academic: [
+    { insight:'The Treaty was not a cession of sovereignty. It was an agreement to share governance while retaining indigenous authority.', author:'Moana Jackson', src:'Matike Mai Aotearoa, 2016' },
+    { insight:'The Crown has consistently interpreted the Treaty in ways that expand its own power while diminishing M\u0101ori rangatiratanga.', author:'Professor Margaret Mutu', src:'Weeping Waters: The Treaty of Waitangi and Constitutional Change, 2010' },
+    { insight:'Colonisation in Aotearoa is not simply an historical event. It is an ongoing structure embedded in law and everyday life.', author:'Ani Mikaere', src:'Colonising Myths \u2014 M\u0101ori Realities, Huia Publishers, 2011' },
+    { insight:'Constitutional transformation must start from the Treaty relationship, not from inherited Westminster structures.', author:'Dr Carwyn Jones', src:'New Treaty, New Tradition, Victoria University Press, 2016' },
+  ],
+};
+
+const PARTIES = [
+  { name:'Te P\u0101ti M\u0101ori', score:9, colour:'#E94560', votes:[{bill:'Treaty Principles Bill',vote:'opposed',y:2024},{bill:'Smokefree repeal',vote:'opposed',y:2023}], donors:['Primarily membership and small donations'], source:'Electoral Commission; Hansard' },
+  { name:'Green Party', score:7, colour:'#2E7D32', votes:[{bill:'Treaty Principles Bill',vote:'opposed',y:2024},{bill:'Wealth Tax proposal',vote:'supported',y:2023}], donors:['Small individual donations; no corporate donations'], source:'Electoral Commission; Hansard' },
+  { name:'Labour Party', score:5, colour:'#D32F2F', votes:[{bill:'Treaty Principles Bill',vote:'opposed',y:2024},{bill:'Fair Pay Agreements',vote:'supported',y:2022}], donors:['Union affiliations + individual donors'], source:'Electoral Commission; Hansard' },
+  { name:'National Party', score:2, colour:'#1565C0', votes:[{bill:'Treaty Principles Bill',vote:'supported to first reading',y:2024},{bill:'Fair Pay Agreements Repeal',vote:'supported',y:2023}], donors:['Significant corporate + high-net-worth donations'], source:'Electoral Commission; Hansard' },
+  { name:'ACT Party', score:1, colour:'#F9A825', votes:[{bill:'Treaty Principles Bill',vote:'introduced',y:2024},{bill:'Charter schools',vote:'supported',y:2024}], donors:['Significant corporate + high-net-worth donations'], source:'Electoral Commission; Hansard' },
+  { name:'NZ First', score:2, colour:'#555', votes:[{bill:'Treaty Principles Bill',vote:'supported to select committee',y:2024},{bill:'Smokefree repeal',vote:'supported',y:2023}], donors:['Mixed; NZ First Foundation controversy 2020'], source:'Electoral Commission; Hansard; NZ Herald' },
+];
+
+const SEED_BILLS = [
+  { id:'treaty-principles', name:'Treaty Principles Bill', party:'ACT', stage:'select-committee', summary:'Seeks to redefine Treaty principles in legislation, effectively reducing M\u0101ori rights guaranteed under Te Tiriti. Proposes a narrow English-text interpretation.', submissionUrl:'https://www.parliament.nz/en/pb/sc/make-a-submission/' },
+  { id:'fast-track-approvals', name:'Fast-Track Approvals Bill', party:'National', stage:'passed', summary:'Bypasses environmental review for major development projects. Ministers can approve directly, overriding environmental protections and Treaty obligations.', submissionUrl:'' },
+  { id:'smokefree-repeal', name:'Smokefree Environments Repeal', party:'National', stage:'passed', summary:'Repealed world-leading smokefree laws that would have created a smoke-free generation. Disproportionately affects M\u0101ori and Pacific communities.', submissionUrl:'' },
+  { id:'fair-pay-repeal', name:'Fair Pay Agreements Repeal', party:'National', stage:'passed', summary:'Repealed Fair Pay Agreements before they took effect. Would have set industry-wide minimum conditions, benefiting low-wage workers.', submissionUrl:'' },
+];
+
+const GUIDE = [
+  { emoji:'\u2696\uFE0F', title:'Know Your Rights', body:'<strong>NZ Bill of Rights Act 1990</strong> protects:<ul><li><strong>Section 14</strong> \u2014 Freedom of expression</li><li><strong>Section 16</strong> \u2014 Freedom of peaceful assembly</li><li><strong>Section 17</strong> \u2014 Freedom of association</li><li><strong>Section 18</strong> \u2014 Freedom of movement</li></ul>You have the right to protest on public land. Police can ask you to move but can\u2019t arrest you for peaceful protest. Always get the name and badge number of any officer.' },
+  { emoji:'\u{1F4DD}', title:'Make a Submission (15 mins)', body:'<strong>Anyone</strong> can submit on a bill \u2014 you don\u2019t need to be an expert.<ul><li>Go to <strong>parliament.nz</strong> \u2192 Bills \u2192 Make a Submission</li><li>3 paragraphs is enough. Say if you support or oppose and why.</li><li>You can request to speak to the committee (video or in person)</li><li>Submissions are read. Community voices especially matter.</li></ul>Your voice is recorded in the democratic record.' },
+  { emoji:'\u{1F6B6}', title:'Organise a March', body:'<ul><li><strong>No permit needed</strong> for peaceful assembly on public land in NZ</li><li>Notify council + police 7+ days in advance (courtesy, not required for footpath)</li><li>Appoint <strong>marshals</strong> in visible vests</li><li>Have a <strong>legal observer</strong> who records but doesn\u2019t participate</li><li><strong>First aid kit</strong> + someone trained</li><li><strong>1\u20132 clear demands</strong> \u2014 not 10. Focus wins.</li></ul>' },
+  { emoji:'\u{1F4E7}', title:'Contact Your MP', body:'Your MP works for you. This is one of the most effective civic actions.<ul><li>Find your MP at <strong>parliament.nz/en/mps-and-electorates</strong></li><li><strong>Email</strong> is best \u2014 they track constituent correspondence</li><li>Be specific: name the bill, state your position, say you\u2019re a constituent</li><li><strong>3\u20134 sentences</strong> is enough. Staff read hundreds of emails.</li><li>List MPs answer to their party. Electorate MPs answer to you.</li></ul>' },
+  { emoji:'\u{1F512}', title:'Digital Security', body:'<ul><li>Use <strong>Signal</strong> for group chats \u2014 encrypted, auto-delete</li><li>Don\u2019t plan actions on Facebook or standard SMS</li><li>Lock your phone with a <strong>PIN</strong> (police can compel fingerprint but not PIN in NZ)</li><li>If arrested, you can <strong>refuse to unlock your phone</strong> \u2014 get a lawyer first</li></ul>' },
+  { emoji:'\u{1F54A}\uFE0F', title:'De-escalation', body:'If confronted:<ul><li><strong>Lower your voice</strong> \u2014 volume escalates conflict</li><li>Open body language, hands visible</li><li>Acknowledge feelings: \u201CI can see you feel strongly about this\u201D</li><li>State your position once, clearly, then disengage</li><li><strong>Never touch</strong> \u2014 even a hand on a shoulder can escalate</li><li>Know where safety is before you need it</li></ul>' },
+];
+
+
+/* ── THINK TANKS & INFLUENCE NETWORKS ── */
+const THINK_TANKS = [
+  {
+    name: 'Atlas Network',
+    type: 'Global network',
+    desc: 'A US-based network of 500+ free-market think tanks in 100 countries. Coordinates policy agendas worldwide \u2014 privatisation, deregulation, reduced public services. Several NZ organisations are Atlas partners.',
+    nzLinks: ['NZ Initiative', 'Taxpayers\u2019 Union (informal alignment)'],
+    funding: 'Koch family foundations, donor-advised funds, corporate donors. Exact NZ funding opaque.',
+    source: 'Atlas Network website; Sourcewatch; The Guardian investigations, 2023',
+    danger: 'high',
+  },
+  {
+    name: 'NZ Initiative',
+    type: 'NZ think tank',
+    desc: 'Formerly the NZ Business Roundtable. Directly advises government on economic policy. Consistently pushes deregulation, lower corporate tax, reduced worker protections, and market-based solutions to public services.',
+    nzLinks: ['Atlas Network partner', 'Major corporate members: ANZ, Fonterra, Fletcher Building, etc.'],
+    funding: 'Corporate membership fees. Members include NZ\u2019s largest companies.',
+    source: 'NZ Initiative annual reports; membership lists (public)',
+    danger: 'high',
+  },
+  {
+    name: 'Taxpayers\u2019 Union',
+    type: 'NZ lobby group',
+    desc: 'Campaigns against public spending, taxes, and government programmes. Frames itself as grassroots but has significant corporate backing. Regularly attacks M\u0101ori-specific funding and Te Tiriti-based policy.',
+    nzLinks: ['Aligned with ACT Party positions', 'Jordan Williams (Executive Director) \u2014 former ACT party staffer'],
+    funding: 'Does not fully disclose donors. Some corporate and high-net-worth backing reported.',
+    source: 'Taxpayers\u2019 Union website; Stuff investigations; NZ Herald reporting',
+    danger: 'high',
+  },
+  {
+    name: 'Maxim Institute',
+    type: 'NZ think tank',
+    desc: 'Socially conservative think tank. Positions on education, family, and religious freedom often align with restricting progressive policy. More moderate than some but consistently opposes equity-based legislation.',
+    nzLinks: ['Links to conservative church networks', 'Submissions on most social legislation'],
+    funding: 'Charitable trust. Donors not publicly disclosed.',
+    source: 'Maxim Institute publications; charity register',
+    danger: 'medium',
+  },
+  {
+    name: 'Hobson\u2019s Pledge',
+    type: 'NZ lobby group',
+    desc: 'Founded by Don Brash. Campaigns against what it calls \u201Crace-based\u201D policy \u2014 meaning any recognition of M\u0101ori rights under Te Tiriti. Pushed the \u201CWe Are All New Zealanders\u201D narrative. Directly influenced ACT\u2019s Treaty Principles Bill.',
+    nzLinks: ['Don Brash (founder)', 'Direct line to ACT Party policy'],
+    funding: 'Donations. Not fully disclosed.',
+    source: 'Hobson\u2019s Pledge website; RNZ reporting; Newsroom investigations',
+    danger: 'high',
+  },
+  {
+    name: 'Free Speech Union (NZ)',
+    type: 'NZ lobby group',
+    desc: 'Campaigns on \u201Cfree speech\u201D grounds but primarily amplifies voices opposing progressive policy, particularly on gender, M\u0101ori rights, and climate. Shares leadership networks with Taxpayers\u2019 Union.',
+    nzLinks: ['Jonathan Ayling (CEO)', 'Shared infrastructure with Taxpayers\u2019 Union'],
+    funding: 'Membership fees. Limited transparency on major donors.',
+    source: 'Free Speech Union NZ website; Stuff reporting',
+    danger: 'medium',
+  },
+];
+
+/* ── FAR-RIGHT NARRATIVE WATCH (curated weekly) ── */
+const NARRATIVES = [
+  {
+    week: 'Current',
+    title: 'Co-governance is undemocratic',
+    who: 'Hobson\u2019s Pledge, Taxpayers\u2019 Union, ACT Party, talkback radio',
+    whatTheySay: 'Co-governance gives M\u0101ori special voting rights and undermines democracy. Unelected iwi leaders are making decisions for everyone.',
+    whyItWorks: 'It sounds fair \u2014 \u201Cone person, one vote\u201D is a deeply held democratic value. Most people don\u2019t know what co-governance actually means in practice.',
+    theReality: 'Co-governance means shared decision-making between the Crown and M\u0101ori \u2014 as guaranteed by Te Tiriti (Article 2). It\u2019s not about extra votes. It\u2019s about the Crown honouring its partnership obligations. Most co-governance arrangements involve local resource management, not national elections. Examples like the Waikato River Authority have been praised as effective models worldwide.',
+    howToRespond: 'Ask: \u201CDo you think the government should keep the promises it signed?\u201D Te Tiriti was a deal. Co-governance is just honouring it. It\u2019s not about more votes \u2014 it\u2019s about M\u0101ori having a seat at the table for decisions that affect their land and water.',
+    source: 'Waitangi Tribunal; Matike Mai Aotearoa Report, 2016; Waikato River Authority outcomes reporting',
+  },
+  {
+    week: 'Recent',
+    title: 'Tax cuts grow the economy for everyone',
+    who: 'NZ Initiative, National Party, business lobby groups',
+    whatTheySay: 'Lower taxes create jobs, stimulate investment, and the benefits trickle down to everyone.',
+    whyItWorks: 'It\u2019s simple and intuitive \u2014 more money in my pocket sounds good. The language of \u201Cgrowth\u201D feels positive.',
+    theReality: 'Decades of international evidence show trickle-down economics doesn\u2019t work. A 2020 London School of Economics study of 50 years of tax cuts in 18 countries found they increased income inequality without improving employment or economic growth. In NZ, the 2024 tax cuts disproportionately benefited high earners.',
+    howToRespond: 'The question isn\u2019t whether tax cuts feel good \u2014 it\u2019s who they actually help. The evidence from 50 years of data is clear: they widen the gap. Ask: \u201CIf trickle-down worked, why are there more food banks than ever after decades of it?\u201D',
+    source: 'Hope & Limberg, \u201CThe Economic Consequences of Major Tax Cuts for the Rich\u201D, LSE, 2020; Treasury BEFU 2024',
+  },
+  {
+    week: 'Recent',
+    title: 'M\u0101ori elite are exploiting the Treaty',
+    who: 'Hobson\u2019s Pledge, talkback radio, certain Substack commentators',
+    whatTheySay: 'Treaty settlements only benefit a small M\u0101ori elite. Ordinary M\u0101ori don\u2019t see the money. The Treaty industry is a gravy train.',
+    whyItWorks: 'It creates a divide between \u201Cordinary\u201D M\u0101ori and \u201Celite\u201D M\u0101ori, which undermines collective solidarity. It also taps into general resentment of perceived unfairness.',
+    theReality: 'Treaty settlements have returned less than 3% of the estimated value of land confiscated. Settlements are distributed through iwi and hap\u016b structures that fund education, health, housing, and employment for their communities. The average settlement is a fraction of what was taken. The \u201Cgravy train\u201D narrative ignores that the Crown took billions and returned millions.',
+    howToRespond: '\u201CIf someone stole your house, sold it for $1 million, then gave you back $30,000 and called it generous \u2014 would you call that a gravy train?\u201D That\u2019s roughly the ratio of what was taken vs returned.',
+    source: 'Office of Treaty Settlements; Waitangi Tribunal; Boast, R. \u201CBuying the Land\u201D, 2008',
+  },
+];
+
+
+/* ══════════════════════════════════════════════════════════════════════════════
+ * VIEWS
+ * ══════════════════════════════════════════════════════════════════════════════ */
+
+function signupFooter() {
+  return `<div style="padding:0 20px;">
+    <div class="signup-sec">
+      <div class="signup-emoji">\u{1F48C}</div>
+      <div class="signup-title">Stay in the loop</div>
+      <div class="signup-sub">Weekly digest \u2014 bills, quotes, and things you can do. No spam, just aroha.</div>
+      <div id="signup-area">
+        <button class="signup-trigger" id="signup-trigger" onclick="toggleSignup()">Let\u2019s get radical</button>
+        <form class="signup-form" id="signup-form" onsubmit="submitSignup(event)">
+          <div class="signup-row"><input class="signup-input" type="text" name="name" placeholder="Your name (optional)"></div>
+          <div class="signup-row"><input class="signup-input" type="email" name="email" placeholder="Email address" required></div>
+          <button class="signup-submit" type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><div class="foot-text">Built with aroha in Aotearoa</div></div>`;
+}
+
+function todayView() {
+  const now = new Date();
+  const dayOfYear = Math.floor((now - new Date(now.getFullYear(),0,0)) / 86400000);
+  const q = QUOTES[dayOfYear % QUOTES.length];
+  const originLabel = {aotearoa:'Aotearoa',pacific:'Pacific',indigenous:'Indigenous',intl:'International'};
+
+  let h = '';
+
+  h += `<div class="quote-hero">
+    <div class="quote-label">Quote of the Day</div>
+    <div class="quote-text">\u201C${q.q}\u201D</div>
+    <div class="quote-attr">\u2014 ${q.a}</div>
+    <div class="quote-src">${q.src}</div>
+    <div class="quote-footer">
+      <span class="origin ${q.origin}">${originLabel[q.origin]}</span>
+      <button class="share-btn" onclick="shareCard('quote','${dayOfYear}')">Share this</button>
+    </div>
+  </div>`;
+
+  h += `<div class="sec"><div class="lbl">What\u2019s happening in Parliament</div>
+    <div class="intro">Bills being pushed through right now. Stay informed \u2014 and push back.</div>`;
+  SEED_BILLS.forEach(b => {
+    const sc = b.stage.replace(/\s+/g,'-');
+    h += `<div class="bill-card">
+      <div class="bill-name">${b.name}</div>
+      <div class="bill-meta"><span class="bill-badge ${sc}">${b.stage.replace(/-/g,' ')}</span><span class="bill-badge party">${b.party}</span></div>
+      <div class="bill-summary">${b.summary}</div>
+      <div class="bill-actions">
+        ${b.submissionUrl ? `<a class="bill-link" href="${b.submissionUrl}" target="_blank" rel="noopener">Make a Submission</a>` : ''}
+        <button class="share-btn share-btn-outline" onclick="shareCard('bill','${b.id}')">Share</button>
+      </div>
+    </div>`;
+  });
+  h += `</div>`;
+
+  h += `<div class="sec" style="padding-bottom:20px;">
+    <div class="lbl">Latest from the Beehive</div>
+    <div id="releases-list" class="intro">Loading government releases\u2026</div>
+  </div>`;
+
+  return h + signupFooter();
+}
+
+function toolkitView() {
+  let h = `<div class="sec"><div class="lbl">Conversation Toolkit</div>
+    <div class="intro">Heard something that didn\u2019t sound right? Tap a topic for the data-backed response. Every claim cited.</div>`;
+  TALKING_POINTS.forEach((tp,i) => {
+    h += `<div class="tk-card">
+      <div class="tk-header" onclick="toggleTk(${i})">
+        <span><span class="tk-emoji">${tp.emoji}</span><span class="tk-topic">${tp.topic}</span></span>
+        <span class="tk-arrow" id="tk-arrow-${i}">\u25BE</span>
+      </div>
+      <div class="tk-body" id="tk-body-${i}">
+        <div class="tk-they-say">${tp.theySay}</div>
+        <div class="tk-reality-lbl">The Reality</div>
+        <div class="tk-reality">${tp.reality}</div>
+        <div class="tk-stat-box"><div class="tk-stat">${tp.keyStat}</div><div class="tk-stat-ctx">${tp.keyStatCtx}</div></div>
+        <div class="tk-source">Source: ${tp.source}</div>
+        <button class="share-btn" onclick="shareCard('talking-point','${tp.id}')">Share this</button>
+      </div>
+    </div>`;
+  });
+  h += `</div>`;
+  return h + signupFooter();
+}
+
+function tiritiView() {
+  let h = '';
+  h += `<div class="tiriti-hero">
+    <div class="tiriti-hero-lbl">${TIRITI.whakaputanga.year}</div>
+    <div class="tiriti-hero-title">${TIRITI.whakaputanga.title}</div>
+    <div class="tiriti-hero-sub">${TIRITI.whakaputanga.english}</div>
+    <div class="tiriti-hero-body">${TIRITI.whakaputanga.explanation}</div>
+    <div class="tiriti-hero-src">${TIRITI.whakaputanga.source}</div>
+    <button class="share-btn" style="margin-top:12px;" onclick="shareCard('tiriti','whakaputanga')">Share</button>
+  </div>`;
+
+  h += `<div class="sec"><div class="lbl">The Articles \u2014 Side by Side</div>
+    <div class="intro">The te reo M\u0101ori and English texts say different things. That\u2019s the whole point.</div>`;
+  TIRITI.articles.forEach((a,i) => {
+    h += `<div class="tiriti-article">
+      <div class="tiriti-num">${a.num}</div>
+      <div class="tiriti-cols">
+        <div><div class="tiriti-col-lbl">Te Reo M\u0101ori</div><div class="tiriti-text" style="font-style:italic;">${a.teReo}</div></div>
+        <div><div class="tiriti-col-lbl">English</div><div class="tiriti-text">${a.english}</div></div>
+      </div>
+      <div class="tiriti-diff">${a.difference}</div>
+      <button class="share-btn share-btn-outline" onclick="shareCard('tiriti','article-${i+1}')" style="margin-top:8px;">Share</button>
+    </div>`;
+  });
+  h += `</div>`;
+
+  h += `<div class="sec"><div class="lbl">Timeline</div>`;
+  TIRITI.timeline.forEach(t => {
+    h += `<div class="tl-item"><div class="tl-year">${t.year}</div><div class="tl-event">${t.event}</div><div class="tl-desc">${t.desc}</div></div>`;
+  });
+  h += `</div>`;
+
+  h += `<div class="sec" style="padding-bottom:20px;"><div class="lbl">What Scholars Say</div>`;
+  TIRITI.academic.forEach(a => {
+    h += `<div class="insight-card"><div class="insight-quote">\u201C${a.insight}\u201D</div><div class="insight-author">${a.author}</div><div class="insight-src">${a.src}</div></div>`;
+  });
+  h += `</div>`;
+  return h + signupFooter();
+}
+
+function ropuView() {
+  let h = '';
+  h += `<div class="sec"><div class="stance"><strong>Radical Love</strong> stands for non-violent direct action and civic participation. We uphold the right to defend <strong>mana motuhake</strong> \u2014 the inherent sovereignty of tangata whenua \u2014 as guaranteed by He Whakap\u016btanga and Te Tiriti. Resistance to the suppression of indigenous sovereignty is not violence. It is <strong>tino rangatiratanga</strong>.</div></div>`;
+
+  h += `<div class="sec"><div class="lbl">Party Scorecard</div>
+    <div class="intro">How community-aligned is each party? Based on voting records and funding sources. All from public data.</div>`;
+  PARTIES.forEach(p => {
+    const pct = (p.score/10)*100;
+    const scoreCol = p.score >= 7 ? '#2E7D32' : p.score >= 4 ? '#F9A825' : '#C62828';
+    h += `<div class="party-card">
+      <div class="party-top"><span class="party-name">${p.name}</span><span class="party-score-num" style="color:${scoreCol}">${p.score}/10</span></div>
+      <div class="party-bar"><div class="party-bar-fill" style="width:${pct}%;background:${p.colour};"></div></div>
+      <div class="party-votes">`;
+    p.votes.forEach(v => {
+      const icon = v.vote.includes('opposed') ? '<span class="n">\u2717</span>' : (v.vote.includes('introduced') ? '<span class="n">\u2605</span>' : '<span class="y">\u2713</span>');
+      h += `<div class="party-vote">${icon} ${v.vote.charAt(0).toUpperCase()+v.vote.slice(1)}: ${v.bill} (${v.y})</div>`;
+    });
+    h += `</div><div class="party-donors-lbl">Funding</div>`;
+    p.donors.forEach(d => { h += `<div class="party-donor">${d}</div>`; });
+    h += `<div class="party-source">${p.source}</div>
+      <button class="share-btn share-btn-outline" style="margin-top:8px;" onclick="shareCard('party','${p.name.replace(/\s+/g,'-').toLowerCase()}')">Share</button></div>`;
+  });
+  h += `</div>`;
+
+  h += `<div class="sec" style="padding-bottom:20px;"><div class="lbl">Organising Guide</div>
+    <div class="intro">Practical stuff. How to protest, submit, organise, stay safe.</div>`;
+  GUIDE.forEach((g,i) => {
+    h += `<div class="guide-card">
+      <div class="guide-header" onclick="toggleGuide(${i})">
+        <span class="guide-emoji">${g.emoji}</span><span class="guide-title">${g.title}</span>
+        <span class="guide-arrow" id="guide-arrow-${i}">\u25BE</span>
+      </div>
+      <div class="guide-body" id="guide-body-${i}"><div class="guide-text">${g.body}</div></div>
+    </div>`;
+  });
+  h += `</div>`;
+  return h + signupFooter();
+}
+
+
+function watchView() {
+  let h = '';
+
+  // Intro
+  h += `<div class="sec"><div class="lbl">Matakitaki \u00B7 Watch</div>
+    <div class="intro">What the right is saying, why it sounds convincing, and how to respond. Know the playbook.</div>
+  </div>`;
+
+  // Narratives
+  h += `<div class="sec"><div class="lbl">This Week\u2019s Narratives</div>`;
+  NARRATIVES.forEach((n, i) => {
+    h += `<div class="tk-card">
+      <div class="tk-header" onclick="toggleWatch(${i})">
+        <span class="tk-topic">${n.title}</span>
+        <span class="tk-arrow" id="watch-arrow-${i}">\u25BE</span>
+      </div>
+      <div class="tk-body" id="watch-body-${i}">
+        <div style="font-size:10px;font-weight:600;letter-spacing:1.5px;color:#aaa;text-transform:uppercase;margin-bottom:8px;">Who\u2019s pushing this</div>
+        <div style="font-size:13px;font-weight:400;color:#555;line-height:1.7;margin-bottom:14px;">${n.who}</div>
+
+        <div class="tk-they-say">${n.whatTheySay}</div>
+
+        <div style="font-size:10px;font-weight:600;letter-spacing:1.5px;color:#C77737;text-transform:uppercase;margin-bottom:6px;">Why it sounds convincing</div>
+        <div style="font-size:13px;font-weight:400;color:#666;line-height:1.75;margin-bottom:14px;font-style:italic;">${n.whyItWorks}</div>
+
+        <div class="tk-reality-lbl">The Reality</div>
+        <div class="tk-reality">${n.theReality}</div>
+
+        <div style="background:#F0FFF4;border-radius:10px;padding:14px;margin-bottom:12px;border-left:3px solid #2E7D32;">
+          <div style="font-size:10px;font-weight:600;letter-spacing:1.5px;color:#2E7D32;text-transform:uppercase;margin-bottom:6px;">How to respond</div>
+          <div style="font-size:13px;font-weight:400;color:#333;line-height:1.75;">${n.howToRespond}</div>
+        </div>
+
+        <div class="tk-source">Source: ${n.source}</div>
+        <button class="share-btn" onclick="shareCard('narrative','${i}')">Share this</button>
+      </div>
+    </div>`;
+  });
+  h += `</div>`;
+
+  // Think Tanks
+  h += `<div class="sec"><div class="lbl">The Influence Map</div>
+    <div class="intro">The think tanks, lobby groups, and networks shaping NZ politics behind the scenes. Follow the money, follow the ideas.</div>`;
+
+  THINK_TANKS.forEach(t => {
+    const dangerCol = t.danger === 'high' ? '#C62828' : '#F9A825';
+    h += `<div class="party-card">
+      <div class="party-top">
+        <span class="party-name">${t.name}</span>
+        <span style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:100px;background:${t.danger==='high'?'#FFEBEE':'#FFF8E1'};color:${dangerCol};">${t.danger} influence</span>
+      </div>
+      <div style="font-size:10px;font-weight:500;color:#999;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">${t.type}</div>
+      <div style="font-size:13px;font-weight:400;color:#555;line-height:1.75;margin-bottom:10px;">${t.desc}</div>
+      <div class="party-donors-lbl">NZ Connections</div>
+      ${t.nzLinks.map(l => `<div class="party-donor">\u2022 ${l}</div>`).join('')}
+      <div class="party-donors-lbl" style="margin-top:8px;">Funding</div>
+      <div class="party-donor">${t.funding}</div>
+      <div class="party-source">${t.source}</div>
+      <button class="share-btn share-btn-outline" style="margin-top:8px;" onclick="shareCard('thinktank','${t.name.replace(/\s+/g,'-').toLowerCase()}')">Share</button>
+    </div>`;
+  });
+  h += `</div>`;
+
+  return h + signupFooter();
+}
+
+function toggleWatch(i) {
+  document.getElementById(`watch-body-${i}`).classList.toggle('open');
+  document.getElementById(`watch-arrow-${i}`).classList.toggle('open');
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════════════
+ * APP LOGIC
+ * ══════════════════════════════════════════════════════════════════════════════ */
+
+const views = [todayView, toolkitView, tiritiView, ropuView, watchView];
+
+function go(i, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  el.classList.add('on');
+  const scr = document.getElementById('scr');
+  scr.innerHTML = views[i]();
+  scr.scrollTop = 0;
+  if (i === 0) fetchReleases();
+}
+
+function toggleTk(i) {
+  document.getElementById(`tk-body-${i}`).classList.toggle('open');
+  document.getElementById(`tk-arrow-${i}`).classList.toggle('open');
+}
+
+function toggleGuide(i) {
+  document.getElementById(`guide-body-${i}`).classList.toggle('open');
+  document.getElementById(`guide-arrow-${i}`).classList.toggle('open');
+}
+
+async function shareCard(type, id) {
+  // Try native share with file (mobile)
+  if (navigator.share && navigator.canShare) {
+    try {
+      const res = await fetch(`/api/generate-card?type=${type}&id=${id}`);
+      if (res.ok) {
+        const blob = await res.blob();
+        const file = new File([blob], `radical-love-${type}-${id}.png`, {type:'image/png'});
+        if (navigator.canShare({files:[file]})) {
+          await navigator.share({files:[file], title:'Radical Love'});
+          return;
+        }
+      }
+    } catch {}
+  }
+  // Fallback: canvas card
+  generateCanvasCard(type, id);
+}
+
+function generateCanvasCard(type, id) {
+  const c = document.createElement('canvas');
+  c.width = 1080; c.height = 1080;
+  const ctx = c.getContext('2d');
+
+  // BG gradient
+  const grad = ctx.createLinearGradient(0,0,1080,1080);
+  grad.addColorStop(0,'#1a1a2e'); grad.addColorStop(1,'#16213e');
+  ctx.fillStyle = grad; ctx.fillRect(0,0,1080,1080);
+
+  // Wordmark
+  ctx.fillStyle = '#E94560';
+  ctx.font = '700 28px Roboto, sans-serif';
+  ctx.fillText('RADICAL LOVE', 60, 80);
+
+  ctx.fillStyle = '#333'; ctx.fillRect(60, 100, 960, 1);
+
+  let title='', body='', source='';
+  if (type==='quote') {
+    const q = QUOTES[parseInt(id)%QUOTES.length];
+    body = `\u201C${q.q}\u201D`;
+    source = `\u2014 ${q.a}\n${q.src}`;
+  } else if (type==='talking-point') {
+    const tp = TALKING_POINTS.find(t=>t.id===id);
+    if(tp){title=tp.topic.toUpperCase();body=tp.keyStat;source=`${tp.keyStatCtx}\n\nSource: ${tp.source}`;}
+  } else if (type==='bill') {
+    const b = SEED_BILLS.find(x=>x.id===id);
+    if(b){title='BILL ALERT';body=b.name;source=b.summary;}
+  } else if (type==='tiriti') {
+    title='TE TIRITI O WAITANGI'; body='Know Your Rights'; source='radicallove.nz';
+  } else if (type==='party') {
+    const p = PARTIES.find(x=>x.name.replace(/\s+/g,'-').toLowerCase()===id);
+    if(p){title='PARTY SCORECARD';body=`${p.name}: ${p.score}/10`;source=p.source;}
+  }
+
+  if(title){ctx.fillStyle='#E94560';ctx.font='600 18px Roboto,sans-serif';ctx.fillText(title,60,170);}
+
+  ctx.fillStyle='#fff';
+  if(type==='talking-point'){ctx.font='300 120px Roboto,sans-serif';ctx.fillText(body,60,420);}
+  else{ctx.font='300 36px Roboto,sans-serif';wrapText(ctx,body,60,280,960,52);}
+
+  ctx.fillStyle='rgba(255,255,255,0.55)';ctx.font='300 20px Roboto,sans-serif';
+  let sy=880; source.split('\n').forEach(l=>{wrapText(ctx,l,60,sy,960,28);sy+=30;});
+
+  ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='400 16px Roboto,sans-serif';ctx.fillText('radicallove.nz',60,1040);
+
+  c.toBlob(blob=>{
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;a.download=`radical-love-${type}-${id}.png`;a.click();
+    URL.revokeObjectURL(url);
+  },'image/png');
+}
+
+function wrapText(ctx,text,x,y,maxW,lh){
+  const words=text.split(' ');let line='';
+  for(let n=0;n<words.length;n++){
+    const t=line+words[n]+' ';
+    if(ctx.measureText(t).width>maxW&&n>0){ctx.fillText(line.trim(),x,y);line=words[n]+' ';y+=lh;}
+    else line=t;
+  }
+  ctx.fillText(line.trim(),x,y);
+}
+
+async function fetchReleases() {
+  const el = document.getElementById('releases-list');
+  if(!el) return;
+  try {
+    const res = await fetch('/api/bills');
+    if(!res.ok) throw 0;
+    const data = await res.json();
+    if(data.releases&&data.releases.length>0){
+      el.innerHTML = data.releases.slice(0,5).map(r =>
+        `<div style="padding:12px 16px;background:#fff;border-radius:10px;margin-bottom:8px;">
+          <a href="${r.link}" target="_blank" rel="noopener" style="font-size:14px;font-weight:500;color:#222;text-decoration:none;line-height:1.4;display:block;">${r.title} \u2197</a>
+          <div style="font-size:11px;font-weight:400;color:#aaa;margin-top:4px;">${new Date(r.pubDate).toLocaleDateString('en-NZ',{day:'numeric',month:'short',year:'numeric'})}</div>
+        </div>`
+      ).join('');
+    } else {
+      el.textContent = 'No releases right now \u2014 check back later.';
+    }
+  } catch {
+    el.textContent = 'Could not load releases. You may be offline.';
+  }
+}
+
+function toggleSignup() {
+  document.getElementById('signup-form').classList.toggle('open');
+  document.getElementById('signup-trigger').style.display = 'none';
+}
+
+async function submitSignup(e) {
+  e.preventDefault();
+  const f=e.target, name=f.querySelector('[name=name]').value, email=f.querySelector('[name=email]').value, btn=f.querySelector('.signup-submit');
+  btn.textContent='Sending\u2026'; btn.disabled=true;
+  try {
+    const res = await fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email})});
+    const data = await res.json();
+    if(data.ok||data.existing) document.getElementById('signup-area').innerHTML='<div class="signup-ok">Nau mai! You\u2019re in \u{1F496}</div>';
+    else{btn.textContent='Try again';btn.disabled=false;}
+  } catch{btn.textContent='Try again';btn.disabled=false;}
+}
+
+function setDate() {
+  const now=new Date();
+  const eng = now.toLocaleDateString('en-NZ',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('hdr-date').textContent = `${RA[now.getDay()]}, ${now.getDate()} ${MARAMA[now.getMonth()]} \u00B7 ${eng}`;
+}
+
+setDate();
+document.getElementById('scr').innerHTML = todayView();
+fetchReleases();
+
+if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
+</script>
+</body>
+</html>

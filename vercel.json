@@ -1,0 +1,19 @@
+{
+  "outputDirectory": ".",
+  "crons": [
+    { "path": "/api/bills", "schedule": "0 19 * * *" },
+    { "path": "/api/send-weekly", "schedule": "0 18 * * 0" }
+  ],
+  "rewrites": [
+    { "source": "/((?!api|data).*)", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, OPTIONS" }
+      ]
+    }
+  ]
+}
