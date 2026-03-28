@@ -545,31 +545,22 @@ function signupFooter() {
 }
 
 function learnView() {
-  const now = new Date();
-  const dayOfYear = Math.floor((now - new Date(now.getFullYear(),0,0)) / 86400000);
-  const q = QUOTES[dayOfYear % QUOTES.length];
-  const originLabel = {aotearoa:'Aotearoa',pacific:'Pacific',indigenous:'Indigenous',intl:'International'};
-
   let h = '';
 
-  // Daily quote
-  h += `<div class="quote-hero">
-    <div class="quote-label">K\u014drero o te R\u0101</div>
-    <div class="quote-text">\u201C${q.q}\u201D</div>
-    <div class="quote-attr">\u2014 ${q.a}</div>
-    <div class="quote-src">${q.src}</div>
-    <div class="quote-footer">
-      <span class="origin ${q.origin}">${originLabel[q.origin]}</span>
-      <button class="share-btn" onclick="shareCard('quote','${dayOfYear}')">Share this</button>
-    </div>
-  </div>`;
+  // 3 dropdown sections
+  h += `<div class="sec" style="padding-bottom:20px;">`;
 
-  // Conversation Toolkit
-  h += `<div class="sec"><div class="lbl">Conversation Toolkit</div>
-    <div class="intro">Heard something that didn\u2019t sound right? Tap for the data-backed response.</div>`;
+  // 1. Conversation Toolkit dropdown
+  h += `<div class="guide-card">
+    <div class="guide-header" onclick="toggleLearn(0)">
+      <span class="guide-title">Conversation Toolkit</span>
+      <span class="guide-arrow" id="learn-arrow-0">\u25BE</span>
+    </div>
+    <div class="guide-body" id="learn-body-0">
+      <div style="font-size:13px;font-weight:400;color:#888;margin-bottom:12px;">Tap a topic for the data-backed response.</div>`;
   TALKING_POINTS.forEach((tp,i) => {
-    h += `<div class="tk-card">
-      <div class="tk-header" onclick="toggleTk(${i})">
+    h += `<div class="tk-card" style="margin-bottom:0;">
+      <div class="tk-header" onclick="toggleTk(${i});event.stopPropagation();">
         <span><span class="tk-emoji">${tp.emoji}</span><span class="tk-topic">${tp.topic}</span></span>
         <span class="tk-arrow" id="tk-arrow-${i}">\u25BE</span>
       </div>
@@ -583,20 +574,26 @@ function learnView() {
       </div>
     </div>`;
   });
-  h += `</div>`;
+  h += `</div></div>`;
 
-  // Te Tiriti
-  h += `<div class="tiriti-hero">
-    <div class="tiriti-hero-lbl">${TIRITI.whakaputanga.year}</div>
-    <div class="tiriti-hero-title">${TIRITI.whakaputanga.title}</div>
-    <div class="tiriti-hero-sub">${TIRITI.whakaputanga.english}</div>
-    <div class="tiriti-hero-body">${TIRITI.whakaputanga.explanation}</div>
-    <div class="tiriti-hero-src">${TIRITI.whakaputanga.source}</div>
-    <button class="share-btn" style="margin-top:12px;" onclick="shareCard('tiriti','whakaputanga')">Share</button>
+  // 2. Te Tiriti dropdown
+  h += `<div class="guide-card">
+    <div class="guide-header" onclick="toggleLearn(1)">
+      <span class="guide-title">Te Tiriti o Waitangi</span>
+      <span class="guide-arrow" id="learn-arrow-1">\u25BE</span>
+    </div>
+    <div class="guide-body" id="learn-body-1">`;
+
+  // Whakaputanga
+  h += `<div style="background:linear-gradient(135deg,#1B4332 0%,#2D6A4F 100%);border-radius:12px;padding:20px;margin-bottom:14px;">
+    <div style="font-size:10px;font-weight:500;letter-spacing:2px;color:#95D5B2;text-transform:uppercase;margin-bottom:8px;">${TIRITI.whakaputanga.year}</div>
+    <div style="font-size:16px;font-weight:500;color:#fff;line-height:1.4;margin-bottom:4px;">${TIRITI.whakaputanga.title}</div>
+    <div style="font-size:12px;font-weight:300;color:rgba(255,255,255,.7);margin-bottom:10px;">${TIRITI.whakaputanga.english}</div>
+    <div style="font-size:13px;font-weight:400;color:rgba(255,255,255,.9);line-height:1.75;">${TIRITI.whakaputanga.explanation}</div>
+    <div style="font-size:10px;font-weight:300;color:rgba(255,255,255,.5);margin-top:8px;">${TIRITI.whakaputanga.source}</div>
   </div>`;
 
-  h += `<div class="sec"><div class="lbl">The Articles \u2014 Side by Side</div>
-    <div class="intro">The te reo M\u0101ori and English texts say different things. That\u2019s the whole point.</div>`;
+  // Articles
   TIRITI.articles.forEach((a,i) => {
     h += `<div class="tiriti-article">
       <div class="tiriti-num">${a.num}</div>
@@ -605,28 +602,59 @@ function learnView() {
         <div><div class="tiriti-col-lbl">English</div><div class="tiriti-text">${a.english}</div></div>
       </div>
       <div class="tiriti-diff">${a.difference}</div>
-      <button class="share-btn share-btn-outline" onclick="shareCard('tiriti','article-${i+1}')" style="margin-top:8px;">Share</button>
     </div>`;
   });
-  h += `</div>`;
 
-  h += `<div class="sec"><div class="lbl">Timeline</div>`;
+  // Timeline
+  h += `<div style="margin-top:14px;">`;
   TIRITI.timeline.forEach(t => {
     h += `<div class="tl-item"><div class="tl-year">${t.year}</div><div class="tl-event">${t.event}</div><div class="tl-desc">${t.desc}</div></div>`;
   });
   h += `</div>`;
 
-  h += `<div class="sec" style="padding-bottom:20px;"><div class="lbl">What Scholars Say</div>`;
+  h += `</div></div>`;
+
+  // 3. What Scholars Say dropdown
+  h += `<div class="guide-card">
+    <div class="guide-header" onclick="toggleLearn(2)">
+      <span class="guide-title">What Scholars Say</span>
+      <span class="guide-arrow" id="learn-arrow-2">\u25BE</span>
+    </div>
+    <div class="guide-body" id="learn-body-2">`;
   TIRITI.academic.forEach(a => {
     h += `<div class="insight-card"><div class="insight-quote">\u201C${a.insight}\u201D</div><div class="insight-author">${a.author}</div><div class="insight-src">${a.src}</div></div>`;
   });
-  h += `</div>`;
+  h += `</div></div>`;
+
+  h += `</div>`; // close sec
 
   return h + signupFooter();
 }
 
+function toggleLearn(i) {
+  document.getElementById('learn-body-' + i).classList.toggle('open');
+  document.getElementById('learn-arrow-' + i).classList.toggle('open');
+}
+
 function pollView() {
+  const now = new Date();
+  const dayOfYear = Math.floor((now - new Date(now.getFullYear(),0,0)) / 86400000);
+  const q = QUOTES[dayOfYear % QUOTES.length];
+  const originLabel = {aotearoa:'Aotearoa',pacific:'Pacific',indigenous:'Indigenous',intl:'International'};
+
   let h = '';
+
+  // Daily quote at top
+  h += `<div class="quote-hero">
+    <div class="quote-label">K\u014drero o te R\u0101</div>
+    <div class="quote-text">\u201C${q.q}\u201D</div>
+    <div class="quote-attr">\u2014 ${q.a}</div>
+    <div class="quote-src">${q.src}</div>
+    <div class="quote-footer">
+      <span class="origin ${q.origin}">${originLabel[q.origin]}</span>
+      <button class="share-btn" onclick="shareCard('quote','${dayOfYear}')">Share this</button>
+    </div>
+  </div>`;
 
   // Intro
   h += `<div class="sec">
