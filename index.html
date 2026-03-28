@@ -1240,8 +1240,8 @@ function answerQ(score) {
     const partyNorm = partyScore / 3;
     const match = Math.abs(userNorm - partyNorm) < 0.3;
 
-    h += `<div style="background:#111;border-radius:10px;padding:14px;margin-bottom:14px;">
-      <div style="font-size:14px;font-weight:400;color:#fff;line-height:1.6;">
+    h += `<div style="background:#fff;border-radius:10px;padding:14px;margin-bottom:14px;">
+      <div style="font-size:14px;font-weight:400;color:#444;line-height:1.6;">
         <strong style="color:${partyInfo.colour}">${partyInfo.name}</strong> <span style="color:${partyCol};font-weight:500;">${partyStance}</span>.
         ${match ? '<span style="color:#4CAF50;font-weight:500;"> You\u2019re aligned.</span>' : '<span style="color:#E94560;font-weight:500;"> Gap detected.</span>'}
       </div>
