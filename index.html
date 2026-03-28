@@ -295,7 +295,7 @@ const QUOTES = [
   { q: "Do not listen to those who tell you it cannot be done. We have already begun.", a: "Dame Whina Cooper", src: "Land March, 1975", origin: "aotearoa" },
   { q: "Colonisation is not an event. It is a structure. And structures can be dismantled.", a: "Moana Jackson", src: "Matike Mai Aotearoa Report, 2016", origin: "aotearoa" },
   { q: "Our identity as M\u0101ori is not a problem to be solved. It is a gift to be celebrated.", a: "Dr Leonie Pihama", src: "Kaupapa M\u0101ori: Theory and Praxis, 2019", origin: "aotearoa" },
-  { q: "Tino rangatiratanga is not a concept to be negotiated. It is a right to be exercised.", a: "Ani Mikaere", src: "Colonising Myths \u2014 M\u0101ori Realities, 2011", origin: "aotearoa" },
+  { q: "Tino rangatiratanga is not a concept to be negotiated. It is a right to be exercised.", a: "Ani Mikaere", src: "Colonising Myths,M\u0101ori Realities, 2011", origin: "aotearoa" },
   { q: "The struggle for justice is not a M\u0101ori issue. It is a human issue.", a: "Syd Jackson", src: "Ng\u0101 Tamatoa protest, 1971", origin: "aotearoa" },
   { q: "He aha te mea nui o te ao? He tangata, he tangata, he tangata.", a: "Whakat\u0101uk\u012b", src: "What is the greatest thing? It is people, it is people, it is people.", origin: "aotearoa" },
   { q: "The function of rangatiratanga is not to rule over, but to weave together.", a: "T\u0101 Mason Durie", src: "Te Mana, Te K\u0101wanatanga, 1998", origin: "aotearoa" },
@@ -323,31 +323,31 @@ const QUOTES = [
 ];
 
 const TALKING_POINTS = [
-  { id:'economy', emoji:'\u{1F4B0}', topic:'The Economy', theySay:'\u201CThe economy is strong. Tax cuts put more money in your pocket.\u201D', reality:'Tax cuts mostly benefit the top earners. The top 10% of NZ households hold more wealth than the bottom 70% combined. GDP growth doesn\u2019t tell you who\u2019s winning \u2014 wages for most people have barely kept up with living costs, while corporate profits have surged.', keyStat:'70%', keyStatCtx:'of NZ\u2019s wealth is held by the top 10%', source:'Stats NZ, Household Economic Survey 2022; NZIER, Income Inequality in Aotearoa, 2023',
-    worldview:'In M\u0101ori economic models, wealth is redistributed through koha and manaakitanga. An economy that only measures GDP ignores whether people are actually thriving. Te Whare Tapa Wh\u0101 tells us wellbeing has four walls \u2014 financial security is only one of them.' },
-  { id:'immigration', emoji:'\u{1F30F}', topic:'Immigration', theySay:'\u201CImmigrants take our jobs and strain services.\u201D', reality:'Immigrants are net contributors \u2014 they pay more in tax than they receive in services. NZ relies on migrant labour in healthcare, construction, and agriculture. Housing pressure comes from speculation and underbuilding, not immigration.', keyStat:'$2.9B', keyStatCtx:'annual net fiscal contribution of recent migrants', source:'MBIE, Migration and Labour Market Outcomes, 2023; Treasury, Long-Term Fiscal Model, 2022',
-    worldview:'Manaakitanga \u2014 hospitality and care for others \u2014 is a core M\u0101ori value. Pacific and M\u0101ori communities have always understood that looking after people who arrive on your shores strengthens everyone. Blaming newcomers divides the community the powerful rely on staying divided.' },
-  { id:'maori-privilege', emoji:'\u{1F91D}', topic:'\u201CM\u0101ori Get Special Treatment\u201D', theySay:'\u201CWe should all be treated the same. No race-based policies.\u201D', reality:'Te Tiriti is not race-based \u2014 it\u2019s a constitutional partnership. M\u0101ori rights are partnership rights, not privileges. The 7-year life expectancy gap isn\u2019t because of culture \u2014 it\u2019s because of 180+ years of colonisation.', keyStat:'7 yrs', keyStatCtx:'life expectancy gap between M\u0101ori and non-M\u0101ori', source:'Ministry of Health, 2023; Waitangi Tribunal, Hauora Report (Wai 2575), 2019',
-    worldview:'When tangata whenua thrive, the whole country thrives. M\u0101ori-led solutions in health, education, and justice consistently outperform one-size-fits-all approaches \u2014 because they\u2019re built by the community they serve. Equity isn\u2019t favouritism. It\u2019s fixing what was broken.' },
-  { id:'taxpayer', emoji:'\u{1F4CA}', topic:'Taxpayer Money', theySay:'\u201CGovernment wastes our money on handouts.\u201D', reality:'The biggest spend is health, education, and super \u2014 stuff everyone uses. NZ Super alone costs $18.6B \u2014 more than all welfare benefits combined. Corporate tax breaks get way less scrutiny.', keyStat:'$18.6B', keyStatCtx:'spent on NZ Super in 2023 \u2014 more than all benefits combined', source:'Treasury, Budget Economic and Fiscal Update, 2023',
-    worldview:'In a wh\u0101nau-centred worldview, looking after each other isn\u2019t waste \u2014 it\u2019s the whole point. The \u201Chandout\u201D narrative turns community support into something shameful. But we all rely on public systems: roads, hospitals, schools. The real question is who\u2019s getting the biggest handouts \u2014 and it\u2019s not beneficiaries.' },
-  { id:'crime', emoji:'\u{1F6A8}', topic:'Crime', theySay:'\u201CCrime is out of control. We need tougher sentences.\u201D', reality:'Violent crime has been declining since the 1990s. What\u2019s increased is media reporting. Longer sentences don\u2019t reduce reoffending \u2014 addressing poverty, housing, and mental health does. M\u0101ori are imprisoned at 6x the rate of non-M\u0101ori.', keyStat:'52%', keyStatCtx:'of NZ\u2019s prison population is M\u0101ori (17% of total population)', source:'Dept of Corrections, 2023; NZ Crime and Victims Survey, Ministry of Justice, 2022',
-    worldview:'M\u0101ori justice traditions are restorative, not punitive. Utu is not revenge \u2014 it\u2019s about restoring balance. When someone causes harm, the wh\u0101nau and community are involved in making it right. Locking people in cages doesn\u2019t restore anything \u2014 it just creates more harm.' },
-  { id:'housing', emoji:'\u{1F3E0}', topic:'Housing', theySay:'\u201CJust build more houses and prices will drop.\u201D', reality:'The crisis is driven by speculation, not just supply. NZ let property investors claim tax deductions on interest while paying no capital gains tax \u2014 virtually unique in the OECD. Median house price is 8.3x median income.', keyStat:'8.3x', keyStatCtx:'NZ\u2019s house price-to-income ratio \u2014 among the worst in the OECD', source:'Demographia International Housing Affordability, 2023; RBNZ, 2023',
-    worldview:'Pap\u0101kainga \u2014 M\u0101ori communal housing on ancestral land \u2014 existed for centuries before the Crown arrived. Housing was never meant to be an investment vehicle. It was meant to be a home for wh\u0101nau. The fact that this is now \u201Cradical\u201D shows how far the system has drifted from common sense.' },
-  { id:'free-speech', emoji:'\u{1F5E3}', topic:'Free Speech', theySay:'\u201CYou can\u2019t say anything anymore.\u201D', reality:'The Bill of Rights protects your speech. What\u2019s changed is that people with less power now have platforms to respond. The most extreme speech restrictions in NZ history were imposed on M\u0101ori: the Tohunga Suppression Act (1907) literally criminalised M\u0101ori knowledge holders.', keyStat:'1907', keyStatCtx:'Tohunga Suppression Act \u2014 M\u0101ori healers were criminalised', source:'NZ Bill of Rights Act 1990, s14; Te Ara, 2017',
-    worldview:'The people most silenced in NZ\u2019s history are M\u0101ori. Their language was beaten out of children. Their healers were criminalised. Their land was taken without consent. When someone says \u201Cyou can\u2019t say anything anymore,\u201D ask: compared to whom? True free speech means everyone\u2019s voice is heard \u2014 especially those who were silenced the longest.' },
-  { id:'one-nz', emoji:'\u{1F1F3}\u{1F1FF}', topic:'\u201CWe\u2019re All New Zealanders\u201D', theySay:'\u201CStop dividing people by race. We\u2019re all one country.\u201D', reality:'Colour-blindness doesn\u2019t create equality \u2014 it erases specific harms done to specific peoples. M\u0101ori are tangata whenua with a constitutional relationship through Te Tiriti. Unity requires justice first \u2014 not the silence of those seeking it.', keyStat:'$100B+', keyStatCtx:'estimated value of confiscated M\u0101ori land \u2014 less than 3% returned', source:'Waitangi Tribunal; Boast, R. "Buying the Land", Victoria University Press, 2008',
-    worldview:'Whakapapa teaches us that identity and connection are strengths, not divisions. Knowing who you are and where you come from makes you a better community member, not a worse one. \u201CWe\u2019re all in this together\u201D is true \u2014 but together means honouring what makes each of us who we are, not erasing it.' },
+  { id:'economy', emoji:'\u{1F4B0}', topic:'The Economy', theySay:'\u201CThe economy is strong. Tax cuts put more money in your pocket.\u201D', reality:'Tax cuts mostly benefit the top earners. The top 10% of NZ households hold more wealth than the bottom 70% combined. GDP growth doesn\u2019t tell you who\u2019s winning,wages for most people have barely kept up with living costs, while corporate profits have surged.', keyStat:'70%', keyStatCtx:'of NZ\u2019s wealth is held by the top 10%', source:'Stats NZ, Household Economic Survey 2022; NZIER, Income Inequality in Aotearoa, 2023',
+    worldview:'In M\u0101ori economic models, wealth is redistributed through koha and manaakitanga. An economy that only measures GDP ignores whether people are actually thriving. Te Whare Tapa Wh\u0101 tells us wellbeing has four walls,financial security is only one of them.' },
+  { id:'immigration', emoji:'\u{1F30F}', topic:'Immigration', theySay:'\u201CImmigrants take our jobs and strain services.\u201D', reality:'Immigrants are net contributors,they pay more in tax than they receive in services. NZ relies on migrant labour in healthcare, construction, and agriculture. Housing pressure comes from speculation and underbuilding, not immigration.', keyStat:'$2.9B', keyStatCtx:'annual net fiscal contribution of recent migrants', source:'MBIE, Migration and Labour Market Outcomes, 2023; Treasury, Long-Term Fiscal Model, 2022',
+    worldview:'Manaakitanga,hospitality and care for others,is a core M\u0101ori value. Pacific and M\u0101ori communities have always understood that looking after people who arrive on your shores strengthens everyone. Blaming newcomers divides the community the powerful rely on staying divided.' },
+  { id:'maori-privilege', emoji:'\u{1F91D}', topic:'\u201CM\u0101ori Get Special Treatment\u201D', theySay:'\u201CWe should all be treated the same. No race-based policies.\u201D', reality:'Te Tiriti is not race-based,it\u2019s a constitutional partnership. M\u0101ori rights are partnership rights, not privileges. The 7-year life expectancy gap isn\u2019t because of culture,it\u2019s because of 180+ years of colonisation.', keyStat:'7 yrs', keyStatCtx:'life expectancy gap between M\u0101ori and non-M\u0101ori', source:'Ministry of Health, 2023; Waitangi Tribunal, Hauora Report (Wai 2575), 2019',
+    worldview:'When tangata whenua thrive, the whole country thrives. M\u0101ori-led solutions in health, education, and justice consistently outperform one-size-fits-all approaches,because they\u2019re built by the community they serve. Equity isn\u2019t favouritism. It\u2019s fixing what was broken.' },
+  { id:'taxpayer', emoji:'\u{1F4CA}', topic:'Taxpayer Money', theySay:'\u201CGovernment wastes our money on handouts.\u201D', reality:'The biggest spend is health, education, and super,stuff everyone uses. NZ Super alone costs $18.6B,more than all welfare benefits combined. Corporate tax breaks get way less scrutiny.', keyStat:'$18.6B', keyStatCtx:'spent on NZ Super in 2023,more than all benefits combined', source:'Treasury, Budget Economic and Fiscal Update, 2023',
+    worldview:'In a wh\u0101nau-centred worldview, looking after each other isn\u2019t waste,it\u2019s the whole point. The \u201Chandout\u201D narrative turns community support into something shameful. But we all rely on public systems: roads, hospitals, schools. The real question is who\u2019s getting the biggest handouts,and it\u2019s not beneficiaries.' },
+  { id:'crime', emoji:'\u{1F6A8}', topic:'Crime', theySay:'\u201CCrime is out of control. We need tougher sentences.\u201D', reality:'Violent crime has been declining since the 1990s. What\u2019s increased is media reporting. Longer sentences don\u2019t reduce reoffending,addressing poverty, housing, and mental health does. M\u0101ori are imprisoned at 6x the rate of non-M\u0101ori.', keyStat:'52%', keyStatCtx:'of NZ\u2019s prison population is M\u0101ori (17% of total population)', source:'Dept of Corrections, 2023; NZ Crime and Victims Survey, Ministry of Justice, 2022',
+    worldview:'M\u0101ori justice traditions are restorative, not punitive. Utu is not revenge,it\u2019s about restoring balance. When someone causes harm, the wh\u0101nau and community are involved in making it right. Locking people in cages doesn\u2019t restore anything,it just creates more harm.' },
+  { id:'housing', emoji:'\u{1F3E0}', topic:'Housing', theySay:'\u201CJust build more houses and prices will drop.\u201D', reality:'The crisis is driven by speculation, not just supply. NZ let property investors claim tax deductions on interest while paying no capital gains tax,virtually unique in the OECD. Median house price is 8.3x median income.', keyStat:'8.3x', keyStatCtx:'NZ\u2019s house price-to-income ratio,among the worst in the OECD', source:'Demographia International Housing Affordability, 2023; RBNZ, 2023',
+    worldview:'Pap\u0101kainga,M\u0101ori communal housing on ancestral land,existed for centuries before the Crown arrived. Housing was never meant to be an investment vehicle. It was meant to be a home for wh\u0101nau. The fact that this is now \u201Cradical\u201D shows how far the system has drifted from common sense.' },
+  { id:'free-speech', emoji:'\u{1F5E3}', topic:'Free Speech', theySay:'\u201CYou can\u2019t say anything anymore.\u201D', reality:'The Bill of Rights protects your speech. What\u2019s changed is that people with less power now have platforms to respond. The most extreme speech restrictions in NZ history were imposed on M\u0101ori: the Tohunga Suppression Act (1907) literally criminalised M\u0101ori knowledge holders.', keyStat:'1907', keyStatCtx:'Tohunga Suppression Act,M\u0101ori healers were criminalised', source:'NZ Bill of Rights Act 1990, s14; Te Ara, 2017',
+    worldview:'The people most silenced in NZ\u2019s history are M\u0101ori. Their language was beaten out of children. Their healers were criminalised. Their land was taken without consent. When someone says \u201Cyou can\u2019t say anything anymore,\u201D ask: compared to whom? True free speech means everyone\u2019s voice is heard,especially those who were silenced the longest.' },
+  { id:'one-nz', emoji:'\u{1F1F3}\u{1F1FF}', topic:'\u201CWe\u2019re All New Zealanders\u201D', theySay:'\u201CStop dividing people by race. We\u2019re all one country.\u201D', reality:'Colour-blindness doesn\u2019t create equality,it erases specific harms done to specific peoples. M\u0101ori are tangata whenua with a constitutional relationship through Te Tiriti. Unity requires justice first,not the silence of those seeking it.', keyStat:'$100B+', keyStatCtx:'estimated value of confiscated M\u0101ori land,less than 3% returned', source:'Waitangi Tribunal; Boast, R. "Buying the Land", Victoria University Press, 2008',
+    worldview:'Whakapapa teaches us that identity and connection are strengths, not divisions. Knowing who you are and where you come from makes you a better community member, not a worse one. \u201CWe\u2019re all in this together\u201D is true,but together means honouring what makes each of us who we are, not erasing it.' },
 ];
 
 const TIRITI = {
-  whakaputanga: { year:1835, title:'He Whakap\u016btanga o te Rangatiratanga o Nu T\u012breni', english:'The Declaration of Independence of New Zealand', explanation:'Signed by 34 rangatira (eventually 52), He Whakap\u016btanga declared New Zealand as an independent sovereign state under the authority of the united chiefs. Acknowledged by King William IV. This declaration has never been revoked. It established that sovereignty \u2014 rangatiratanga \u2014 resided with M\u0101ori.', source:'Waitangi Tribunal, He Whakap\u016btanga me te Tiriti (Wai 1040), 2014' },
+  whakaputanga: { year:1835, title:'He Whakap\u016btanga o te Rangatiratanga o Nu T\u012breni', english:'The Declaration of Independence of New Zealand', explanation:'Signed by 34 rangatira (eventually 52), He Whakap\u016btanga declared New Zealand as an independent sovereign state under the authority of the united chiefs. Acknowledged by King William IV. This declaration has never been revoked. It established that sovereignty,rangatiratanga,resided with M\u0101ori.', source:'Waitangi Tribunal, He Whakap\u016btanga me te Tiriti (Wai 1040), 2014' },
   articles: [
-    { num:'Te Tuatahi \u2014 Article 1', teReo:'Ko ng\u0101 Rangatira o te Wakaminenga me ng\u0101 Rangatira katoa hoki\u2026 ka tuku rawa atu ki te Kuini o Ingarani te Kawanatanga katoa o \u014d r\u0101tou wenua.', english:'The Chiefs\u2026 cede to Her Majesty the Queen of England absolutely and without reservation all the rights and powers of Sovereignty.', difference:'The te reo M\u0101ori text used \u201Ckawanatanga\u201D (governance) \u2014 not sovereignty. Rangatira understood they were sharing governance. The English text claims total sovereignty.' },
-    { num:'Te Tuarua \u2014 Article 2', teReo:'Ko te Kuini o Ingarani ka wakarite ka wakaae ki ng\u0101 Rangatira\u2026 te tino rangatiratanga o \u014d r\u0101tou wenua \u014d r\u0101tou k\u0101inga me \u014d r\u0101tou taonga katoa.', english:'Her Majesty confirms and guarantees to the Chiefs\u2026 the full exclusive and undisturbed possession of their Lands and Estates Forests Fisheries and other properties.', difference:'The te reo version guarantees <strong>tino rangatiratanga</strong> \u2014 absolute chieftainship. The English downgrades this to mere \u201Cpossession.\u201D This is the critical article.' },
-    { num:'Te Tuatoru \u2014 Article 3', teReo:'\u2026ka tiakina e te Kuini o Ingarani ng\u0101 t\u0101ngata m\u0101ori katoa o Nu T\u012breni ka tukua ki a r\u0101tou ng\u0101 tikanga katoa rite tahi ki \u0101na mea ki ng\u0101 t\u0101ngata o Ingarani.', english:'\u2026Her Majesty extends to the Natives of New Zealand all the Rights and Privileges of British Subjects.', difference:'Both versions agree: M\u0101ori were granted British rights. But this was an <strong>addition</strong> to existing rights, not a replacement.' },
-    { num:'Te Tuawh\u0101 \u2014 The Oral Article', teReo:'E mea ana te Kawana ko ng\u0101 whakapono katoa o Ingarani\u2026 ka tiakina ngatahitia.', english:'Governor Hobson verbally promised protection of M\u0101ori customs and spiritual practices.', difference:'Spoken at the signing and recorded by witnesses. Guaranteed protection of <strong>wairuatanga</strong> and <strong>tikanga</strong>. Oral promises carry weight in te ao M\u0101ori and in law.' },
+    { num:'Te Tuatahi,Article 1', teReo:'Ko ng\u0101 Rangatira o te Wakaminenga me ng\u0101 Rangatira katoa hoki\u2026 ka tuku rawa atu ki te Kuini o Ingarani te Kawanatanga katoa o \u014d r\u0101tou wenua.', english:'The Chiefs\u2026 cede to Her Majesty the Queen of England absolutely and without reservation all the rights and powers of Sovereignty.', difference:'The te reo M\u0101ori text used \u201Ckawanatanga\u201D (governance),not sovereignty. Rangatira understood they were sharing governance. The English text claims total sovereignty.' },
+    { num:'Te Tuarua,Article 2', teReo:'Ko te Kuini o Ingarani ka wakarite ka wakaae ki ng\u0101 Rangatira\u2026 te tino rangatiratanga o \u014d r\u0101tou wenua \u014d r\u0101tou k\u0101inga me \u014d r\u0101tou taonga katoa.', english:'Her Majesty confirms and guarantees to the Chiefs\u2026 the full exclusive and undisturbed possession of their Lands and Estates Forests Fisheries and other properties.', difference:'The te reo version guarantees <strong>tino rangatiratanga</strong>,absolute chieftainship. The English downgrades this to mere \u201Cpossession.\u201D This is the critical article.' },
+    { num:'Te Tuatoru,Article 3', teReo:'\u2026ka tiakina e te Kuini o Ingarani ng\u0101 t\u0101ngata m\u0101ori katoa o Nu T\u012breni ka tukua ki a r\u0101tou ng\u0101 tikanga katoa rite tahi ki \u0101na mea ki ng\u0101 t\u0101ngata o Ingarani.', english:'\u2026Her Majesty extends to the Natives of New Zealand all the Rights and Privileges of British Subjects.', difference:'Both versions agree: M\u0101ori were granted British rights. But this was an <strong>addition</strong> to existing rights, not a replacement.' },
+    { num:'Te Tuawh\u0101,The Oral Article', teReo:'E mea ana te Kawana ko ng\u0101 whakapono katoa o Ingarani\u2026 ka tiakina ngatahitia.', english:'Governor Hobson verbally promised protection of M\u0101ori customs and spiritual practices.', difference:'Spoken at the signing and recorded by witnesses. Guaranteed protection of <strong>wairuatanga</strong> and <strong>tikanga</strong>. Oral promises carry weight in te ao M\u0101ori and in law.' },
   ],
   timeline: [
     { year:1840, event:'Te Tiriti o Waitangi signed', desc:'Rangatira and the Crown enter a partnership. Breaches begin within years.' },
@@ -364,7 +364,7 @@ const TIRITI = {
   academic: [
     { insight:'The Treaty was not a cession of sovereignty. It was an agreement to share governance while retaining indigenous authority.', author:'Moana Jackson', src:'Matike Mai Aotearoa, 2016' },
     { insight:'The Crown has consistently interpreted the Treaty in ways that expand its own power while diminishing M\u0101ori rangatiratanga.', author:'Professor Margaret Mutu', src:'Weeping Waters: The Treaty of Waitangi and Constitutional Change, 2010' },
-    { insight:'Colonisation in Aotearoa is not simply an historical event. It is an ongoing structure embedded in law and everyday life.', author:'Ani Mikaere', src:'Colonising Myths \u2014 M\u0101ori Realities, Huia Publishers, 2011' },
+    { insight:'Colonisation in Aotearoa is not simply an historical event. It is an ongoing structure embedded in law and everyday life.', author:'Ani Mikaere', src:'Colonising Myths,M\u0101ori Realities, Huia Publishers, 2011' },
     { insight:'Constitutional transformation must start from the Treaty relationship, not from inherited Westminster structures.', author:'Dr Carwyn Jones', src:'New Treaty, New Tradition, Victoria University Press, 2016' },
   ],
 };
@@ -389,17 +389,17 @@ const SEED_BILLS = [
 /* ── ALIGNMENT QUESTIONS — real policy positions ── */
 /* ── DID YOU KNOW — NZ political system insights ── */
 const DID_YOU_KNOW = [
-  { stat:'5%', text:'of NZ laws are initiated by citizens. The rest come from Cabinet \u2014 a group of about 20 people making decisions for 5 million. In te ao M\u0101ori, decisions were made through hui involving the whole community.', source:'Parliament.nz; Cabinet Manual' },
+  { stat:'5%', text:'of NZ laws are initiated by citizens. The rest come from Cabinet,a group of about 20 people making decisions for 5 million. In te ao M\u0101ori, decisions were made through hui involving the whole community.', source:'Parliament.nz; Cabinet Manual' },
   { stat:'$0', text:'is the capital gains tax in NZ. You can buy a house, watch it double in value, sell it, and pay no tax on the profit. Meanwhile, someone earning $50k at their job pays over $8k in income tax. The system taxes mahi, not wealth.', source:'IRD; Treasury' },
-  { stat:'52%', text:'of people in NZ prisons are M\u0101ori \u2014 despite being 17% of the population. This isn\u2019t because M\u0101ori commit more crime. It\u2019s because the justice system was built without M\u0101ori. Imagine a system built on restorative justice and wh\u0101nau-centred accountability instead.', source:'Dept of Corrections, 2023' },
-  { stat:'3 yrs', text:'is how long an MP can serve before facing re-election. But the real decisions happen in Select Committees that most people never engage with. You can submit on any bill \u2014 it takes 15 minutes and your voice is recorded in the democratic record.', source:'Parliament.nz' },
+  { stat:'52%', text:'of people in NZ prisons are M\u0101ori,despite being 17% of the population. This isn\u2019t because M\u0101ori commit more crime. It\u2019s because the justice system was built without M\u0101ori. Imagine a system built on restorative justice and wh\u0101nau-centred accountability instead.', source:'Dept of Corrections, 2023' },
+  { stat:'3 yrs', text:'is how long an MP can serve before facing re-election. But the real decisions happen in Select Committees that most people never engage with. You can submit on any bill,it takes 15 minutes and your voice is recorded in the democratic record.', source:'Parliament.nz' },
   { stat:'$37M', text:'was donated to political parties in the last election cycle. National and ACT received the majority from corporate and high-net-worth donors. In a system based on manaakitanga, political power wouldn\u2019t be for sale.', source:'Electoral Commission, 2023' },
-  { stat:'120', text:'seats in Parliament, but only 7 M\u0101ori electorate seats. M\u0101ori are 17% of the population but have less than 6% of dedicated representation. He Whakap\u016btanga declared M\u0101ori sovereignty in 1835 \u2014 Parliament didn\u2019t exist until 1854.', source:'Electoral Commission; Waitangi Tribunal' },
-  { stat:'$18.6B', text:'goes to NZ Super every year \u2014 more than all welfare benefits combined ($13.2B). But the public conversation focuses on \u201Cbeneficiary bashing.\u201D In a community-centred worldview, caring for all our people \u2014 young and old \u2014 is not a cost. It\u2019s a responsibility.', source:'Treasury BEFU, 2023' },
+  { stat:'120', text:'seats in Parliament, but only 7 M\u0101ori electorate seats. M\u0101ori are 17% of the population but have less than 6% of dedicated representation. He Whakap\u016btanga declared M\u0101ori sovereignty in 1835,Parliament didn\u2019t exist until 1854.', source:'Electoral Commission; Waitangi Tribunal' },
+  { stat:'$18.6B', text:'goes to NZ Super every year,more than all welfare benefits combined ($13.2B). But the public conversation focuses on \u201Cbeneficiary bashing.\u201D In a community-centred worldview, caring for all our people,young and old,is not a cost. It\u2019s a responsibility.', source:'Treasury BEFU, 2023' },
   { stat:'1907', text:'\u2014 the year the Crown passed the Tohunga Suppression Act, making it illegal to be a M\u0101ori healer or knowledge holder. They criminalised an entire knowledge system. When people say \u201Cget over the past,\u201D ask them: would you get over it if someone made your doctor illegal?', source:'NZ Legislation; Te Ara' },
-  { stat:'8.3x', text:'is NZ\u2019s house price-to-income ratio \u2014 among the worst in the OECD. A generation ago, a house cost 3x the average income. The difference isn\u2019t laziness \u2014 it\u2019s a system that rewards speculation over wh\u0101nau having a home.', source:'Demographia, 2023' },
-  { stat:'70%', text:'of NZ\u2019s wealth is held by the top 10%. The bottom 50% hold less than 2%. This isn\u2019t a natural outcome \u2014 it\u2019s the result of policy choices. In M\u0101ori economic models, wealth is redistributed through koha, manaakitanga, and collective ownership.', source:'Stats NZ, Household Economic Survey 2022' },
-  { stat:'0', text:'public referendums have been binding in NZ\u2019s history. When 87% of voters said no to asset sales in 2013, the government sold them anyway. The system gives people a voice \u2014 then ignores it. Real democracy means real power, not just a suggestion box.', source:'Elections NZ; RNZ reporting' },
+  { stat:'8.3x', text:'is NZ\u2019s house price-to-income ratio,among the worst in the OECD. A generation ago, a house cost 3x the average income. The difference isn\u2019t laziness,it\u2019s a system that rewards speculation over wh\u0101nau having a home.', source:'Demographia, 2023' },
+  { stat:'70%', text:'of NZ\u2019s wealth is held by the top 10%. The bottom 50% hold less than 2%. This isn\u2019t a natural outcome,it\u2019s the result of policy choices. In M\u0101ori economic models, wealth is redistributed through koha, manaakitanga, and collective ownership.', source:'Stats NZ, Household Economic Survey 2022' },
+  { stat:'0', text:'public referendums have been binding in NZ\u2019s history. When 87% of voters said no to asset sales in 2013, the government sold them anyway. The system gives people a voice,then ignores it. Real democracy means real power, not just a suggestion box.', source:'Elections NZ; RNZ reporting' },
   { stat:'$100B+', text:'is the estimated value of M\u0101ori land confiscated by the Crown. Treaty settlements have returned less than 3%. When politicians talk about \u201Cequality,\u201D remember: you can\u2019t start a race fairly when one runner had their legs broken at the start line.', source:'Waitangi Tribunal; Boast, 2008' },
 ];
 
@@ -432,16 +432,16 @@ const DID_YOU_KNOW = [
 const QUESTIONS = [
   // ── TREATY (4 questions) ──
   { q:'M\u0101ori should have co-governance over natural resources like rivers and lakes', dim:'treaty', dimLabel:'Treaty', disc:1.8, collective:true,
-    consider:'Co-governance isn\u2019t about extra votes \u2014 it\u2019s about the Crown honouring the partnership it signed in 1840. The Waikato River Authority is a working example praised internationally.',
+    consider:'Co-governance isn\u2019t about extra votes,it\u2019s about the Crown honouring the partnership it signed in 1840. The Waikato River Authority is a working example praised internationally.',
     scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:0} },
   { q:'The Treaty Principles Bill should be passed into law', dim:'treaty', dimLabel:'Treaty', disc:2.0, timely:true,
-    consider:'The bill redefines Treaty principles using only the English text \u2014 ignoring the te reo M\u0101ori version that rangatira actually signed. Article 2 guarantees tino rangatiratanga \u2014 the English version downgrades this to mere \u201Cpossession.\u201D',
+    consider:'The bill redefines Treaty principles using only the English text,ignoring the te reo M\u0101ori version that rangatira actually signed. Article 2 guarantees tino rangatiratanga,the English version downgrades this to mere \u201Cpossession.\u201D',
     scores:{tpm:0,grn:0,lab:0,nat:1,act:3,nzf:1} },
   { q:'Hap\u016b and iwi should have the final say on what happens to their ancestral land', dim:'treaty', dimLabel:'Treaty', disc:1.6, collective:true,
     consider:'Before the Crown arrived, land decisions were made by the community who held mana whenua. The NZ Settlements Act 1863 legalised confiscation. Less than 3% of the estimated value has been returned through settlements.',
     scores:{tpm:3,grn:3,lab:1,nat:0,act:0,nzf:0} },
   { q:'New Zealand should move towards a constitutional framework based on Te Tiriti', dim:'treaty', dimLabel:'Treaty', disc:1.9,
-    consider:'The Matike Mai report (2016) proposed constitutional models based on the Treaty relationship \u2014 not replacing Parliament but creating genuine power-sharing. NZ is one of the few democracies without a written constitution.',
+    consider:'The Matike Mai report (2016) proposed constitutional models based on the Treaty relationship,not replacing Parliament but creating genuine power-sharing. NZ is one of the few democracies without a written constitution.',
     scores:{tpm:3,grn:2,lab:1,nat:0,act:0,nzf:0} },
 
   // ── WH\u0100NAU / COLLECTIVE WELLBEING (4 questions) ──
@@ -449,12 +449,12 @@ const QUESTIONS = [
     consider:'GDP measures total economic output but not how it\u2019s distributed. Te Whare Tapa Wh\u0101 (Mason Durie) measures wellbeing across four dimensions: taha tinana, taha hinengaro, taha wh\u0101nau, taha wairua. Only one is financial.',
     scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:1} },
   { q:'Communities should have more power over local decisions, not central government', dim:'whanau', dimLabel:'Wh\u0101nau', disc:1.2, collective:true,
-    consider:'Centralisation concentrates power in Wellington. M\u0101ori governance traditions placed decision-making at the hap\u016b level \u2014 closer to the people affected. Three Waters reform tried to give communities more control over water \u2014 it was repealed.',
+    consider:'Centralisation concentrates power in Wellington. M\u0101ori governance traditions placed decision-making at the hap\u016b level,closer to the people affected. Three Waters reform tried to give communities more control over water,it was repealed.',
     scores:{tpm:3,grn:2,lab:2,nat:1,act:1,nzf:1} },
   { q:'Welfare should be enough for a family to live on with dignity, not just survive', dim:'whanau', dimLabel:'Wh\u0101nau', disc:1.5, collective:true,
-    consider:'Current benefit levels are below the poverty line. The Welfare Expert Advisory Group (2019) recommended increases of 12-47%. Manaakitanga \u2014 caring for those who need support \u2014 is not charity. It\u2019s a responsibility.',
+    consider:'Current benefit levels are below the poverty line. The Welfare Expert Advisory Group (2019) recommended increases of 12-47%. Manaakitanga,caring for those who need support,is not charity. It\u2019s a responsibility.',
     scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:1} },
-  { q:'Grandparents, aunties, and wider wh\u0101nau should be formally supported as caregivers \u2014 not just nuclear parents', dim:'whanau', dimLabel:'Wh\u0101nau', disc:1.3, collective:true,
+  { q:'Grandparents, aunties, and wider wh\u0101nau should be formally supported as caregivers,not just nuclear parents', dim:'whanau', dimLabel:'Wh\u0101nau', disc:1.3, collective:true,
     consider:'In te ao M\u0101ori and Pacific cultures, child-raising is a collective responsibility. But NZ\u2019s system only supports nuclear family structures. Wh\u0101ngai (customary fostering) has no formal legal recognition. Oranga Tamariki often removes children from wh\u0101nau instead of supporting them within it.',
     scores:{tpm:3,grn:3,lab:2,nat:1,act:0,nzf:1} },
 
@@ -463,21 +463,21 @@ const QUESTIONS = [
     consider:'NZ has no capital gains tax (except bright-line). The top 10% hold 70% of all wealth. A wealth tax would affect about 6% of the population.',
     scores:{tpm:2,grn:3,lab:1,nat:0,act:0,nzf:1} },
   { q:'Workers should have the right to industry-wide pay agreements', dim:'economy', dimLabel:'Economy', disc:1.6,
-    consider:'Fair Pay Agreements were passed in 2022 and repealed in 2023 before taking effect. They would have set minimum conditions across whole industries \u2014 benefiting the lowest-paid workers most.',
+    consider:'Fair Pay Agreements were passed in 2022 and repealed in 2023 before taking effect. They would have set minimum conditions across whole industries,benefiting the lowest-paid workers most.',
     scores:{tpm:3,grn:3,lab:3,nat:0,act:0,nzf:0} },
   { q:'Tax cuts are more important than increasing public services', dim:'economy', dimLabel:'Economy', disc:1.9,
     consider:'NZ\u2019s 2024 tax cuts gave the top 2% of earners the largest benefit. Meanwhile, hospitals, schools, and social services face funding cuts.',
     scores:{tpm:0,grn:0,lab:1,nat:3,act:3,nzf:2} },
   { q:'Essential services like water and electricity should be publicly owned, never privatised', dim:'economy', dimLabel:'Economy', disc:1.4, collective:true,
-    consider:'When 87% of voters said no to asset sales in the 2013 referendum, the government sold them anyway. In te ao M\u0101ori, water is a taonga \u2014 a treasure held in trust, not a commodity.',
+    consider:'When 87% of voters said no to asset sales in the 2013 referendum, the government sold them anyway. In te ao M\u0101ori, water is a taonga,a treasure held in trust, not a commodity.',
     scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:1} },
 
   // ── JUSTICE (3 questions) ──
   { q:'Prisons should focus on rehabilitation and restoring relationships, not punishment', dim:'justice', dimLabel:'Justice', disc:1.7,
-    consider:'NZ\u2019s recidivism rate is around 60%. Countries with rehabilitation-focused systems (Norway) have rates below 20%. M\u0101ori justice traditions are restorative \u2014 utu is about restoring balance, not revenge.',
+    consider:'NZ\u2019s recidivism rate is around 60%. Countries with rehabilitation-focused systems (Norway) have rates below 20%. M\u0101ori justice traditions are restorative,utu is about restoring balance, not revenge.',
     scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:0} },
   { q:'Wh\u0101nau and community should be involved in justice decisions, not just judges and police', dim:'justice', dimLabel:'Justice', disc:1.5, collective:true,
-    consider:'M\u0101ori dispute resolution involved the whole community. Restorative justice conferencing \u2014 where offenders face the people they\u2019ve harmed \u2014 has better outcomes than court. But it\u2019s used in less than 5% of cases.',
+    consider:'M\u0101ori dispute resolution involved the whole community. Restorative justice conferencing,where offenders face the people they\u2019ve harmed,has better outcomes than court. But it\u2019s used in less than 5% of cases.',
     scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:0} },
   { q:'Police funding should be redirected towards mental health services and community support', dim:'justice', dimLabel:'Justice', disc:1.8,
     consider:'Over 30% of police callouts involve mental health crises. Sending armed officers to someone in distress often escalates the situation. Countries investing in community-based crisis response see better outcomes and lower costs.',
@@ -487,8 +487,8 @@ const QUESTIONS = [
   { q:'Climate action should be prioritised even if it slows economic growth', dim:'environ', dimLabel:'Environment', disc:1.6,
     consider:'The cost of inaction is higher than action. NZ committed to net zero by 2050 but the Fast-Track Approvals Bill bypasses environmental review.',
     scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:0} },
-  { q:'Rivers and lakes should have legal rights \u2014 like the Whanganui River', dim:'environ', dimLabel:'Environment', disc:1.4, collective:true,
-    consider:'The Whanganui River was granted legal personhood in 2017 \u2014 a world first, recognising the M\u0101ori worldview that the river is a living ancestor. Te Awa Tupua. If a river can be a person, why can\u2019t a forest?',
+  { q:'Rivers and lakes should have legal rights,like the Whanganui River', dim:'environ', dimLabel:'Environment', disc:1.4, collective:true,
+    consider:'The Whanganui River was granted legal personhood in 2017,a world first, recognising the M\u0101ori worldview that the river is a living ancestor. Te Awa Tupua. If a river can be a person, why can\u2019t a forest?',
     scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:0} },
   { q:'The Fast-Track Approvals Bill should be repealed', dim:'environ', dimLabel:'Environment', disc:1.9, timely:true,
     consider:'The bill lets ministers approve major projects without standard environmental review, overriding local government, environmental protections, and Treaty settlement obligations.',
@@ -502,29 +502,29 @@ const QUESTIONS = [
     consider:'Te reo M\u0101ori is an official language of NZ but only about 4% of the population speaks it. Language revitalisation is directly tied to cultural survival.',
     scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:0} },
   { q:'M\u0101tauranga M\u0101ori (M\u0101ori knowledge systems) should have equal status with Western science in schools', dim:'education', dimLabel:'Education', disc:1.8, collective:true,
-    consider:'M\u0101ori navigated the Pacific using stars, currents, and bird patterns centuries before European contact. M\u0101tauranga is not an alternative to science \u2014 it\u2019s a parallel knowledge system with its own rigour and evidence base.',
+    consider:'M\u0101ori navigated the Pacific using stars, currents, and bird patterns centuries before European contact. M\u0101tauranga is not an alternative to science,it\u2019s a parallel knowledge system with its own rigour and evidence base.',
     scores:{tpm:3,grn:2,lab:1,nat:0,act:0,nzf:0} },
 
   // ── HEALTH (3 questions) ──
   { q:'M\u0101ori health services should be designed and run by M\u0101ori', dim:'health', dimLabel:'Health', disc:1.6, collective:true,
-    consider:'The life expectancy gap between M\u0101ori and non-M\u0101ori is 7 years. Te Aka Whai Ora was established to address this \u2014 then disestablished by the current government.',
+    consider:'The life expectancy gap between M\u0101ori and non-M\u0101ori is 7 years. Te Aka Whai Ora was established to address this,then disestablished by the current government.',
     scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:0} },
   { q:'Mental health should receive the same funding and priority as physical health', dim:'health', dimLabel:'Health', disc:1.1,
-    consider:'NZ has one of the highest youth suicide rates in the OECD. The 2018 inquiry recommended $1.9B \u2014 the government committed far less. In te ao M\u0101ori, hauora (health) includes hinengaro (mind) as equal to tinana (body).',
+    consider:'NZ has one of the highest youth suicide rates in the OECD. The 2018 inquiry recommended $1.9B,the government committed far less. In te ao M\u0101ori, hauora (health) includes hinengaro (mind) as equal to tinana (body).',
     scores:{tpm:3,grn:3,lab:2,nat:1,act:1,nzf:1} },
-  { q:'Healthcare should be fully public and free \u2014 with no role for private insurance in essential care', dim:'health', dimLabel:'Health', disc:1.5,
+  { q:'Healthcare should be fully public and free,with no role for private insurance in essential care', dim:'health', dimLabel:'Health', disc:1.5,
     consider:'NZ\u2019s public health system is under strain while private healthcare grows. A two-tier system means better care for those who can pay. In a community-centred worldview, everyone deserves the same standard of care.',
     scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:1} },
 
   // ── HOUSING (3 questions) ──
   { q:'The government should build large-scale public housing and introduce rent controls', dim:'housing', dimLabel:'Housing', disc:1.5,
-    consider:'NZ\u2019s house price-to-income ratio is 8.3x \u2014 among the worst in the OECD. The social housing waitlist has over 25,000 wh\u0101nau.',
+    consider:'NZ\u2019s house price-to-income ratio is 8.3x,among the worst in the OECD. The social housing waitlist has over 25,000 wh\u0101nau.',
     scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:1} },
   { q:'Property speculation should be taxed through a capital gains tax', dim:'housing', dimLabel:'Housing', disc:1.7,
-    consider:'NZ is virtually the only OECD country without a capital gains tax on property. This incentivises speculation over building homes. Pap\u0101kainga \u2014 communal housing on ancestral land \u2014 existed for centuries before the Crown arrived.',
+    consider:'NZ is virtually the only OECD country without a capital gains tax on property. This incentivises speculation over building homes. Pap\u0101kainga,communal housing on ancestral land,existed for centuries before the Crown arrived.',
     scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:1} },
   { q:'Iwi and hap\u016b should be able to build pap\u0101kainga (communal housing) on their land without standard council consents', dim:'housing', dimLabel:'Housing', disc:1.4, collective:true,
-    consider:'Pap\u0101kainga housing lets M\u0101ori build on ancestral land for their wh\u0101nau. Current RMA and council processes make this extremely difficult and expensive. Housing was never meant to be an investment vehicle \u2014 it was meant to be a home.',
+    consider:'Pap\u0101kainga housing lets M\u0101ori build on ancestral land for their wh\u0101nau. Current RMA and council processes make this extremely difficult and expensive. Housing was never meant to be an investment vehicle,it was meant to be a home.',
     scores:{tpm:3,grn:2,lab:1,nat:0,act:0,nzf:0} },
 
   // ── COMMUNITY / IMMIGRATION (1 question) ──
@@ -543,12 +543,12 @@ const PARTY_KEYS = [
 ];
 
 const GUIDE = [
-  { emoji:'\u2696\uFE0F', title:'Know Your Rights', body:'<strong>NZ Bill of Rights Act 1990</strong> protects:<ul><li><strong>Section 14</strong> \u2014 Freedom of expression</li><li><strong>Section 16</strong> \u2014 Freedom of peaceful assembly</li><li><strong>Section 17</strong> \u2014 Freedom of association</li><li><strong>Section 18</strong> \u2014 Freedom of movement</li></ul>You have the right to protest on public land. Police can ask you to move but can\u2019t arrest you for peaceful protest. Always get the name and badge number of any officer.' },
-  { emoji:'\u{1F4DD}', title:'Make a Submission (15 mins)', body:'<strong>Anyone</strong> can submit on a bill \u2014 you don\u2019t need to be an expert.<ul><li>Go to <strong>parliament.nz</strong> \u2192 Bills \u2192 Make a Submission</li><li>3 paragraphs is enough. Say if you support or oppose and why.</li><li>You can request to speak to the committee (video or in person)</li><li>Submissions are read. Community voices especially matter.</li></ul>Your voice is recorded in the democratic record.' },
-  { emoji:'\u{1F6B6}', title:'Organise a March', body:'<ul><li><strong>No permit needed</strong> for peaceful assembly on public land in NZ</li><li>Notify council + police 7+ days in advance (courtesy, not required for footpath)</li><li>Appoint <strong>marshals</strong> in visible vests</li><li>Have a <strong>legal observer</strong> who records but doesn\u2019t participate</li><li><strong>First aid kit</strong> + someone trained</li><li><strong>1\u20132 clear demands</strong> \u2014 not 10. Focus wins.</li></ul>' },
-  { emoji:'\u{1F4E7}', title:'Contact Your MP', body:'Your MP works for you. This is one of the most effective civic actions.<ul><li>Find your MP at <strong>parliament.nz/en/mps-and-electorates</strong></li><li><strong>Email</strong> is best \u2014 they track constituent correspondence</li><li>Be specific: name the bill, state your position, say you\u2019re a constituent</li><li><strong>3\u20134 sentences</strong> is enough. Staff read hundreds of emails.</li><li>List MPs answer to their party. Electorate MPs answer to you.</li></ul>' },
-  { emoji:'\u{1F512}', title:'Digital Security', body:'<ul><li>Use <strong>Signal</strong> for group chats \u2014 encrypted, auto-delete</li><li>Don\u2019t plan actions on Facebook or standard SMS</li><li>Lock your phone with a <strong>PIN</strong> (police can compel fingerprint but not PIN in NZ)</li><li>If arrested, you can <strong>refuse to unlock your phone</strong> \u2014 get a lawyer first</li></ul>' },
-  { emoji:'\u{1F54A}\uFE0F', title:'De-escalation', body:'If confronted:<ul><li><strong>Lower your voice</strong> \u2014 volume escalates conflict</li><li>Open body language, hands visible</li><li>Acknowledge feelings: \u201CI can see you feel strongly about this\u201D</li><li>State your position once, clearly, then disengage</li><li><strong>Never touch</strong> \u2014 even a hand on a shoulder can escalate</li><li>Know where safety is before you need it</li></ul>' },
+  { emoji:'\u2696\uFE0F', title:'Know Your Rights', body:'<strong>NZ Bill of Rights Act 1990</strong> protects:<ul><li><strong>Section 14</strong>,Freedom of expression</li><li><strong>Section 16</strong>,Freedom of peaceful assembly</li><li><strong>Section 17</strong>,Freedom of association</li><li><strong>Section 18</strong>,Freedom of movement</li></ul>You have the right to protest on public land. Police can ask you to move but can\u2019t arrest you for peaceful protest. Always get the name and badge number of any officer.' },
+  { emoji:'\u{1F4DD}', title:'Make a Submission (15 mins)', body:'<strong>Anyone</strong> can submit on a bill,you don\u2019t need to be an expert.<ul><li>Go to <strong>parliament.nz</strong> \u2192 Bills \u2192 Make a Submission</li><li>3 paragraphs is enough. Say if you support or oppose and why.</li><li>You can request to speak to the committee (video or in person)</li><li>Submissions are read. Community voices especially matter.</li></ul>Your voice is recorded in the democratic record.' },
+  { emoji:'\u{1F6B6}', title:'Organise a March', body:'<ul><li><strong>No permit needed</strong> for peaceful assembly on public land in NZ</li><li>Notify council + police 7+ days in advance (courtesy, not required for footpath)</li><li>Appoint <strong>marshals</strong> in visible vests</li><li>Have a <strong>legal observer</strong> who records but doesn\u2019t participate</li><li><strong>First aid kit</strong> + someone trained</li><li><strong>1\u20132 clear demands</strong>,not 10. Focus wins.</li></ul>' },
+  { emoji:'\u{1F4E7}', title:'Contact Your MP', body:'Your MP works for you. This is one of the most effective civic actions.<ul><li>Find your MP at <strong>parliament.nz/en/mps-and-electorates</strong></li><li><strong>Email</strong> is best,they track constituent correspondence</li><li>Be specific: name the bill, state your position, say you\u2019re a constituent</li><li><strong>3\u20134 sentences</strong> is enough. Staff read hundreds of emails.</li><li>List MPs answer to their party. Electorate MPs answer to you.</li></ul>' },
+  { emoji:'\u{1F512}', title:'Digital Security', body:'<ul><li>Use <strong>Signal</strong> for group chats,encrypted, auto-delete</li><li>Don\u2019t plan actions on Facebook or standard SMS</li><li>Lock your phone with a <strong>PIN</strong> (police can compel fingerprint but not PIN in NZ)</li><li>If arrested, you can <strong>refuse to unlock your phone</strong>,get a lawyer first</li></ul>' },
+  { emoji:'\u{1F54A}\uFE0F', title:'De-escalation', body:'If confronted:<ul><li><strong>Lower your voice</strong>,volume escalates conflict</li><li>Open body language, hands visible</li><li>Acknowledge feelings: \u201CI can see you feel strongly about this\u201D</li><li>State your position once, clearly, then disengage</li><li><strong>Never touch</strong>,even a hand on a shoulder can escalate</li><li>Know where safety is before you need it</li></ul>' },
 ];
 
 
@@ -557,7 +557,7 @@ const THINK_TANKS = [
   {
     name: 'Atlas Network',
     type: 'Global network',
-    desc: 'A US-based network of 500+ free-market think tanks in 100 countries. Coordinates policy agendas worldwide \u2014 privatisation, deregulation, reduced public services. Several NZ organisations are Atlas partners.',
+    desc: 'A US-based network of 500+ free-market think tanks in 100 countries. Coordinates policy agendas worldwide,privatisation, deregulation, reduced public services. Several NZ organisations are Atlas partners.',
     nzLinks: ['NZ Initiative', 'Taxpayers\u2019 Union (informal alignment)'],
     funding: 'Koch family foundations, donor-advised funds, corporate donors. Exact NZ funding opaque.',
     source: 'Atlas Network website; Sourcewatch; The Guardian investigations, 2023',
@@ -576,7 +576,7 @@ const THINK_TANKS = [
     name: 'Taxpayers\u2019 Union',
     type: 'NZ lobby group',
     desc: 'Campaigns against public spending, taxes, and government programmes. Frames itself as grassroots but has significant corporate backing. Regularly attacks M\u0101ori-specific funding and Te Tiriti-based policy.',
-    nzLinks: ['Aligned with ACT Party positions', 'Jordan Williams (Executive Director) \u2014 former ACT party staffer'],
+    nzLinks: ['Aligned with ACT Party positions', 'Jordan Williams (Executive Director),former ACT party staffer'],
     funding: 'Does not fully disclose donors. Some corporate and high-net-worth backing reported.',
     source: 'Taxpayers\u2019 Union website; Stuff investigations; NZ Herald reporting',
     danger: 'high',
@@ -593,7 +593,7 @@ const THINK_TANKS = [
   {
     name: 'Hobson\u2019s Pledge',
     type: 'NZ lobby group',
-    desc: 'Founded by Don Brash. Campaigns against what it calls \u201Crace-based\u201D policy \u2014 meaning any recognition of M\u0101ori rights under Te Tiriti. Pushed the \u201CWe Are All New Zealanders\u201D narrative. Directly influenced ACT\u2019s Treaty Principles Bill.',
+    desc: 'Founded by Don Brash. Campaigns against what it calls \u201Crace-based\u201D policy,meaning any recognition of M\u0101ori rights under Te Tiriti. Pushed the \u201CWe Are All New Zealanders\u201D narrative. Directly influenced ACT\u2019s Treaty Principles Bill.',
     nzLinks: ['Don Brash (founder)', 'Direct line to ACT Party policy'],
     funding: 'Donations. Not fully disclosed.',
     source: 'Hobson\u2019s Pledge website; RNZ reporting; Newsroom investigations',
@@ -617,9 +617,9 @@ const NARRATIVES = [
     title: 'Co-governance is undemocratic',
     who: 'Hobson\u2019s Pledge, Taxpayers\u2019 Union, ACT Party, talkback radio',
     whatTheySay: 'Co-governance gives M\u0101ori special voting rights and undermines democracy. Unelected iwi leaders are making decisions for everyone.',
-    whyItWorks: 'It sounds fair \u2014 \u201Cone person, one vote\u201D is a deeply held democratic value. Most people don\u2019t know what co-governance actually means in practice.',
-    theReality: 'Co-governance means shared decision-making between the Crown and M\u0101ori \u2014 as guaranteed by Te Tiriti (Article 2). It\u2019s not about extra votes. It\u2019s about the Crown honouring its partnership obligations. Most co-governance arrangements involve local resource management, not national elections. Examples like the Waikato River Authority have been praised as effective models worldwide.',
-    howToRespond: 'Ask: \u201CDo you think the government should keep the promises it signed?\u201D Te Tiriti was a deal. Co-governance is just honouring it. It\u2019s not about more votes \u2014 it\u2019s about M\u0101ori having a seat at the table for decisions that affect their land and water.',
+    whyItWorks: 'It sounds fair,\u201Cone person, one vote\u201D is a deeply held democratic value. Most people don\u2019t know what co-governance actually means in practice.',
+    theReality: 'Co-governance means shared decision-making between the Crown and M\u0101ori,as guaranteed by Te Tiriti (Article 2). It\u2019s not about extra votes. It\u2019s about the Crown honouring its partnership obligations. Most co-governance arrangements involve local resource management, not national elections. Examples like the Waikato River Authority have been praised as effective models worldwide.',
+    howToRespond: 'Ask: \u201CDo you think the government should keep the promises it signed?\u201D Te Tiriti was a deal. Co-governance is just honouring it. It\u2019s not about more votes,it\u2019s about M\u0101ori having a seat at the table for decisions that affect their land and water.',
     source: 'Waitangi Tribunal; Matike Mai Aotearoa Report, 2016; Waikato River Authority outcomes reporting',
   },
   {
@@ -627,9 +627,9 @@ const NARRATIVES = [
     title: 'Tax cuts grow the economy for everyone',
     who: 'NZ Initiative, National Party, business lobby groups',
     whatTheySay: 'Lower taxes create jobs, stimulate investment, and the benefits trickle down to everyone.',
-    whyItWorks: 'It\u2019s simple and intuitive \u2014 more money in my pocket sounds good. The language of \u201Cgrowth\u201D feels positive.',
+    whyItWorks: 'It\u2019s simple and intuitive,more money in my pocket sounds good. The language of \u201Cgrowth\u201D feels positive.',
     theReality: 'Decades of international evidence show trickle-down economics doesn\u2019t work. A 2020 London School of Economics study of 50 years of tax cuts in 18 countries found they increased income inequality without improving employment or economic growth. In NZ, the 2024 tax cuts disproportionately benefited high earners.',
-    howToRespond: 'The question isn\u2019t whether tax cuts feel good \u2014 it\u2019s who they actually help. The evidence from 50 years of data is clear: they widen the gap. Ask: \u201CIf trickle-down worked, why are there more food banks than ever after decades of it?\u201D',
+    howToRespond: 'The question isn\u2019t whether tax cuts feel good,it\u2019s who they actually help. The evidence from 50 years of data is clear: they widen the gap. Ask: \u201CIf trickle-down worked, why are there more food banks than ever after decades of it?\u201D',
     source: 'Hope & Limberg, \u201CThe Economic Consequences of Major Tax Cuts for the Rich\u201D, LSE, 2020; Treasury BEFU 2024',
   },
   {
@@ -639,7 +639,7 @@ const NARRATIVES = [
     whatTheySay: 'Treaty settlements only benefit a small M\u0101ori elite. Ordinary M\u0101ori don\u2019t see the money. The Treaty industry is a gravy train.',
     whyItWorks: 'It creates a divide between \u201Cordinary\u201D M\u0101ori and \u201Celite\u201D M\u0101ori, which undermines collective solidarity. It also taps into general resentment of perceived unfairness.',
     theReality: 'Treaty settlements have returned less than 3% of the estimated value of land confiscated. Settlements are distributed through iwi and hap\u016b structures that fund education, health, housing, and employment for their communities. The average settlement is a fraction of what was taken. The \u201Cgravy train\u201D narrative ignores that the Crown took billions and returned millions.',
-    howToRespond: '\u201CIf someone stole your house, sold it for $1 million, then gave you back $30,000 and called it generous \u2014 would you call that a gravy train?\u201D That\u2019s roughly the ratio of what was taken vs returned.',
+    howToRespond: '\u201CIf someone stole your house, sold it for $1 million, then gave you back $30,000 and called it generous,would you call that a gravy train?\u201D That\u2019s roughly the ratio of what was taken vs returned.',
     source: 'Office of Treaty Settlements; Waitangi Tribunal; Boast, R. \u201CBuying the Land\u201D, 2008',
   },
 ];
@@ -654,7 +654,7 @@ function signupFooter() {
     <div class="signup-sec">
       <div class="signup-emoji">\u{1F48C}</div>
       <div class="signup-title">Stay in the loop</div>
-      <div class="signup-sub">Weekly digest \u2014 bills, quotes, and things you can do. No spam, just aroha.</div>
+      <div class="signup-sub">Weekly digest,bills, quotes, and things you can do. No spam, just aroha.</div>
       <div id="signup-area">
         <button class="signup-trigger" id="signup-trigger" onclick="toggleSignup()">Let\u2019s get radical</button>
         <form class="signup-form" id="signup-form" onsubmit="submitSignup(event)">
@@ -686,8 +686,8 @@ function learnView() {
 
   // Framing
   h += `<div class="sec">
-    <div style="font-size:13px;font-weight:400;color:#777;line-height:1.75;padding:14px;background:#FAF7F4;border-radius:10px;border-left:3px solid #1B4332;">
-      Everything here is framed through <strong style="color:#1B4332;">collective wellbeing</strong> \u2014 the idea that we\u2019re all better off when everyone is looked after. That\u2019s not radical. In te ao M\u0101ori, it\u2019s just how things work.
+    <div style="font-size:13px;font-weight:400;color:#777;line-height:1.75;padding:14px;background:#fff;border-radius:10px;border-left:3px solid #E94560;">
+      This app is underpinned by Aotearoa New Zealand\u2019s founding document, <strong style="color:#222;">Te Tiriti o Waitangi</strong>.
     </div>
   </div>`;
 
@@ -817,7 +817,7 @@ function renderOnboarding() {
   h += `<div class="sec" id="poll-step1">
     <div style="text-align:center;margin:20px 0 24px;">
       <div style="font-size:22px;font-weight:500;color:#222;line-height:1.4;margin-bottom:8px;">Let\u2019s build your card</div>
-      <div style="font-size:14px;font-weight:300;color:#888;line-height:1.6;">Pick who you voted for (or who you\u2019re thinking about). No judgement \u2014 we\u2019re just getting started.</div>
+      <div style="font-size:14px;font-weight:300;color:#888;line-height:1.6;">Pick who you voted for (or who you\u2019re thinking about). No judgement,we\u2019re just getting started.</div>
     </div>`;
   PARTY_KEYS.forEach(p => {
     h += `<div class="poll-issue" onclick="pickParty('${p.key}')">
@@ -867,13 +867,13 @@ function renderCard(profile) {
       </div>
 
       <div class="card-name">Your heart says\u2026</div>
-      <div class="card-party" style="color:${topInfo.colour};font-weight:600;font-size:18px;">${topInfo.name} \u2014 ${topParty.pct}% match</div>`;
+      <div class="card-party" style="color:${topInfo.colour};font-weight:600;font-size:18px;">${topInfo.name},${topParty.pct}% match</div>`;
 
   // Gap callout if different from chosen
   if (chosenInfo && topParty.key !== profile.chosen) {
     const chosenResult = profile.results.find(r => r.key === profile.chosen);
     h += `<div style="background:rgba(233,69,96,.15);border-radius:8px;padding:10px 12px;margin-bottom:14px;">
-      <div style="font-size:12px;font-weight:400;color:rgba(255,255,255,.85);line-height:1.5;">You picked <strong>${chosenInfo.name}</strong> (${chosenResult.pct}% alignment) but based on your answers, <strong style="color:${topInfo.colour}">${topInfo.name}</strong> (${topResult.pct}%) most closely reflects what you care about. This isn\u2019t about telling you who to vote for \u2014 it\u2019s about making sure you know.</div>
+      <div style="font-size:12px;font-weight:400;color:rgba(255,255,255,.85);line-height:1.5;">You picked <strong>${chosenInfo.name}</strong> (${chosenResult.pct}% alignment) but based on your answers, <strong style="color:${topInfo.colour}">${topInfo.name}</strong> (${topResult.pct}%) most closely reflects what you care about. This isn\u2019t about telling you who to vote for,it\u2019s about making sure you know.</div>
     </div>`;
   }
 
@@ -978,14 +978,14 @@ function pickParty(key) {
       <div style="font-size:36px;margin-bottom:12px;">\u2764\uFE0F</div>
       <div style="font-size:20px;font-weight:500;color:#222;margin-bottom:8px;">Nice!</div>
       <div style="font-size:15px;font-weight:300;color:#555;line-height:1.7;margin-bottom:20px;">
-        ${partyInfo ? `You picked <strong style="color:${partyInfo.colour}">${partyName}</strong>.` : 'No worries \u2014 that\u2019s what we\u2019re here to figure out.'}
+        ${partyInfo ? `You picked <strong style="color:${partyInfo.colour}">${partyName}</strong>.` : 'No worries,that\u2019s what we\u2019re here to figure out.'}
       </div>
       <div style="background:#FAF7F4;border-radius:12px;padding:18px;text-align:left;margin-bottom:24px;">
         <div style="font-size:14px;font-weight:400;color:#444;line-height:1.75;">
           Each day, I\u2019ll ask you <strong>one question</strong> as we lead up to the election. This will help you see whether ${partyInfo ? partyName : 'any party'} actually reflects what you care about.
         </div>
         <div style="font-size:13px;font-weight:400;color:#888;line-height:1.7;margin-top:10px;">
-          Not here to change your mind. Just here to show you what parties actually stand for \u2014 so you can vote knowing, not guessing.
+          Not here to change your mind. Just here to show you what parties actually stand for, soyou can vote knowing, not guessing.
         </div>
       </div>
       <button class="poll-go" onclick="showQuestion()">Let\u2019s start</button>
@@ -1101,7 +1101,7 @@ function showQuestion() {
 
   // Skip option (Kaupapa M\u0101ori: silence is valid)
   h += `<div style="text-align:center;">
-    <button onclick="skipQ()" style="background:none;border:none;color:#aaa;font-family:'Roboto',sans-serif;font-size:12px;cursor:pointer;padding:8px;">Not today \u2014 skip this one</button>
+    <button onclick="skipQ()" style="background:none;border:none;color:#aaa;font-family:'Roboto',sans-serif;font-size:12px;cursor:pointer;padding:8px;">Not today,skip this one</button>
   </div>`;
 
   container.innerHTML = h;
@@ -1109,7 +1109,7 @@ function showQuestion() {
 }
 
 function skipQ() {
-  // Silence is valid (Kaupapa M\u0101ori) \u2014 just go back to card without recording
+  // Silence is valid (Kaupapa M\u0101ori),just go back to card without recording
   finishPoll();
 }
 
@@ -1225,7 +1225,7 @@ function watchMergedView() {
 
   // Bills
   h += `<div class="sec"><div class="lbl">What\u2019s happening in Parliament</div>
-    <div class="intro">Bills being pushed through right now. Stay informed \u2014 and push back.</div>`;
+    <div class="intro">Bills being pushed through right now. Stay informed,and push back.</div>`;
   SEED_BILLS.forEach(b => {
     const sc = b.stage.replace(/\s+/g,'-');
     h += `<div class="bill-card">
@@ -1434,7 +1434,7 @@ async function fetchReleases() {
         </div>`
       ).join('');
     } else {
-      el.textContent = 'No releases right now \u2014 check back later.';
+      el.textContent = 'No releases right now,check back later.';
     }
   } catch {
     el.textContent = 'Could not load releases. You may be offline.';
