@@ -473,43 +473,134 @@ const DID_YOU_KNOW = [
   { stat:'$100B+', text:'is the estimated value of M\u0101ori land confiscated by the Crown. Treaty settlements have returned less than 3%. When politicians talk about \u201Cequality,\u201D remember: you can\u2019t start a race fairly when one runner had their legs broken at the start line.', source:'Waitangi Tribunal; Boast, 2008' },
 ];
 
+/* ── QUESTION BANK ────────────────────────────────────────────────────────────
+ * Structured using:
+ *   CAT/IRT (Montgomery & Cutler, 2013) — discrimination values for adaptive selection
+ *   VAA methodology (Garzia & Marschall, 2014) — Likert-scale propositions, party calibration
+ *   Kaupapa M\u0101ori (Smith, 2021) — expanded dimensions, collective framing, silence as valid
+ *
+ * Dimensions (8):
+ *   treaty    — Te Tiriti, sovereignty, co-governance (Kaupapa M\u0101ori dimension)
+ *   whanau    — Collective wellbeing, wh\u0101nau-centred policy (Kaupapa M\u0101ori dimension)
+ *   economy   — Wealth, tax, work, inequality
+ *   justice   — Prisons, policing, restorative justice
+ *   environ   — Climate, land, water, taiao
+ *   education — Schools, te reo, knowledge systems
+ *   health    — Hauora, public health, M\u0101ori health equity
+ *   housing   — Homes, whenua, affordability
+ *
+ * Each question has:
+ *   q          — the proposition (plain language)
+ *   dim        — dimension key
+ *   dimLabel   — display label
+ *   disc       — discrimination (0.5-2.0) — how well this item separates people (CAT/IRT)
+ *   collective — true if framed through wh\u0101nau/community (Kaupapa M\u0101ori)
+ *   timely     — true if tied to current events (can be injected by cron later)
+ *   consider   — "did you consider?" reflection
+ *   scores     — party positions (0=oppose, 1=unclear, 2=partial, 3=strong support)
+ * ──────────────────────────────────────────────────────────────────────────── */
 const QUESTIONS = [
-  { q:'M\u0101ori should have co-governance over natural resources like rivers and lakes', area:'Te Tiriti',
+  // ── TREATY (4 questions) ──
+  { q:'M\u0101ori should have co-governance over natural resources like rivers and lakes', dim:'treaty', dimLabel:'Treaty', disc:1.8, collective:true,
     consider:'Co-governance isn\u2019t about extra votes \u2014 it\u2019s about the Crown honouring the partnership it signed in 1840. The Waikato River Authority is a working example praised internationally.',
     scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:0} },
-  { q:'The government should introduce a wealth tax on assets over $2 million', area:'\u014Changa',
-    consider:'NZ has no capital gains tax (except on bright-line property). The top 10% hold 70% of all wealth. A wealth tax would affect about 6% of the population.',
-    scores:{tpm:2,grn:3,lab:1,nat:0,act:0,nzf:1} },
-  { q:'Prisons should focus on rehabilitation, not punishment', area:'Ture',
-    consider:'NZ\u2019s recidivism rate is around 60%. Countries with rehabilitation-focused systems (like Norway) have rates below 20%. M\u0101ori are imprisoned at 6x the rate of non-M\u0101ori.',
-    scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:0} },
-  { q:'Climate action should be prioritised even if it slows economic growth', area:'Taiao',
-    consider:'The cost of inaction is higher than action. NZ committed to net zero by 2050 but the Fast-Track Approvals Bill bypasses environmental review for development projects.',
-    scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:0} },
-  { q:'University and trades training should be free for everyone', area:'M\u0101tauranga',
-    consider:'NZ had free tertiary education until 1990. Student loan debt currently sits at over $16 billion. Countries like Germany and Norway offer free university.',
+  { q:'The Treaty Principles Bill should be passed into law', dim:'treaty', dimLabel:'Treaty', disc:2.0, timely:true,
+    consider:'The bill redefines Treaty principles using only the English text \u2014 ignoring the te reo M\u0101ori version that rangatira actually signed. Article 2 guarantees tino rangatiratanga \u2014 the English version downgrades this to mere \u201Cpossession.\u201D',
+    scores:{tpm:0,grn:0,lab:0,nat:1,act:3,nzf:1} },
+  { q:'Hap\u016b and iwi should have the final say on what happens to their ancestral land', dim:'treaty', dimLabel:'Treaty', disc:1.6, collective:true,
+    consider:'Before the Crown arrived, land decisions were made by the community who held mana whenua. The NZ Settlements Act 1863 legalised confiscation. Less than 3% of the estimated value has been returned through settlements.',
+    scores:{tpm:3,grn:3,lab:1,nat:0,act:0,nzf:0} },
+  { q:'New Zealand should move towards a constitutional framework based on Te Tiriti', dim:'treaty', dimLabel:'Treaty', disc:1.9,
+    consider:'The Matike Mai report (2016) proposed constitutional models based on the Treaty relationship \u2014 not replacing Parliament but creating genuine power-sharing. NZ is one of the few democracies without a written constitution.',
+    scores:{tpm:3,grn:2,lab:1,nat:0,act:0,nzf:0} },
+
+  // ── WH\u0100NAU / COLLECTIVE WELLBEING (4 questions) ──
+  { q:'Government policy should be measured by how it affects the most vulnerable wh\u0101nau, not GDP growth', dim:'whanau', dimLabel:'Wh\u0101nau', disc:1.7, collective:true,
+    consider:'GDP measures total economic output but not how it\u2019s distributed. Te Whare Tapa Wh\u0101 (Mason Durie) measures wellbeing across four dimensions: taha tinana, taha hinengaro, taha wh\u0101nau, taha wairua. Only one is financial.',
     scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:1} },
-  { q:'Workers should have the right to industry-wide pay agreements (Fair Pay Agreements)', area:'\u014Changa',
+  { q:'Communities should have more power over local decisions, not central government', dim:'whanau', dimLabel:'Wh\u0101nau', disc:1.2, collective:true,
+    consider:'Centralisation concentrates power in Wellington. M\u0101ori governance traditions placed decision-making at the hap\u016b level \u2014 closer to the people affected. Three Waters reform tried to give communities more control over water \u2014 it was repealed.',
+    scores:{tpm:3,grn:2,lab:2,nat:1,act:1,nzf:1} },
+  { q:'Welfare should be enough for a family to live on with dignity, not just survive', dim:'whanau', dimLabel:'Wh\u0101nau', disc:1.5, collective:true,
+    consider:'Current benefit levels are below the poverty line. The Welfare Expert Advisory Group (2019) recommended increases of 12-47%. Manaakitanga \u2014 caring for those who need support \u2014 is not charity. It\u2019s a responsibility.',
+    scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:1} },
+  { q:'Grandparents, aunties, and wider wh\u0101nau should be formally supported as caregivers \u2014 not just nuclear parents', dim:'whanau', dimLabel:'Wh\u0101nau', disc:1.3, collective:true,
+    consider:'In te ao M\u0101ori and Pacific cultures, child-raising is a collective responsibility. But NZ\u2019s system only supports nuclear family structures. Wh\u0101ngai (customary fostering) has no formal legal recognition. Oranga Tamariki often removes children from wh\u0101nau instead of supporting them within it.',
+    scores:{tpm:3,grn:3,lab:2,nat:1,act:0,nzf:1} },
+
+  // ── ECONOMY (4 questions) ──
+  { q:'The government should introduce a wealth tax on assets over $2 million', dim:'economy', dimLabel:'Economy', disc:1.8,
+    consider:'NZ has no capital gains tax (except bright-line). The top 10% hold 70% of all wealth. A wealth tax would affect about 6% of the population.',
+    scores:{tpm:2,grn:3,lab:1,nat:0,act:0,nzf:1} },
+  { q:'Workers should have the right to industry-wide pay agreements', dim:'economy', dimLabel:'Economy', disc:1.6,
     consider:'Fair Pay Agreements were passed in 2022 and repealed in 2023 before taking effect. They would have set minimum conditions across whole industries \u2014 benefiting the lowest-paid workers most.',
     scores:{tpm:3,grn:3,lab:3,nat:0,act:0,nzf:0} },
-  { q:'The voting age should be lowered to 16', area:'Rangatahi',
-    consider:'16-year-olds can work, pay tax, drive, and consent to medical treatment \u2014 but can\u2019t vote. Scotland, Austria, and Brazil already allow voting at 16.',
-    scores:{tpm:3,grn:3,lab:1,nat:0,act:0,nzf:0} },
-  { q:'The government should build large-scale public housing and introduce rent controls', area:'Whare',
-    consider:'NZ\u2019s house price-to-income ratio is 8.3x \u2014 among the worst in the OECD. The social housing waitlist has over 25,000 families.',
-    scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:1} },
-  { q:'Te reo M\u0101ori should be compulsory in all primary schools', area:'M\u0101tauranga',
-    consider:'Te reo M\u0101ori is an official language of NZ but only about 4% of the population speaks it. Language revitalisation is directly tied to cultural survival and identity.',
-    scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:0} },
-  { q:'Tax cuts are more important than increasing public services', area:'\u014Changa',
+  { q:'Tax cuts are more important than increasing public services', dim:'economy', dimLabel:'Economy', disc:1.9,
     consider:'NZ\u2019s 2024 tax cuts gave the top 2% of earners the largest benefit. Meanwhile, hospitals, schools, and social services face funding cuts.',
     scores:{tpm:0,grn:0,lab:1,nat:3,act:3,nzf:2} },
-  { q:'Immigration levels should be significantly reduced', area:'Community',
-    consider:'Migrants are net fiscal contributors. NZ\u2019s healthcare, construction, and aged care sectors rely heavily on migrant workers. The housing crisis is driven by speculation, not immigration.',
-    scores:{tpm:1,grn:0,lab:1,nat:2,act:1,nzf:3} },
-  { q:'M\u0101ori health services should be designed and run by M\u0101ori', area:'Hauora',
-    consider:'The life expectancy gap between M\u0101ori and non-M\u0101ori is 7 years. Te Aka Whai Ora (M\u0101ori Health Authority) was established to address this \u2014 then disestablished by the current government.',
+  { q:'Essential services like water and electricity should be publicly owned, never privatised', dim:'economy', dimLabel:'Economy', disc:1.4, collective:true,
+    consider:'When 87% of voters said no to asset sales in the 2013 referendum, the government sold them anyway. In te ao M\u0101ori, water is a taonga \u2014 a treasure held in trust, not a commodity.',
+    scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:1} },
+
+  // ── JUSTICE (3 questions) ──
+  { q:'Prisons should focus on rehabilitation and restoring relationships, not punishment', dim:'justice', dimLabel:'Justice', disc:1.7,
+    consider:'NZ\u2019s recidivism rate is around 60%. Countries with rehabilitation-focused systems (Norway) have rates below 20%. M\u0101ori justice traditions are restorative \u2014 utu is about restoring balance, not revenge.',
     scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:0} },
+  { q:'Wh\u0101nau and community should be involved in justice decisions, not just judges and police', dim:'justice', dimLabel:'Justice', disc:1.5, collective:true,
+    consider:'M\u0101ori dispute resolution involved the whole community. Restorative justice conferencing \u2014 where offenders face the people they\u2019ve harmed \u2014 has better outcomes than court. But it\u2019s used in less than 5% of cases.',
+    scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:0} },
+  { q:'Police funding should be redirected towards mental health services and community support', dim:'justice', dimLabel:'Justice', disc:1.8,
+    consider:'Over 30% of police callouts involve mental health crises. Sending armed officers to someone in distress often escalates the situation. Countries investing in community-based crisis response see better outcomes and lower costs.',
+    scores:{tpm:3,grn:3,lab:1,nat:0,act:0,nzf:0} },
+
+  // ── ENVIRONMENT (3 questions) ──
+  { q:'Climate action should be prioritised even if it slows economic growth', dim:'environ', dimLabel:'Environment', disc:1.6,
+    consider:'The cost of inaction is higher than action. NZ committed to net zero by 2050 but the Fast-Track Approvals Bill bypasses environmental review.',
+    scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:0} },
+  { q:'Rivers and lakes should have legal rights \u2014 like the Whanganui River', dim:'environ', dimLabel:'Environment', disc:1.4, collective:true,
+    consider:'The Whanganui River was granted legal personhood in 2017 \u2014 a world first, recognising the M\u0101ori worldview that the river is a living ancestor. Te Awa Tupua. If a river can be a person, why can\u2019t a forest?',
+    scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:0} },
+  { q:'The Fast-Track Approvals Bill should be repealed', dim:'environ', dimLabel:'Environment', disc:1.9, timely:true,
+    consider:'The bill lets ministers approve major projects without standard environmental review, overriding local government, environmental protections, and Treaty settlement obligations.',
+    scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:0} },
+
+  // ── EDUCATION (3 questions) ──
+  { q:'University and trades training should be free for everyone', dim:'education', dimLabel:'Education', disc:1.3,
+    consider:'NZ had free tertiary education until 1990. Student loan debt is over $16 billion. Countries like Germany and Norway offer free university.',
+    scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:1} },
+  { q:'Te reo M\u0101ori should be compulsory in all primary schools', dim:'education', dimLabel:'Education', disc:1.7,
+    consider:'Te reo M\u0101ori is an official language of NZ but only about 4% of the population speaks it. Language revitalisation is directly tied to cultural survival.',
+    scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:0} },
+  { q:'M\u0101tauranga M\u0101ori (M\u0101ori knowledge systems) should have equal status with Western science in schools', dim:'education', dimLabel:'Education', disc:1.8, collective:true,
+    consider:'M\u0101ori navigated the Pacific using stars, currents, and bird patterns centuries before European contact. M\u0101tauranga is not an alternative to science \u2014 it\u2019s a parallel knowledge system with its own rigour and evidence base.',
+    scores:{tpm:3,grn:2,lab:1,nat:0,act:0,nzf:0} },
+
+  // ── HEALTH (3 questions) ──
+  { q:'M\u0101ori health services should be designed and run by M\u0101ori', dim:'health', dimLabel:'Health', disc:1.6, collective:true,
+    consider:'The life expectancy gap between M\u0101ori and non-M\u0101ori is 7 years. Te Aka Whai Ora was established to address this \u2014 then disestablished by the current government.',
+    scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:0} },
+  { q:'Mental health should receive the same funding and priority as physical health', dim:'health', dimLabel:'Health', disc:1.1,
+    consider:'NZ has one of the highest youth suicide rates in the OECD. The 2018 inquiry recommended $1.9B \u2014 the government committed far less. In te ao M\u0101ori, hauora (health) includes hinengaro (mind) as equal to tinana (body).',
+    scores:{tpm:3,grn:3,lab:2,nat:1,act:1,nzf:1} },
+  { q:'Healthcare should be fully public and free \u2014 with no role for private insurance in essential care', dim:'health', dimLabel:'Health', disc:1.5,
+    consider:'NZ\u2019s public health system is under strain while private healthcare grows. A two-tier system means better care for those who can pay. In a community-centred worldview, everyone deserves the same standard of care.',
+    scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:1} },
+
+  // ── HOUSING (3 questions) ──
+  { q:'The government should build large-scale public housing and introduce rent controls', dim:'housing', dimLabel:'Housing', disc:1.5,
+    consider:'NZ\u2019s house price-to-income ratio is 8.3x \u2014 among the worst in the OECD. The social housing waitlist has over 25,000 wh\u0101nau.',
+    scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:1} },
+  { q:'Property speculation should be taxed through a capital gains tax', dim:'housing', dimLabel:'Housing', disc:1.7,
+    consider:'NZ is virtually the only OECD country without a capital gains tax on property. This incentivises speculation over building homes. Pap\u0101kainga \u2014 communal housing on ancestral land \u2014 existed for centuries before the Crown arrived.',
+    scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:1} },
+  { q:'Iwi and hap\u016b should be able to build pap\u0101kainga (communal housing) on their land without standard council consents', dim:'housing', dimLabel:'Housing', disc:1.4, collective:true,
+    consider:'Pap\u0101kainga housing lets M\u0101ori build on ancestral land for their wh\u0101nau. Current RMA and council processes make this extremely difficult and expensive. Housing was never meant to be an investment vehicle \u2014 it was meant to be a home.',
+    scores:{tpm:3,grn:2,lab:1,nat:0,act:0,nzf:0} },
+
+  // ── COMMUNITY / IMMIGRATION (1 question) ──
+  { q:'Immigration levels should be significantly reduced', dim:'economy', dimLabel:'Economy', disc:1.3,
+    consider:'Migrants are net fiscal contributors. NZ\u2019s healthcare, construction, and aged care sectors rely heavily on migrant workers. The housing crisis is driven by speculation, not immigration. Manaakitanga means caring for those who arrive on your shores.',
+    scores:{tpm:1,grn:0,lab:1,nat:2,act:1,nzf:3} },
 ];
 
 const PARTY_KEYS = [
@@ -804,16 +895,15 @@ function renderCard(profile) {
   const chosenInfo = profile.chosen !== 'unsure' ? PARTY_KEYS.find(p => p.key === profile.chosen) : null;
   const topInfo = PARTY_KEYS.find(p => p.key === topParty.key);
 
-  // Issue areas for spectrum
-  const areas = ['Te Tiriti','\u014Changa','Ture','Taiao','M\u0101tauranga','Rangatahi','Hauora','Whare','Community'];
-  const areaEnglish = {'Te Tiriti':'Treaty','\u014Changa':'Economy','Ture':'Justice','Taiao':'Environment','M\u0101tauranga':'Education','Rangatahi':'Youth','Hauora':'Health','Whare':'Housing','Community':'Community'};
-  const areaScores = {};
-  areas.forEach(a => { areaScores[a] = { user: 0, count: 0 }; });
+  // Issue areas for spectrum — using dim/dimLabel from new question bank
+  const dims = [{key:'treaty',label:'Treaty'},{key:'whanau',label:'Wh\u0101nau'},{key:'economy',label:'Economy'},{key:'justice',label:'Justice'},{key:'environ',label:'Environment'},{key:'education',label:'Education'},{key:'health',label:'Health'},{key:'housing',label:'Housing'}];
+  const dimScores = {};
+  dims.forEach(d => { dimScores[d.key] = { user: 0, count: 0 }; });
   profile.answers.forEach(ans => {
     const qq = QUESTIONS[ans.qIdx];
-    if (areaScores[qq.area] !== undefined) {
-      areaScores[qq.area].user += ans.score / 3;
-      areaScores[qq.area].count++;
+    if (dimScores[qq.dim]) {
+      dimScores[qq.dim].user += ans.score / 4; // 5-point scale now
+      dimScores[qq.dim].count++;
     }
   });
 
@@ -850,17 +940,17 @@ function renderCard(profile) {
     <div style="font-size:9px;font-weight:500;letter-spacing:2px;color:rgba(255,255,255,.4);text-transform:uppercase;margin-bottom:10px;">Your Issue Map</div>
     <div class="card-spectrum">`;
 
-  areas.forEach(area => {
-    const data = areaScores[area];
+  dims.forEach(dim => {
+    const data = dimScores[dim.key];
     if (data.count === 0) return;
     const userPct = Math.round((data.user / data.count) * 100);
-    // Find which party is closest on this issue
+    // Find which party is closest on this dimension
     let bestParty = null; let bestDiff = 999;
     PARTY_KEYS.forEach(pk => {
       let partyTotal = 0; let partyCount = 0;
       profile.answers.forEach(ans => {
         const qq = QUESTIONS[ans.qIdx];
-        if (qq.area === area) { partyTotal += qq.scores[pk.key] / 3; partyCount++; }
+        if (qq.dim === dim.key) { partyTotal += qq.scores[pk.key] / 3; partyCount++; }
       });
       if (partyCount > 0) {
         const diff = Math.abs((partyTotal / partyCount) - (data.user / data.count));
@@ -869,7 +959,7 @@ function renderCard(profile) {
     });
 
     h += `<div class="card-spec-row">
-      <div class="card-spec-label">${areaEnglish[area] || area}</div>
+      <div class="card-spec-label">${dim.label}</div>
       <div class="card-spec-track">
         <div class="card-spec-fill" style="width:${userPct}%;background:${bestParty ? bestParty.colour : '#E94560'};border-radius:100px;"></div>
       </div>
@@ -960,10 +1050,71 @@ function startQuestions() {
     const profile = JSON.parse(saved);
     chosenParty = profile.chosen;
     answers = profile.answers;
-    currentQ = answers.length < QUESTIONS.length ? answers.length : 0;
   }
   const scr = document.getElementById('scr');
   scr.innerHTML = `<div class="sec" id="poll-step2"></div>` + signupFooter();
+  selectAndShowQuestion();
+}
+
+/* ── ADAPTIVE QUESTION SELECTION (CAT/IRT) ────────────────────────────────
+ * Picks the question that maximises information gain.
+ * Based on Montgomery & Cutler (2013) — Minimum Expected Posterior Variance.
+ *
+ * For each unanswered question, calculates:
+ *   information = discrimination^2 * dimension_uncertainty
+ *
+ * dimension_uncertainty = how few questions answered in that dimension
+ * discrimination = how well this item separates people (from question bank)
+ *
+ * Timely questions (current events) get a 1.5x boost.
+ * Collective-framed questions (Kaupapa M\u0101ori) get slight priority early
+ * to establish the bicultural frame before deeper policy questions.
+ * ──────────────────────────────────────────────────────────────────────────── */
+function selectNextQuestion() {
+  const answeredIds = new Set(answers.map(a => a.qIdx));
+
+  // Count answers per dimension
+  const dimCounts = {};
+  QUESTIONS.forEach(q => { dimCounts[q.dim] = 0; });
+  answers.forEach(a => { dimCounts[QUESTIONS[a.qIdx].dim]++; });
+
+  // Find dimension with least coverage (highest uncertainty)
+  const maxDimCount = Math.max(...Object.values(dimCounts), 1);
+
+  let bestIdx = -1;
+  let bestScore = -1;
+
+  QUESTIONS.forEach((q, i) => {
+    if (answeredIds.has(i)) return;
+
+    // Dimension uncertainty: inverse of how covered this dimension is (0-1)
+    const dimUncertainty = 1 - (dimCounts[q.dim] / (maxDimCount + 1));
+
+    // Information gain = discrimination^2 * uncertainty
+    let info = (q.disc * q.disc) * (0.3 + 0.7 * dimUncertainty);
+
+    // Timely boost (current events questions get priority)
+    if (q.timely) info *= 1.5;
+
+    // Early collective framing boost (first 5 questions)
+    if (q.collective && answers.length < 5) info *= 1.3;
+
+    // Small random jitter so users don\u2019t all get identical sequences
+    info *= (0.9 + Math.random() * 0.2);
+
+    if (info > bestScore) { bestScore = info; bestIdx = i; }
+  });
+
+  return bestIdx;
+}
+
+function selectAndShowQuestion() {
+  currentQ = selectNextQuestion();
+  if (currentQ === -1) {
+    // All questions answered
+    finishPoll();
+    return;
+  }
   showQuestion();
 }
 
@@ -971,28 +1122,46 @@ function showQuestion() {
   const container = document.getElementById('poll-step2');
   container.style.display = 'block';
   const q = QUESTIONS[currentQ];
-  const progress = `${currentQ + 1} of ${QUESTIONS.length}`;
+  const answered = answers.length;
+  const total = QUESTIONS.length;
 
   let h = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-    <div class="lbl" style="margin-bottom:0;">${q.area}</div>
-    <div style="font-size:11px;font-weight:500;color:#aaa;">${progress}</div>
+    <div class="lbl" style="margin-bottom:0;">${q.dimLabel}</div>
+    <div style="font-size:11px;font-weight:500;color:#aaa;">${answered + 1} of ${total} answered</div>
   </div>`;
 
-  const pct = ((currentQ) / QUESTIONS.length) * 100;
+  const pct = (answered / total) * 100;
   h += `<div style="height:4px;background:#f0ede8;border-radius:100px;margin-bottom:20px;overflow:hidden;">
     <div style="height:100%;width:${pct}%;background:#E94560;border-radius:100px;transition:width .3s;"></div>
   </div>`;
 
+  if (q.collective) {
+    h += '<div style="font-size:9px;font-weight:500;letter-spacing:1.5px;color:#1B4332;text-transform:uppercase;margin-bottom:8px;background:rgba(27,67,50,.08);display:inline-block;padding:3px 8px;border-radius:100px;">Wh\u0101nau perspective</div>';
+  }
+
   h += `<div style="font-size:17px;font-weight:400;color:#222;line-height:1.6;margin-bottom:24px;">\u201C${q.q}\u201D</div>`;
 
-  h += `<div style="display:flex;gap:8px;margin-bottom:16px;">
-    <button class="poll-go" style="flex:1;background:#2E7D32;" onclick="answerQ(3)">Agree</button>
-    <button class="poll-go" style="flex:1;background:#888;" onclick="answerQ(1)">Unsure</button>
-    <button class="poll-go" style="flex:1;background:#C62828;" onclick="answerQ(0)">Disagree</button>
+  // 5-point Likert scale (VAA methodology)
+  h += `<div style="display:flex;gap:6px;margin-bottom:12px;">
+    <button class="poll-go" style="flex:1;background:#1B5E3A;font-size:12px;padding:12px 4px;" onclick="answerQ(4)">Strongly<br>agree</button>
+    <button class="poll-go" style="flex:1;background:#4CAF50;font-size:12px;padding:12px 4px;" onclick="answerQ(3)">Agree</button>
+    <button class="poll-go" style="flex:1;background:#888;font-size:12px;padding:12px 4px;" onclick="answerQ(2)">Neutral</button>
+    <button class="poll-go" style="flex:1;background:#E65100;font-size:12px;padding:12px 4px;" onclick="answerQ(1)">Disagree</button>
+    <button class="poll-go" style="flex:1;background:#B71C1C;font-size:12px;padding:12px 4px;" onclick="answerQ(0)">Strongly<br>disagree</button>
+  </div>`;
+
+  // Skip option (Kaupapa M\u0101ori: silence is valid)
+  h += `<div style="text-align:center;">
+    <button onclick="skipQ()" style="background:none;border:none;color:#aaa;font-family:'Roboto',sans-serif;font-size:12px;cursor:pointer;padding:8px;">Not today \u2014 skip this one</button>
   </div>`;
 
   container.innerHTML = h;
   document.getElementById('scr').scrollTop = 0;
+}
+
+function skipQ() {
+  // Silence is valid (Kaupapa M\u0101ori) \u2014 just go back to card without recording
+  finishPoll();
 }
 
 function answerQ(score) {
@@ -1003,9 +1172,9 @@ function answerQ(score) {
 
   let h = `<div style="font-size:15px;font-weight:400;color:#555;line-height:1.6;margin-bottom:14px;font-style:italic;">\u201C${q.q}\u201D</div>`;
 
-  const answerLabel = score === 3 ? 'You agreed' : score === 0 ? 'You disagreed' : 'You were unsure';
-  const answerCol = score === 3 ? '#2E7D32' : score === 0 ? '#C62828' : '#888';
-  h += `<div style="font-size:13px;font-weight:600;color:${answerCol};margin-bottom:14px;">${answerLabel}</div>`;
+  const labels = ['Strongly disagreed','Disagreed','Were neutral','Agreed','Strongly agreed'];
+  const cols = ['#B71C1C','#E65100','#888','#4CAF50','#1B5E3A'];
+  h += `<div style="font-size:13px;font-weight:600;color:${cols[score]};margin-bottom:14px;">You ${labels[score].toLowerCase()}</div>`;
 
   h += `<div style="background:#F0FFF4;border-radius:10px;padding:14px;margin-bottom:16px;border-left:3px solid #2E7D32;">
     <div style="font-size:11px;font-weight:600;letter-spacing:1px;color:#2E7D32;text-transform:uppercase;margin-bottom:6px;">Did you consider?</div>
@@ -1017,36 +1186,58 @@ function answerQ(score) {
     const partyScore = q.scores[chosenParty];
     const partyStance = partyScore === 3 ? 'supports this' : partyScore === 2 ? 'partially supports this' : partyScore === 1 ? 'is unclear on this' : 'opposes this';
     const partyCol = partyScore >= 2 ? '#2E7D32' : partyScore === 1 ? '#F9A825' : '#C62828';
-    const match = (score >= 2 && partyScore >= 2) || (score === 0 && partyScore === 0);
+    const userNorm = score / 4;
+    const partyNorm = partyScore / 3;
+    const match = Math.abs(userNorm - partyNorm) < 0.3;
 
     h += `<div style="background:#fff;border-radius:10px;padding:14px;margin-bottom:16px;">
       <div style="font-size:13px;font-weight:400;color:#555;line-height:1.6;">
         <strong style="color:${partyInfo.colour}">${partyInfo.name}</strong> <span style="color:${partyCol};font-weight:500;">${partyStance}</span>.
-        ${match ? '<span style="color:#2E7D32;"> You\u2019re aligned here.</span>' : '<span style="color:#C62828;"> That\u2019s a gap.</span>'}
+        ${match ? '<span style="color:#2E7D32;"> You\u2019re aligned here.</span>' : '<span style="color:#C62828;"> That\u2019s a gap between you and your party.</span>'}
       </div>
     </div>`;
   }
 
-  // Save after every answer and return to card
-  h += `<button class="poll-go" onclick="finishPoll()">See your card</button>`;
+  // Salience weighting (VAA methodology)
+  h += `<div style="background:#FAF7F4;border-radius:10px;padding:14px;margin-bottom:16px;">
+    <div style="font-size:12px;font-weight:500;color:#555;margin-bottom:8px;">How much does this issue matter to you?</div>
+    <div style="display:flex;gap:8px;">
+      <button onclick="setSalience(1)" style="flex:1;padding:10px;border:1.5px solid #ddd;background:none;color:#888;font-family:'Roboto',sans-serif;font-size:12px;border-radius:8px;cursor:pointer;">A little</button>
+      <button onclick="setSalience(2)" style="flex:1;padding:10px;border:1.5px solid #ddd;background:none;color:#666;font-family:'Roboto',sans-serif;font-size:12px;border-radius:8px;cursor:pointer;">Quite a bit</button>
+      <button onclick="setSalience(3)" style="flex:1;padding:10px;border:1.5px solid #E94560;background:rgba(233,69,96,.05);color:#E94560;font-family:'Roboto',sans-serif;font-size:12px;font-weight:500;border-radius:8px;cursor:pointer;">A lot</button>
+    </div>
+  </div>`;
+
+  h += `<div id="salience-next" style="display:none;"><button class="poll-go" onclick="finishPoll()">See your card</button></div>`;
 
   container.innerHTML = h;
   document.getElementById('scr').scrollTop = 0;
 }
 
-function nextQ() {
-  currentQ++;
-  showQuestion();
+function setSalience(weight) {
+  // Update the last answer with salience weight
+  if (answers.length > 0) {
+    answers[answers.length - 1].salience = weight;
+  }
+  document.getElementById('salience-next').style.display = 'block';
+  // Highlight selected
+  const btns = document.querySelectorAll('#poll-step2 [onclick^="setSalience"]');
+  btns.forEach(b => { b.style.background = 'none'; b.style.borderColor = '#ddd'; b.style.color = '#888'; b.style.fontWeight = '400'; });
+  const sel = btns[weight - 1];
+  if (sel) { sel.style.background = 'rgba(233,69,96,.1)'; sel.style.borderColor = '#E94560'; sel.style.color = '#E94560'; sel.style.fontWeight = '500'; }
 }
 
 function finishPoll() {
-  // Calculate results
+  // Calculate results with salience weighting (VAA methodology)
   const results = PARTY_KEYS.map(p => {
     let total = 0; let max = 0;
     answers.forEach(a => {
       const q = QUESTIONS[a.qIdx];
-      total += 1 - Math.abs((a.score / 3) - (q.scores[p.key] / 3));
-      max += 1;
+      const salience = a.salience || 1;
+      const userNorm = a.score / 4; // 5-point scale: 0-4 → 0-1
+      const partyNorm = q.scores[p.key] / 3; // 0-3 → 0-1
+      total += (1 - Math.abs(userNorm - partyNorm)) * salience;
+      max += salience;
     });
     return { key: p.key, pct: max > 0 ? Math.round((total / max) * 100) : 0 };
   });
