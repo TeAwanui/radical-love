@@ -380,81 +380,6 @@ const SEED_BILLS = [
   { id:'fair-pay-repeal', name:'Fair Pay Agreements Repeal', party:'National', stage:'passed', summary:'Repealed Fair Pay Agreements before they took effect. Would have set industry-wide minimum conditions, benefiting low-wage workers.', submissionUrl:'' },
 ];
 
-/* ── POLL ISSUES + PARTY POSITIONS ── */
-const POLL_ISSUES = [
-  { id:'tiriti', name:'Te Tiriti o Waitangi', desc:'Honouring the partnership, co-governance, M\u0101ori sovereignty',
-    positions: {
-      'Te P\u0101ti M\u0101ori': { stance:'strong', text:'Champions tino rangatiratanga. Opposes Treaty Principles Bill. Advocates for constitutional transformation based on Te Tiriti.' },
-      'Green Party': { stance:'strong', text:'Supports co-governance and Treaty-based policy. Opposed Treaty Principles Bill.' },
-      'Labour Party': { stance:'moderate', text:'Supports Treaty settlements and Waitangi Tribunal but cautious on co-governance language.' },
-      'National Party': { stance:'weak', text:'Supported Treaty Principles Bill to first reading. Favours narrowing Treaty interpretation.' },
-      'ACT Party': { stance:'oppose', text:'Introduced the Treaty Principles Bill. Wants to redefine Treaty principles to remove specific M\u0101ori rights.' },
-      'NZ First': { stance:'weak', text:'Supported Treaty Principles Bill to select committee. Opposes co-governance.' },
-    }},
-  { id:'health', name:'Hauora | Health', desc:'Public healthcare, M\u0101ori health equity, mental health funding',
-    positions: {
-      'Te P\u0101ti M\u0101ori': { stance:'strong', text:'Advocates for M\u0101ori health authority, by-M\u0101ori-for-M\u0101ori health services. Champions health equity.' },
-      'Green Party': { stance:'strong', text:'Supports fully funded public healthcare, mental health investment, and addressing root causes of health inequity.' },
-      'Labour Party': { stance:'moderate', text:'Established M\u0101ori Health Authority (Te Aka Whai Ora). Increased mental health funding but fell short of promises.' },
-      'National Party': { stance:'weak', text:'Disestablished Te Aka Whai Ora. Supports public-private partnerships in health. Focus on targets over equity.' },
-      'ACT Party': { stance:'weak', text:'Wants market-based health reforms. Opposed M\u0101ori Health Authority.' },
-      'NZ First': { stance:'weak', text:'Supported disestablishing M\u0101ori Health Authority.' },
-    }},
-  { id:'education', name:'M\u0101tauranga | Education', desc:'Public schools, te reo, charter schools, university fees',
-    positions: {
-      'Te P\u0101ti M\u0101ori': { stance:'strong', text:'Champions k\u014dhanga reo, kura kaupapa, bilingual education. Education through a te ao M\u0101ori lens.' },
-      'Green Party': { stance:'strong', text:'Free tertiary education, well-funded public schools, opposes charter schools.' },
-      'Labour Party': { stance:'moderate', text:'Increased school funding, fees-free first year tertiary. Closed charter schools (later reopened by National).' },
-      'National Party': { stance:'weak', text:'Reintroduced charter schools. Supports performance-based education funding.' },
-      'ACT Party': { stance:'weak', text:'Strongly supports charter schools and school choice. Wants competition in education.' },
-      'NZ First': { stance:'moderate', text:'Supports public education but not strongly. No clear equity position.' },
-    }},
-  { id:'economy', name:'\u014Changa | Economy', desc:'Wages, housing, tax, inequality, workers\u2019 rights',
-    positions: {
-      'Te P\u0101ti M\u0101ori': { stance:'strong', text:'Advocates for living wage, M\u0101ori economic development, wealth redistribution, and addressing systemic economic exclusion.' },
-      'Green Party': { stance:'strong', text:'Wealth tax, living wage, Fair Pay Agreements, strong worker protections. Most redistributive economic policy.' },
-      'Labour Party': { stance:'moderate', text:'Introduced Fair Pay Agreements (repealed by National). Raised minimum wage. Moderate redistribution.' },
-      'National Party': { stance:'weak', text:'Tax cuts favouring higher earners. Repealed Fair Pay Agreements. Opposes wealth tax.' },
-      'ACT Party': { stance:'oppose', text:'Flat tax advocacy, minimal regulation, opposes minimum wage increases. Most pro-corporate economic policy.' },
-      'NZ First': { stance:'moderate', text:'Populist economic messaging but supports corporate-friendly policy in coalition.' },
-    }},
-  { id:'environment', name:'Taiao | Environment', desc:'Climate action, freshwater, conservation, fast-track approvals',
-    positions: {
-      'Te P\u0101ti M\u0101ori': { stance:'strong', text:'Kaitiakitanga-based environmental policy. Opposes Fast-Track Approvals. Advocates for iwi authority over waterways.' },
-      'Green Party': { stance:'strong', text:'Strongest climate policy. Carbon zero by 2040. Opposes Fast-Track Approvals. Champions biodiversity protection.' },
-      'Labour Party': { stance:'moderate', text:'Declared climate emergency. Moderate emissions targets. Some environmental protections weakened in practice.' },
-      'National Party': { stance:'weak', text:'Passed Fast-Track Approvals Bill bypassing environmental review. Weakened freshwater standards.' },
-      'ACT Party': { stance:'oppose', text:'Wants to repeal Zero Carbon Act. Opposes most environmental regulation as economic burden.' },
-      'NZ First': { stance:'weak', text:'Supported Fast-Track Approvals. Sceptical of climate targets.' },
-    }},
-  { id:'housing', name:'Whare | Housing', desc:'Affordability, social housing, renters\u2019 rights, homelessness',
-    positions: {
-      'Te P\u0101ti M\u0101ori': { stance:'strong', text:'Advocates for pap\u0101kainga housing, iwi-led housing, rent controls, and addressing M\u0101ori homelessness.' },
-      'Green Party': { stance:'strong', text:'Rent controls, large-scale social housing build, capital gains tax, stronger tenant protections.' },
-      'Labour Party': { stance:'moderate', text:'Built social housing but didn\u2019t meet targets. Removed interest deductibility (later reversed). KiwiBuild underdelivered.' },
-      'National Party': { stance:'weak', text:'Restored interest deductibility for landlords. Market-led approach. Opposes rent controls.' },
-      'ACT Party': { stance:'weak', text:'Deregulation-focused. Opposes social housing expansion. Wants to reduce council planning rules.' },
-      'NZ First': { stance:'moderate', text:'Supports some housing investment but no strong equity position.' },
-    }},
-  { id:'rangatahi', name:'Rangatahi | Youth', desc:'Youth mental health, employment, education pathways, political voice',
-    positions: {
-      'Te P\u0101ti M\u0101ori': { stance:'strong', text:'Champions rangatahi voice in policy. Supports lowering voting age, youth employment programmes, and cultural identity programmes.' },
-      'Green Party': { stance:'strong', text:'Supports lowering voting age to 16. Free public transport for under-25s. Youth mental health investment.' },
-      'Labour Party': { stance:'moderate', text:'Increased youth mental health funding. Fees-free first year. But youth engagement could go further.' },
-      'National Party': { stance:'weak', text:'Youth boot camp approach to youth offending. Limited youth-specific policy beyond education.' },
-      'ACT Party': { stance:'weak', text:'Opposes lowering voting age. Market-based approach to youth employment.' },
-      'NZ First': { stance:'weak', text:'Conservative approach to youth policy. Opposes lowering voting age.' },
-    }},
-  { id:'justice', name:'Ture | Justice', desc:'Prisons, policing, M\u0101ori incarceration, restorative justice',
-    positions: {
-      'Te P\u0101ti M\u0101ori': { stance:'strong', text:'Advocates for reducing M\u0101ori incarceration, kaupapa M\u0101ori justice, closing prisons, and addressing root causes.' },
-      'Green Party': { stance:'strong', text:'Restorative justice focus. Reduce prison population. Address poverty as root cause of crime.' },
-      'Labour Party': { stance:'moderate', text:'Some restorative justice investment. Halo project. But prison population remained high.' },
-      'National Party': { stance:'oppose', text:'Tough on crime. More police, longer sentences. Youth boot camps.' },
-      'ACT Party': { stance:'oppose', text:'Three strikes policy. Longer sentences. Opposes cultural programmes in prisons.' },
-      'NZ First': { stance:'oppose', text:'Tough on crime rhetoric. Supports increased policing and longer sentences.' },
-    }},
-];
 
 /* ── ALIGNMENT QUESTIONS — real policy positions ── */
 /* ── DID YOU KNOW — NZ political system insights ── */
@@ -844,6 +769,25 @@ function learnView() {
   });
   h += `</div></div>`;
 
+  // 4. Take Action — organising guide
+  h += `<div class="guide-card">
+    <div class="guide-header" onclick="toggleLearn(3)">
+      <span class="guide-title">Take Action</span>
+      <span class="guide-arrow" id="learn-arrow-3">\u25BE</span>
+    </div>
+    <div class="guide-body" id="learn-body-3">
+      <div style="font-size:13px;font-weight:400;color:#888;margin-bottom:12px;">Practical stuff. How to protest, submit, organise, stay safe.</div>`;
+  GUIDE.forEach((g,i) => {
+    h += `<div class="guide-card" style="margin-bottom:0;">
+      <div class="guide-header" onclick="toggleGuide(${i});event.stopPropagation();">
+        <span class="guide-title">${g.title}</span>
+        <span class="guide-arrow" id="guide-arrow-${i}">\u25BE</span>
+      </div>
+      <div class="guide-body" id="guide-body-${i}"><div class="guide-text">${g.body}</div></div>
+    </div>`;
+  });
+  h += `</div></div>`;
+
   h += `</div>`; // close sec
 
   return h + signupFooter();
@@ -924,7 +868,7 @@ function renderCard(profile) {
   if (chosenInfo && topParty.key !== profile.chosen) {
     const chosenResult = profile.results.find(r => r.key === profile.chosen);
     h += `<div style="background:rgba(233,69,96,.15);border-radius:8px;padding:10px 12px;margin-bottom:14px;">
-      <div style="font-size:12px;font-weight:400;color:rgba(255,255,255,.85);line-height:1.5;">You picked <strong>${chosenInfo.name}</strong> (${chosenResult.pct}%) but your answers say <strong style="color:${topInfo.colour}">${topInfo.name}</strong>. That\u2019s interesting, not wrong.</div>
+      <div style="font-size:12px;font-weight:400;color:rgba(255,255,255,.85);line-height:1.5;">You picked <strong>${chosenInfo.name}</strong> (${chosenResult.pct}% alignment) but based on your answers, <strong style="color:${topInfo.colour}">${topInfo.name}</strong> (${topResult.pct}%) most closely reflects what you care about. This isn\u2019t about telling you who to vote for \u2014 it\u2019s about making sure you know.</div>
     </div>`;
   }
 
@@ -1033,10 +977,13 @@ function pickParty(key) {
       </div>
       <div style="background:#FAF7F4;border-radius:12px;padding:18px;text-align:left;margin-bottom:24px;">
         <div style="font-size:14px;font-weight:400;color:#444;line-height:1.75;">
-          Each day, I\u2019ll ask you <strong>one question</strong> as we lead up to the election. This will help you see if ${partyInfo ? partyName : 'any party'} actually reflects what you care about.
+          Each day, I\u2019ll ask you <strong>one question</strong> as we lead up to the election. This will help you see whether ${partyInfo ? partyName : 'any party'} actually reflects what you care about.
         </div>
         <div style="font-size:13px;font-weight:300;color:#888;line-height:1.7;margin-top:10px;">
-          It\u2019s fluid \u2014 your card will evolve as you answer. No pressure, no judgement. Just honest reflection.
+          This isn\u2019t about changing your mind. It\u2019s about giving you accurate information on what parties actually stand for \u2014 and whether that aligns with what matters to you.
+        </div>
+        <div style="font-size:13px;font-weight:300;color:#888;line-height:1.7;margin-top:8px;">
+          We know who we vote for can be tied to wh\u0101nau, to tradition, to identity. We respect that. But we also believe in moving beyond \u201Cthis is who we\u2019ve always voted for\u201D \u2014 towards knowing why.
         </div>
       </div>
       <button class="poll-go" onclick="showQuestion()">Let\u2019s start</button>
@@ -1264,7 +1211,7 @@ function clearProfile() {
   go(0, tabs[0]);
 }
 
-function resetPoll() { clearProfile(); }
+function resetPoll() { clearProfile(); } // kept as alias for onclick references
 
 
 function watchMergedView() {
@@ -1505,14 +1452,7 @@ async function submitSignup(e) {
   } catch{btn.textContent='Try again';btn.disabled=false;}
 }
 
-function setDate() {
-  const now=new Date();
-  const eng = now.toLocaleDateString('en-NZ',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  document.getElementById('hdr-date').textContent = `${RA[now.getDay()]}, ${now.getDate()} ${MARAMA[now.getMonth()]} \u00B7 ${eng}`;
-}
-
 document.addEventListener('DOMContentLoaded', () => {
-  try { setDate(); } catch(e) {}
   document.getElementById('scr').innerHTML = pollView();
   if('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js').then(reg => {
@@ -1602,7 +1542,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 // Fallback if DOMContentLoaded already fired
 if (document.readyState !== 'loading') {
-  try { setDate(); } catch(e) {}
   const scr = document.getElementById('scr');
   if (scr && !scr.innerHTML) scr.innerHTML = pollView();
 }
