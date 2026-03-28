@@ -67,12 +67,12 @@
     .intro { font-size: 14px; font-weight: 300; color: #666; line-height: 1.7; margin-bottom: 16px; }
 
     /* ── QUOTE HERO ── */
-    .quote-hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); padding: 28px 24px; border-radius: 16px; margin: 16px 20px 0; }
-    .quote-label { font-size: 10px; font-weight: 500; letter-spacing: 2px; color: #E94560; text-transform: uppercase; margin-bottom: 14px; }
-    .quote-text { font-size: 20px; font-weight: 300; font-style: italic; color: #fff; line-height: 1.7; margin-bottom: 16px; }
-    .quote-attr { font-size: 13px; font-weight: 500; color: rgba(255,255,255,.85); }
-    .quote-src { font-size: 11px; font-weight: 300; color: rgba(255,255,255,.5); margin-top: 4px; line-height: 1.5; }
-    .quote-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; }
+    .quote-hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); padding: 16px 20px; border-radius: 12px; margin: 12px 20px 0; }
+    .quote-label { font-size: 9px; font-weight: 500; letter-spacing: 2px; color: #E94560; text-transform: uppercase; margin-bottom: 8px; }
+    .quote-text { font-size: 15px; font-weight: 300; font-style: italic; color: #fff; line-height: 1.65; margin-bottom: 8px; }
+    .quote-attr { font-size: 12px; font-weight: 500; color: rgba(255,255,255,.85); }
+    .quote-src { font-size: 10px; font-weight: 300; color: rgba(255,255,255,.5); margin-top: 2px; line-height: 1.4; }
+    .quote-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
 
     /* ── ORIGIN BADGES ── */
     .origin { font-size: 9px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; padding: 4px 10px; border-radius: 100px; display: inline-block; }
@@ -418,6 +418,55 @@ const POLL_ISSUES = [
     }},
 ];
 
+/* ── ALIGNMENT QUESTIONS — real policy positions ── */
+const QUESTIONS = [
+  { q:'M\u0101ori should have co-governance over natural resources like rivers and lakes', area:'Te Tiriti',
+    consider:'Co-governance isn\u2019t about extra votes \u2014 it\u2019s about the Crown honouring the partnership it signed in 1840. The Waikato River Authority is a working example praised internationally.',
+    scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:0} },
+  { q:'The government should introduce a wealth tax on assets over $2 million', area:'\u014Changa',
+    consider:'NZ has no capital gains tax (except on bright-line property). The top 10% hold 70% of all wealth. A wealth tax would affect about 6% of the population.',
+    scores:{tpm:2,grn:3,lab:1,nat:0,act:0,nzf:1} },
+  { q:'Prisons should focus on rehabilitation, not punishment', area:'Ture',
+    consider:'NZ\u2019s recidivism rate is around 60%. Countries with rehabilitation-focused systems (like Norway) have rates below 20%. M\u0101ori are imprisoned at 6x the rate of non-M\u0101ori.',
+    scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:0} },
+  { q:'Climate action should be prioritised even if it slows economic growth', area:'Taiao',
+    consider:'The cost of inaction is higher than action. NZ committed to net zero by 2050 but the Fast-Track Approvals Bill bypasses environmental review for development projects.',
+    scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:0} },
+  { q:'University and trades training should be free for everyone', area:'M\u0101tauranga',
+    consider:'NZ had free tertiary education until 1990. Student loan debt currently sits at over $16 billion. Countries like Germany and Norway offer free university.',
+    scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:1} },
+  { q:'Workers should have the right to industry-wide pay agreements (Fair Pay Agreements)', area:'\u014Changa',
+    consider:'Fair Pay Agreements were passed in 2022 and repealed in 2023 before taking effect. They would have set minimum conditions across whole industries \u2014 benefiting the lowest-paid workers most.',
+    scores:{tpm:3,grn:3,lab:3,nat:0,act:0,nzf:0} },
+  { q:'The voting age should be lowered to 16', area:'Rangatahi',
+    consider:'16-year-olds can work, pay tax, drive, and consent to medical treatment \u2014 but can\u2019t vote. Scotland, Austria, and Brazil already allow voting at 16.',
+    scores:{tpm:3,grn:3,lab:1,nat:0,act:0,nzf:0} },
+  { q:'The government should build large-scale public housing and introduce rent controls', area:'Whare',
+    consider:'NZ\u2019s house price-to-income ratio is 8.3x \u2014 among the worst in the OECD. The social housing waitlist has over 25,000 families.',
+    scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:1} },
+  { q:'Te reo M\u0101ori should be compulsory in all primary schools', area:'M\u0101tauranga',
+    consider:'Te reo M\u0101ori is an official language of NZ but only about 4% of the population speaks it. Language revitalisation is directly tied to cultural survival and identity.',
+    scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:0} },
+  { q:'Tax cuts are more important than increasing public services', area:'\u014Changa',
+    consider:'NZ\u2019s 2024 tax cuts gave the top 2% of earners the largest benefit. Meanwhile, hospitals, schools, and social services face funding cuts.',
+    scores:{tpm:0,grn:0,lab:1,nat:3,act:3,nzf:2} },
+  { q:'Immigration levels should be significantly reduced', area:'Community',
+    consider:'Migrants are net fiscal contributors. NZ\u2019s healthcare, construction, and aged care sectors rely heavily on migrant workers. The housing crisis is driven by speculation, not immigration.',
+    scores:{tpm:1,grn:0,lab:1,nat:2,act:1,nzf:3} },
+  { q:'M\u0101ori health services should be designed and run by M\u0101ori', area:'Hauora',
+    consider:'The life expectancy gap between M\u0101ori and non-M\u0101ori is 7 years. Te Aka Whai Ora (M\u0101ori Health Authority) was established to address this \u2014 then disestablished by the current government.',
+    scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:0} },
+];
+
+const PARTY_KEYS = [
+  { key:'tpm', name:'Te P\u0101ti M\u0101ori', colour:'#E94560' },
+  { key:'grn', name:'Green Party', colour:'#2E7D32' },
+  { key:'lab', name:'Labour Party', colour:'#D32F2F' },
+  { key:'nat', name:'National Party', colour:'#1565C0' },
+  { key:'act', name:'ACT Party', colour:'#F9A825' },
+  { key:'nzf', name:'NZ First', colour:'#555' },
+];
+
 const GUIDE = [
   { emoji:'\u2696\uFE0F', title:'Know Your Rights', body:'<strong>NZ Bill of Rights Act 1990</strong> protects:<ul><li><strong>Section 14</strong> \u2014 Freedom of expression</li><li><strong>Section 16</strong> \u2014 Freedom of peaceful assembly</li><li><strong>Section 17</strong> \u2014 Freedom of association</li><li><strong>Section 18</strong> \u2014 Freedom of movement</li></ul>You have the right to protest on public land. Police can ask you to move but can\u2019t arrest you for peaceful protest. Always get the name and badge number of any officer.' },
   { emoji:'\u{1F4DD}', title:'Make a Submission (15 mins)', body:'<strong>Anyone</strong> can submit on a bill \u2014 you don\u2019t need to be an expert.<ul><li>Go to <strong>parliament.nz</strong> \u2192 Bills \u2192 Make a Submission</li><li>3 paragraphs is enough. Say if you support or oppose and why.</li><li>You can request to speak to the committee (video or in person)</li><li>Submissions are read. Community voices especially matter.</li></ul>Your voice is recorded in the democratic record.' },
@@ -644,7 +693,7 @@ function pollView() {
 
   let h = '';
 
-  // Daily quote at top
+  // Daily quote
   h += `<div class="quote-hero">
     <div class="quote-label">K\u014drero o te R\u0101</div>
     <div class="quote-text">\u201C${q.q}\u201D</div>
@@ -656,136 +705,210 @@ function pollView() {
     </div>
   </div>`;
 
-  // Intro
-  h += `<div class="sec">
-    <div class="lbl">Who Actually Represents You?</div>
-    <div class="intro">Cut through the soundbites. Pick the issues that matter to you \u2014 we\u2019ll show you where each party actually stands. Based on voting records, not campaign promises.</div>
-    <div style="font-size:12px;font-weight:400;color:#999;line-height:1.6;margin-bottom:16px;padding:12px;background:#FAF7F4;border-radius:8px;border-left:3px solid #E94560;">
-      <strong style="color:#E94560;">Remember:</strong> Parties serve a system built on colonial capitalism. None of them are the revolution \u2014 but some do less harm than others. Know who\u2019s who so you can push from an informed position.
-    </div>
-  </div>`;
-
-  // Issue selection
-  h += `<div class="sec" id="poll-select">
-    <div style="font-size:13px;font-weight:500;color:#555;margin-bottom:12px;">Select the issues that matter most to you (pick 3+)</div>`;
-  POLL_ISSUES.forEach(iss => {
-    h += `<div class="poll-issue" id="pi-${iss.id}" onclick="toggleIssue('${iss.id}')">
+  // Step 1: Pick your party
+  h += `<div class="sec" id="poll-step1">
+    <div class="lbl">Let\u2019s find out</div>
+    <div style="font-size:18px;font-weight:500;color:#222;line-height:1.5;margin-bottom:6px;">Who did you vote for last time?</div>
+    <div class="intro">Or who are you thinking of voting for? Be honest \u2014 no judgement. We\u2019re here to help you think it through.</div>`;
+  PARTY_KEYS.forEach(p => {
+    h += `<div class="poll-issue" onclick="pickParty('${p.key}')">
       <div style="display:flex;justify-content:space-between;align-items:center;">
-        <div><div class="poll-issue-name">${iss.name}</div><div class="poll-issue-desc">${iss.desc}</div></div>
-        <div class="check">\u2713</div>
+        <div class="poll-issue-name">${p.name}</div>
+        <div style="width:12px;height:12px;border-radius:50%;background:${p.colour};flex-shrink:0;"></div>
       </div>
     </div>`;
   });
-  h += `<button class="poll-go" id="poll-go-btn" disabled onclick="runPoll()">Select at least 3 issues</button></div>`;
-
-  // Results container (hidden until poll runs)
-  h += `<div class="sec" id="poll-results" style="display:none;padding-bottom:20px;"></div>`;
-
-  // Organising guide below
-  h += `<div class="sec" style="padding-bottom:20px;"><div class="lbl">Take Action</div>
-    <div class="intro">Now you know who stands where \u2014 here\u2019s how to make your voice count.</div>`;
-  GUIDE.forEach((g,i) => {
-    h += `<div class="guide-card">
-      <div class="guide-header" onclick="toggleGuide(${i})">
-        <span class="guide-title">${g.title}</span>
-        <span class="guide-arrow" id="guide-arrow-${i}">\u25BE</span>
-      </div>
-      <div class="guide-body" id="guide-body-${i}"><div class="guide-text">${g.body}</div></div>
-    </div>`;
-  });
+  h += `<div class="poll-issue" onclick="pickParty('unsure')">
+    <div class="poll-issue-name" style="color:#888;">Not sure yet / didn\u2019t vote</div>
+  </div>`;
   h += `</div>`;
+
+  // Step 2: Questions (hidden until party picked)
+  h += `<div class="sec" id="poll-step2" style="display:none;"></div>`;
+
+  // Step 3: Results (hidden until all answered)
+  h += `<div class="sec" id="poll-step3" style="display:none;padding-bottom:20px;"></div>`;
 
   return h + signupFooter();
 }
 
-/* ── POLL LOGIC ── */
-let selectedIssues = new Set();
+/* ── POLL STATE ── */
+let chosenParty = null;
+let currentQ = 0;
+let answers = [];
 
-function toggleIssue(id) {
-  const el = document.getElementById('pi-' + id);
-  if (selectedIssues.has(id)) {
-    selectedIssues.delete(id);
-    el.classList.remove('selected');
-  } else {
-    selectedIssues.add(id);
-    el.classList.add('selected');
-  }
-  const btn = document.getElementById('poll-go-btn');
-  if (selectedIssues.size >= 3) {
-    btn.disabled = false;
-    btn.textContent = `Show me who matches (${selectedIssues.size} issues)`;
-  } else {
-    btn.disabled = true;
-    btn.textContent = `Select at least 3 issues (${selectedIssues.size} selected)`;
-  }
+function pickParty(key) {
+  chosenParty = key;
+  currentQ = 0;
+  answers = [];
+  document.getElementById('poll-step1').style.display = 'none';
+  showQuestion();
 }
 
-function runPoll() {
-  const partyNames = ['Te P\u0101ti M\u0101ori','Green Party','Labour Party','National Party','ACT Party','NZ First'];
-  const stanceScore = { strong: 3, moderate: 2, weak: 1, oppose: 0 };
-  const stanceLabel = { strong: 'Strongly aligned', moderate: 'Somewhat aligned', weak: 'Weakly aligned', oppose: 'Opposes your position' };
-  const stanceCol = { strong: '#2E7D32', moderate: '#F9A825', weak: '#E65100', oppose: '#C62828' };
+function showQuestion() {
+  const container = document.getElementById('poll-step2');
+  container.style.display = 'block';
+  const q = QUESTIONS[currentQ];
+  const progress = `${currentQ + 1} of ${QUESTIONS.length}`;
 
-  // Calculate scores
-  const results = partyNames.map(name => {
+  let h = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+    <div class="lbl" style="margin-bottom:0;">${q.area}</div>
+    <div style="font-size:11px;font-weight:500;color:#aaa;">${progress}</div>
+  </div>`;
+
+  // Progress bar
+  const pct = ((currentQ) / QUESTIONS.length) * 100;
+  h += `<div style="height:4px;background:#f0ede8;border-radius:100px;margin-bottom:20px;overflow:hidden;">
+    <div style="height:100%;width:${pct}%;background:#E94560;border-radius:100px;transition:width .3s;"></div>
+  </div>`;
+
+  h += `<div style="font-size:17px;font-weight:400;color:#222;line-height:1.6;margin-bottom:24px;">\u201C${q.q}\u201D</div>`;
+
+  // Answer buttons
+  h += `<div style="display:flex;gap:8px;margin-bottom:16px;">
+    <button class="poll-go" style="flex:1;background:#2E7D32;" onclick="answerQ(3)">Agree</button>
+    <button class="poll-go" style="flex:1;background:#888;" onclick="answerQ(1)">Unsure</button>
+    <button class="poll-go" style="flex:1;background:#C62828;" onclick="answerQ(0)">Disagree</button>
+  </div>`;
+
+  container.innerHTML = h;
+  document.getElementById('scr').scrollTop = 0;
+}
+
+function answerQ(score) {
+  const q = QUESTIONS[currentQ];
+  answers.push({ qIdx: currentQ, score });
+
+  // Show "Did you consider?" before moving on
+  const container = document.getElementById('poll-step2');
+  const progress = `${currentQ + 1} of ${QUESTIONS.length}`;
+
+  let h = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+    <div class="lbl" style="margin-bottom:0;">${q.area}</div>
+    <div style="font-size:11px;font-weight:500;color:#aaa;">${progress}</div>
+  </div>`;
+
+  const pct = ((currentQ + 1) / QUESTIONS.length) * 100;
+  h += `<div style="height:4px;background:#f0ede8;border-radius:100px;margin-bottom:20px;overflow:hidden;">
+    <div style="height:100%;width:${pct}%;background:#E94560;border-radius:100px;transition:width .3s;"></div>
+  </div>`;
+
+  h += `<div style="font-size:15px;font-weight:400;color:#555;line-height:1.6;margin-bottom:14px;font-style:italic;">\u201C${q.q}\u201D</div>`;
+
+  // Your answer
+  const answerLabel = score === 3 ? 'You agreed' : score === 0 ? 'You disagreed' : 'You were unsure';
+  const answerCol = score === 3 ? '#2E7D32' : score === 0 ? '#C62828' : '#888';
+  h += `<div style="font-size:13px;font-weight:600;color:${answerCol};margin-bottom:14px;">${answerLabel}</div>`;
+
+  // Did you consider?
+  h += `<div style="background:#F0FFF4;border-radius:10px;padding:14px;margin-bottom:16px;border-left:3px solid #2E7D32;">
+    <div style="font-size:11px;font-weight:600;letter-spacing:1px;color:#2E7D32;text-transform:uppercase;margin-bottom:6px;">Did you consider?</div>
+    <div style="font-size:13px;font-weight:400;color:#333;line-height:1.75;">${q.consider}</div>
+  </div>`;
+
+  // Show where chosen party stands on this
+  if (chosenParty !== 'unsure') {
+    const partyInfo = PARTY_KEYS.find(p => p.key === chosenParty);
+    const partyScore = q.scores[chosenParty];
+    const partyStance = partyScore === 3 ? 'supports this' : partyScore === 2 ? 'partially supports this' : partyScore === 1 ? 'is unclear on this' : 'opposes this';
+    const partyCol = partyScore >= 2 ? '#2E7D32' : partyScore === 1 ? '#F9A825' : '#C62828';
+    const match = (score >= 2 && partyScore >= 2) || (score === 0 && partyScore === 0);
+
+    h += `<div style="background:#fff;border-radius:10px;padding:14px;margin-bottom:16px;">
+      <div style="font-size:13px;font-weight:400;color:#555;line-height:1.6;">
+        <strong style="color:${partyInfo.colour}">${partyInfo.name}</strong> <span style="color:${partyCol};font-weight:500;">${partyStance}</span>.
+        ${match ? '<span style="color:#2E7D32;"> You\u2019re aligned here.</span>' : '<span style="color:#C62828;"> That\u2019s a gap between you and your party.</span>'}
+      </div>
+    </div>`;
+  }
+
+  // Next button
+  const isLast = currentQ >= QUESTIONS.length - 1;
+  h += `<button class="poll-go" onclick="${isLast ? 'showResults()' : 'nextQ()'}">${isLast ? 'See your full results' : 'Next question'}</button>`;
+
+  container.innerHTML = h;
+  document.getElementById('scr').scrollTop = 0;
+}
+
+function nextQ() {
+  currentQ++;
+  showQuestion();
+}
+
+function showResults() {
+  document.getElementById('poll-step2').style.display = 'none';
+  const container = document.getElementById('poll-step3');
+  container.style.display = 'block';
+
+  // Calculate alignment for each party
+  const results = PARTY_KEYS.map(p => {
     let total = 0;
     let max = 0;
-    let details = [];
-    selectedIssues.forEach(issId => {
-      const iss = POLL_ISSUES.find(i => i.id === issId);
-      const pos = iss.positions[name];
-      if (pos) {
-        total += stanceScore[pos.stance];
-        max += 3;
-        details.push({ issue: iss.name, stance: pos.stance, text: pos.text });
-      }
+    answers.forEach(a => {
+      const q = QUESTIONS[a.qIdx];
+      const partyScore = q.scores[p.key];
+      // How close is the user's answer to this party's position?
+      // Both high = match, both low = match, divergence = mismatch
+      const userNorm = a.score / 3; // 0-1
+      const partyNorm = partyScore / 3; // 0-1
+      total += 1 - Math.abs(userNorm - partyNorm);
+      max += 1;
     });
-    const pct = max > 0 ? Math.round((total / max) * 100) : 0;
-    const party = PARTIES.find(p => p.name === name);
-    return { name, pct, details, colour: party ? party.colour : '#888' };
+    return { ...p, pct: max > 0 ? Math.round((total / max) * 100) : 0 };
   });
 
   results.sort((a, b) => b.pct - a.pct);
 
-  // Render results
-  let h = `<div class="lbl">Your Results</div>
-    <div class="intro">Based on your ${selectedIssues.size} selected issues. Ranked by how closely each party\u2019s <strong>actual voting record</strong> aligns with community-positive positions on these issues.</div>`;
+  const chosenResult = chosenParty !== 'unsure' ? results.find(r => r.key === chosenParty) : null;
+  const topResult = results[0];
 
-  results.forEach((r, i) => {
-    const matchLabel = r.pct >= 75 ? 'Strong match' : r.pct >= 50 ? 'Partial match' : r.pct >= 25 ? 'Weak match' : 'Poor match';
-    const matchBg = r.pct >= 75 ? '#E8F5EE' : r.pct >= 50 ? '#FFF8E1' : r.pct >= 25 ? '#FFF3E0' : '#FFEBEE';
-    const matchCol = r.pct >= 75 ? '#1B5E3A' : r.pct >= 50 ? '#856404' : r.pct >= 25 ? '#E65100' : '#C62828';
+  let h = '';
 
-    h += `<div class="poll-result">
+  // The reveal
+  if (chosenResult && topResult.key !== chosenParty) {
+    h += `<div style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);border-radius:16px;padding:24px;margin-bottom:16px;">
+      <div style="font-size:11px;font-weight:500;letter-spacing:2px;color:#E94560;text-transform:uppercase;margin-bottom:10px;">Here\u2019s the thing</div>
+      <div style="font-size:18px;font-weight:400;color:#fff;line-height:1.6;margin-bottom:8px;">
+        You said <strong>${chosenResult.name}</strong> \u2014 but your answers align <strong>${topResult.pct}%</strong> with <strong style="color:${topResult.colour}">${topResult.name}</strong> and only <strong>${chosenResult.pct}%</strong> with ${chosenResult.name}.
+      </div>
+      <div style="font-size:13px;font-weight:300;color:rgba(255,255,255,.65);line-height:1.6;">That doesn\u2019t mean you\u2019re wrong. It means there might be a gap between what you value and who you\u2019re voting for. Worth thinking about.</div>
+    </div>`;
+  } else if (chosenResult) {
+    h += `<div style="background:linear-gradient(135deg,#1B4332 0%,#2D6A4F 100%);border-radius:16px;padding:24px;margin-bottom:16px;">
+      <div style="font-size:11px;font-weight:500;letter-spacing:2px;color:#95D5B2;text-transform:uppercase;margin-bottom:10px;">Good news</div>
+      <div style="font-size:18px;font-weight:400;color:#fff;line-height:1.6;">Your answers align <strong>${chosenResult.pct}%</strong> with <strong>${chosenResult.name}</strong>. Your vote matches your values.</div>
+    </div>`;
+  }
+
+  h += `<div class="lbl">Full alignment</div>
+    <div class="intro">Based on ${answers.length} questions about real policy positions.</div>`;
+
+  results.forEach(r => {
+    const isChosen = r.key === chosenParty;
+    const matchCol = r.pct >= 70 ? '#2E7D32' : r.pct >= 45 ? '#F9A825' : '#C62828';
+    h += `<div class="poll-result" style="${isChosen ? 'border:2px solid '+r.colour+';' : ''}">
       <div class="poll-result-top">
-        <span class="poll-result-name">${i === 0 ? '\u2B50 ' : ''}${r.name}</span>
+        <span class="poll-result-name">${r.name}${isChosen ? ' (your pick)' : ''}</span>
         <span class="poll-result-pct" style="color:${matchCol}">${r.pct}%</span>
       </div>
       <div class="poll-result-bar"><div class="poll-result-fill" style="width:${r.pct}%;background:${r.colour};"></div></div>
-      <span class="poll-result-match" style="background:${matchBg};color:${matchCol};">${matchLabel}</span>`;
-
-    r.details.forEach(d => {
-      const col = stanceCol[d.stance];
-      h += `<div class="poll-result-detail"><strong style="color:${col}">${stanceLabel[d.stance]}</strong> on ${d.issue}: ${d.text}</div>`;
-    });
-
-    h += `<button class="share-btn share-btn-outline" style="margin-top:10px;" onclick="shareCard('party','${r.name.replace(/\s+/g,'-').toLowerCase()}')">Share</button>
     </div>`;
   });
 
-  h += `<div style="text-align:center;"><button class="poll-reset" onclick="resetPoll()">Start over</button></div>`;
+  h += `<div style="font-size:12px;font-weight:400;color:#999;line-height:1.6;margin-top:12px;padding:12px;background:#FAF7F4;border-radius:8px;border-left:3px solid #E94560;">
+    Parties serve a system built on colonial capitalism. None of them are the revolution \u2014 but some do less harm than others. Use this to push from an informed position.
+  </div>`;
 
-  document.getElementById('poll-results').innerHTML = h;
-  document.getElementById('poll-results').style.display = 'block';
-  document.getElementById('poll-select').style.display = 'none';
+  h += `<div style="text-align:center;margin-top:16px;"><button class="poll-reset" onclick="resetPoll()">Start over</button></div>`;
 
-  // Scroll to results
+  container.innerHTML = h;
   document.getElementById('scr').scrollTop = 0;
 }
 
 function resetPoll() {
-  selectedIssues.clear();
-  // Re-render the whole tab
+  chosenParty = null;
+  currentQ = 0;
+  answers = [];
   const tabs = document.querySelectorAll('.tab');
   go(0, tabs[0]);
 }
@@ -1035,10 +1158,17 @@ function setDate() {
   document.getElementById('hdr-date').textContent = `${RA[now.getDay()]}, ${now.getDate()} ${MARAMA[now.getMonth()]} \u00B7 ${eng}`;
 }
 
-setDate();
-document.getElementById('scr').innerHTML = pollView();
-
-if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
+document.addEventListener('DOMContentLoaded', () => {
+  try { setDate(); } catch(e) {}
+  document.getElementById('scr').innerHTML = pollView();
+  if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
+});
+// Fallback if DOMContentLoaded already fired
+if (document.readyState !== 'loading') {
+  try { setDate(); } catch(e) {}
+  const scr = document.getElementById('scr');
+  if (scr && !scr.innerHTML) scr.innerHTML = pollView();
+}
 </script>
 </body>
 </html>
