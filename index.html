@@ -1069,47 +1069,152 @@ function selectAndShowQuestion() {
   showQuestion();
 }
 
+/* ── GAME MODES ── */
+const GAME_MODES = ['slider','swipe','budget'];
+
+function pickGameMode() {
+  return GAME_MODES[Math.floor(Math.random() * GAME_MODES.length)];
+}
+
 function showQuestion() {
   const container = document.getElementById('poll-step2');
   container.style.display = 'block';
   const q = QUESTIONS[currentQ];
   const answered = answers.length;
   const total = QUESTIONS.length;
+  const game = pickGameMode();
 
-  let h = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+  let h = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
     <div class="lbl" style="margin-bottom:0;">${q.dimLabel}</div>
-    <div style="font-size:11px;font-weight:500;color:#aaa;">${answered + 1} of ${total} answered</div>
+    <div style="font-size:10px;font-weight:600;color:#C4A882;letter-spacing:0.5px;">${answered + 1}/${total}</div>
   </div>`;
 
   const pct = (answered / total) * 100;
-  h += `<div style="height:4px;background:#f0ede8;border-radius:100px;margin-bottom:20px;overflow:hidden;">
+  h += `<div style="height:4px;background:#F0E6D3;border-radius:100px;margin-bottom:16px;overflow:hidden;">
     <div style="height:100%;width:${pct}%;background:#E94560;border-radius:100px;transition:width .3s;"></div>
   </div>`;
 
   if (q.collective) {
-    h += '<div style="font-size:9px;font-weight:500;letter-spacing:1.5px;color:#1B4332;text-transform:uppercase;margin-bottom:8px;background:rgba(27,67,50,.08);display:inline-block;padding:3px 8px;border-radius:100px;">Wh\u0101nau perspective</div>';
+    h += '<div style="font-size:9px;font-weight:600;letter-spacing:1.5px;color:#1B4332;text-transform:uppercase;margin-bottom:8px;background:#E8F5EE;display:inline-block;padding:4px 10px;border-radius:100px;">Wh\u0101nau perspective</div>';
   }
 
-  h += `<div style="font-size:17px;font-weight:400;color:#222;line-height:1.6;margin-bottom:24px;">\u201C${q.q}\u201D</div>`;
+  if (game === 'swipe') {
+    // ── SWIPE CARD ──
+    h += `<div id="swipe-card" style="background:#fff;border-radius:16px;padding:24px;text-align:center;margin-bottom:12px;position:relative;touch-action:pan-y;cursor:grab;transition:transform .15s,opacity .15s;user-select:none;" ontouchstart="swipeStart(event)" ontouchmove="swipeMove(event)" ontouchend="swipeEnd(event)" onmousedown="swipeStart(event)">
+      <div style="font-size:16px;font-weight:400;color:#222;line-height:1.6;margin-bottom:16px;">${q.q}</div>
+      <div style="display:flex;justify-content:space-between;padding:0 20px;">
+        <div style="font-size:24px;opacity:.3;">👈</div>
+        <div style="font-size:11px;color:#ccc;align-self:center;">swipe to answer</div>
+        <div style="font-size:24px;opacity:.3;">👉</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:0 12px;margin-top:4px;">
+        <div style="font-size:10px;font-weight:600;color:#E94560;">DISAGREE</div>
+        <div style="font-size:10px;font-weight:600;color:#4CAF50;">AGREE</div>
+      </div>
+    </div>`;
+  } else if (game === 'budget') {
+    // ── BUDGET DROP ──
+    const leftLabel = q.scores.act >= 2 ? 'Individual benefit' : 'Keep things as they are';
+    const rightLabel = q.scores.tpm >= 2 ? 'Community benefit' : 'Make the change';
+    h += `<div style="background:#fff;border-radius:16px;padding:20px;margin-bottom:12px;">
+      <div style="font-size:15px;font-weight:400;color:#222;line-height:1.6;margin-bottom:16px;">${q.q}</div>
+      <div style="font-size:11px;font-weight:600;color:#C77737;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">Where would you put $100?</div>
+      <div style="display:flex;gap:12px;align-items:center;margin-bottom:6px;">
+        <div style="flex:1;text-align:center;">
+          <div style="font-size:10px;font-weight:600;color:#E94560;margin-bottom:4px;">${leftLabel}</div>
+          <div id="budget-left" style="font-size:28px;font-weight:300;color:#E94560;">$50</div>
+        </div>
+        <div style="flex:1;text-align:center;">
+          <div style="font-size:10px;font-weight:600;color:#4CAF50;margin-bottom:4px;">${rightLabel}</div>
+          <div id="budget-right" style="font-size:28px;font-weight:300;color:#4CAF50;">$50</div>
+        </div>
+      </div>
+      <input type="range" id="budget-slider" min="0" max="100" value="50" style="width:100%;height:8px;-webkit-appearance:none;appearance:none;background:linear-gradient(to right,#E94560,#4CAF50);border-radius:100px;outline:none;cursor:pointer;" oninput="updateBudget(this.value)">
+      <button class="poll-go" style="margin-top:14px;" onclick="answerQ(Math.round(parseInt(document.getElementById('budget-slider').value) / 25))">Lock it in</button>
+    </div>`;
+  } else {
+    // ── SLIDER (default) ──
+    h += `<div style="background:#fff;border-radius:16px;padding:20px;margin-bottom:12px;">
+      <div style="font-size:16px;font-weight:400;color:#222;line-height:1.6;margin-bottom:16px;">${q.q}</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+        <span style="font-size:10px;font-weight:600;color:#E94560;letter-spacing:0.5px;">DISAGREE</span>
+        <span style="font-size:10px;font-weight:600;color:#4CAF50;letter-spacing:0.5px;">AGREE</span>
+      </div>
+      <input type="range" id="q-slider" min="0" max="4" value="2" style="width:100%;height:8px;-webkit-appearance:none;appearance:none;background:linear-gradient(to right,#E94560,#F9A825,#4CAF50);border-radius:100px;outline:none;cursor:pointer;" oninput="updateSliderLabel(this.value)">
+      <div id="slider-label" style="text-align:center;font-size:13px;font-weight:500;color:#888;margin-top:8px;">Neutral</div>
+      <button class="poll-go" style="margin-top:12px;" onclick="answerQ(parseInt(document.getElementById('q-slider').value))">Lock it in</button>
+    </div>`;
+  }
 
-  // Spectrum slider (VAA methodology, arcade feel)
-  h += `<div style="background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;">
-    <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
-      <span style="font-size:10px;font-weight:600;color:#E94560;letter-spacing:0.5px;">DISAGREE</span>
-      <span style="font-size:10px;font-weight:600;color:#4CAF50;letter-spacing:0.5px;">AGREE</span>
-    </div>
-    <input type="range" id="q-slider" min="0" max="4" value="2" style="width:100%;height:8px;-webkit-appearance:none;appearance:none;background:linear-gradient(to right,#E94560,#F9A825,#4CAF50);border-radius:100px;outline:none;cursor:pointer;" oninput="updateSliderLabel(this.value)">
-    <div id="slider-label" style="text-align:center;font-size:13px;font-weight:500;color:#888;margin-top:8px;">Neutral</div>
-    <button class="poll-go" style="margin-top:12px;" onclick="answerQ(parseInt(document.getElementById('q-slider').value))">Lock it in</button>
-  </div>`;
-
-  // Skip option (Kaupapa M\u0101ori: silence is valid)
+  // Skip
   h += `<div style="text-align:center;">
     <button onclick="skipQ()" style="background:none;border:none;color:#ccc;font-family:'Roboto',sans-serif;font-size:12px;cursor:pointer;padding:8px;">Not today, skip this one</button>
   </div>`;
 
   container.innerHTML = h;
   document.getElementById('scr').scrollTop = 0;
+}
+
+/* ── SWIPE MECHANICS ── */
+let swipeStartX = 0;
+let swiping = false;
+
+function swipeStart(e) {
+  swipeStartX = e.touches ? e.touches[0].clientX : e.clientX;
+  swiping = true;
+  if (!e.touches) {
+    document.addEventListener('mousemove', swipeMove);
+    document.addEventListener('mouseup', swipeEnd);
+  }
+}
+
+function swipeMove(e) {
+  if (!swiping) return;
+  const x = e.touches ? e.touches[0].clientX : e.clientX;
+  const diff = x - swipeStartX;
+  const card = document.getElementById('swipe-card');
+  if (card) {
+    card.style.transform = `translateX(${diff}px) rotate(${diff * 0.1}deg)`;
+    card.style.opacity = Math.max(0.5, 1 - Math.abs(diff) / 300);
+  }
+}
+
+function swipeEnd(e) {
+  if (!swiping) return;
+  swiping = false;
+  document.removeEventListener('mousemove', swipeMove);
+  document.removeEventListener('mouseup', swipeEnd);
+  const x = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+  const diff = x - swipeStartX;
+  const card = document.getElementById('swipe-card');
+
+  if (Math.abs(diff) > 80) {
+    // Swiped far enough
+    if (card) {
+      card.style.transform = `translateX(${diff > 0 ? 300 : -300}px) rotate(${diff > 0 ? 20 : -20}deg)`;
+      card.style.opacity = '0';
+    }
+    // Right = agree (3-4), Left = disagree (0-1), intensity based on distance
+    const intensity = Math.min(Math.abs(diff) / 150, 1);
+    const score = diff > 0 ? (intensity > 0.6 ? 4 : 3) : (intensity > 0.6 ? 0 : 1);
+    setTimeout(() => answerQ(score), 200);
+  } else {
+    // Snap back
+    if (card) { card.style.transform = ''; card.style.opacity = '1'; }
+  }
+}
+
+/* ── BUDGET MECHANICS ── */
+function updateBudget(val) {
+  const left = 100 - parseInt(val);
+  const right = parseInt(val);
+  const el = document.getElementById('budget-left');
+  const er = document.getElementById('budget-right');
+  if (el) el.textContent = `$${left}`;
+  if (er) er.textContent = `$${right}`;
+  // Size scales with amount
+  if (el) el.style.fontSize = `${20 + (left / 100) * 16}px`;
+  if (er) er.style.fontSize = `${20 + (right / 100) * 16}px`;
 }
 
 function updateSliderLabel(val) {
