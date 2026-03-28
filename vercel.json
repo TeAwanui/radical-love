@@ -2,6 +2,7 @@
   "outputDirectory": ".",
   "crons": [
     { "path": "/api/bills", "schedule": "0 19 * * *" },
+    { "path": "/api/send-push", "schedule": "0 19 * * *" },
     { "path": "/api/send-weekly", "schedule": "0 18 * * 0" }
   ],
   "rewrites": [
