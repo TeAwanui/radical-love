@@ -199,27 +199,28 @@
     .poll-reset { background: none; border: 1.5px solid #ddd; color: #888; font-family: 'Roboto', sans-serif; font-size: 13px; font-weight: 500; padding: 10px 20px; border-radius: 100px; cursor: pointer; transition: all .15s; margin-top: 12px; }
     .poll-reset:hover { border-color: #E94560; color: #E94560; }
 
-    /* ── POKEMON CARD ── */
-    .card { margin: 12px 16px; border-radius: 16px; overflow: hidden; padding: 6px; }
-    .card-frame { border-radius: 12px; overflow: hidden; border: 2px solid rgba(0,0,0,.15); }
-    .card-header { padding: 12px 16px 8px; display: flex; justify-content: space-between; align-items: center; }
-    .card-party-name { font-size: 18px; font-weight: 700; }
-    .card-hp { font-size: 14px; font-weight: 700; }
-    .card-hp span { font-size: 9px; font-weight: 500; letter-spacing: 1px; }
-    .card-art { height: 120px; margin: 0 12px; border-radius: 8px; border: 3px solid rgba(0,0,0,.08); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
-    .card-art-icon { font-size: 64px; }
-    .card-art-label { position: absolute; bottom: 6px; right: 8px; font-size: 8px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; padding: 2px 8px; border-radius: 100px; }
-    .card-info { padding: 8px 16px 4px; display: flex; justify-content: space-between; }
-    .card-info-item { font-size: 9px; font-weight: 500; color: #888; }
-    .card-stats { padding: 8px 16px; }
-    .card-stat { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-    .card-stat-label { font-size: 10px; font-weight: 600; width: 72px; text-align: right; flex-shrink: 0; }
-    .card-stat-track { flex: 1; height: 8px; border-radius: 100px; overflow: hidden; }
-    .card-stat-fill { height: 100%; border-radius: 100px; }
-    .card-stat-val { font-size: 10px; font-weight: 700; width: 32px; text-align: right; }
-    .card-desc { padding: 8px 16px; font-size: 11px; font-weight: 400; line-height: 1.5; border-top: 1px solid rgba(0,0,0,.06); }
-    .card-bottom { padding: 8px 16px 12px; display: flex; justify-content: space-between; align-items: center; }
-    .card-bottom-text { font-size: 8px; font-weight: 500; color: #aaa; letter-spacing: 0.5px; }
+    /* ── POKEMON CARD (exact proportions: 1:1.4, golden border) ── */
+    .card { margin: 12px 24px; border: 8px solid #D4AF37; border-radius: 12px; background: #E8E4A0; padding: 8px; box-shadow: 0 4px 16px rgba(0,0,0,.12); }
+    .card-name-bar { display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; border-radius: 6px 6px 0 0; }
+    .card-party-name { font-size: 17px; font-weight: 700; color: #222; }
+    .card-hp { font-size: 16px; font-weight: 700; color: #E94560; }
+    .card-hp span { font-size: 9px; font-weight: 600; }
+    .card-art { margin: 4px 6px; border-radius: 4px; border: 3px solid #C4B454; height: 160px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .card-art-icon { font-size: 72px; position: relative; z-index: 1; }
+    .card-art-lvl { position: absolute; bottom: 6px; right: 8px; font-size: 8px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; background: rgba(255,255,255,.9); color: #555; }
+    .card-info-bar { display: flex; justify-content: center; gap: 16px; padding: 6px; font-size: 9px; font-weight: 500; color: #888; }
+    .card-attacks { padding: 6px 10px; }
+    .card-attack { display: flex; align-items: center; gap: 8px; padding: 8px 0; border-top: 1px solid rgba(0,0,0,.06); }
+    .card-attack:first-child { border-top: none; }
+    .card-attack-cost { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+    .card-attack-name { flex: 1; font-size: 12px; font-weight: 600; color: #333; }
+    .card-attack-dmg { font-size: 16px; font-weight: 700; color: #222; width: 36px; text-align: right; }
+    .card-weak-bar { display: flex; justify-content: space-around; padding: 6px 10px; margin: 4px 6px; border-radius: 4px; background: rgba(0,0,0,.04); }
+    .card-weak-item { text-align: center; }
+    .card-weak-label { font-size: 8px; font-weight: 600; color: #aaa; text-transform: uppercase; letter-spacing: 0.5px; }
+    .card-weak-val { font-size: 11px; font-weight: 700; margin-top: 2px; }
+    .card-flavour { padding: 6px 12px; font-size: 10px; font-weight: 400; font-style: italic; color: #777; line-height: 1.5; text-align: center; }
+    .card-set { display: flex; justify-content: space-between; padding: 4px 10px 2px; font-size: 8px; font-weight: 500; color: #aaa; }
     .card-cta { text-align: center; margin: 12px 16px; }
     .card-cta-btn { width: 100%; padding: 14px; border: none; background: #E94560; color: #fff; font-family: 'Roboto', sans-serif; font-size: 15px; font-weight: 600; border-radius: 12px; cursor: pointer; transition: all .1s; }
     .card-cta-btn:hover { filter: brightness(1.1); }
@@ -852,93 +853,115 @@ function renderCard(profile) {
     .map(d => ({ ...d, pct: Math.round((dimScores[d.key].user / dimScores[d.key].count) * 100) }))
     .sort((a,b) => b.pct - a.pct);
 
-  // Evolution level
-  const lvl = profile.answers.length <= 3 ? 'Basic' : profile.answers.length <= 10 ? 'Stage 1' : profile.answers.length <= 20 ? 'Stage 2' : 'Final Form';
+  // Evolution
+  const n = profile.answers.length;
+  const lvl = n <= 3 ? 'Basic' : n <= 10 ? 'Stage 1' : n <= 20 ? 'Stage 2' : 'Final Form';
 
-  // Party icons
-  const partyIcons = {tpm:'\u2764\uFE0F',grn:'\u{1F331}',lab:'\u{1F528}',nat:'\u{1F4BC}',act:'\u{1F4B5}',nzf:'\u{1F5C3}\uFE0F',unsure:'\u2753'};
+  // Random Pokemon image from PokeAPI (different each day)
+  const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(),0,0)) / 86400000);
+  const pokeId = (dayOfYear % 151) + 1; // Gen 1 Pokemon, rotates daily
+  const pokeImg = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeId}.png`;
+
+  // Party type colours (like Pokemon types)
+  const typeBg = {tpm:'#FBE3EB',grn:'#E3F8E8',lab:'#FDE8E8',nat:'#E3EDF8',act:'#FFF9DB',nzf:'#EDEDEE',unsure:'#FFF5E1'};
+  const artBg = {tpm:'linear-gradient(135deg,#F8BBD0,#F48FB1)',grn:'linear-gradient(135deg,#C8E6C9,#81C784)',lab:'linear-gradient(135deg,#FFCDD2,#EF9A9A)',nat:'linear-gradient(135deg,#BBDEFB,#64B5F6)',act:'linear-gradient(135deg,#FFF9C4,#FFF176)',nzf:'linear-gradient(135deg,#E0E0E0,#BDBDBD)',unsure:'linear-gradient(135deg,#FFE0B2,#FFB74D)'};
+
+  // Issue emojis for "attack cost"
+  const dimEmoji = {treaty:'\u{1F4DC}',whanau:'\u{1F46A}',economy:'\u{1F4B0}',justice:'\u2696\uFE0F',environ:'\u{1F331}',education:'\u{1F4DA}',health:'\u2764\uFE0F',housing:'\u{1F3E0}'};
+
+  // Party descriptions
   const partyDesc = {
-    tpm:'Champions tino rangatiratanga, Te Tiriti, and M\u0101ori-led solutions across health, education, housing, and justice.',
-    grn:'Strongest on climate, wealth redistribution, and social equity. Supports co-governance and restorative justice.',
-    lab:'Centre-left. Moderate on most issues. Introduced Fair Pay Agreements and M\u0101ori Health Authority (both since repealed).',
-    nat:'Centre-right. Tax cuts, market-led solutions, repealed key equity legislation. Corporate donor base.',
-    act:'Free market, deregulation, Treaty Principles Bill. Most right-wing economic policy in Parliament.',
-    nzf:'Populist. Positions shift by coalition. Supported both centre-left and centre-right governments.',
+    tpm:'Champions Te Tiriti o Waitangi, tino rangatiratanga, and community-led solutions.',
+    grn:'Strongest on climate, wealth redistribution, and social equity.',
+    lab:'Centre-left. Moderate on most issues. Introduced key equity legislation.',
+    nat:'Centre-right. Tax cuts, market-led solutions. Corporate donor base.',
+    act:'Free market, deregulation. Introduced the Treaty Principles Bill.',
+    nzf:'Populist. Positions shift depending on coalition partner.',
     unsure:'Still figuring it out. That\u2019s what this is for.',
   };
 
-  // Card background colour based on party
-  const bgColours = {tpm:'#FFF0F3',grn:'#F0FFF4',lab:'#FFF5F5',nat:'#F0F4FF',act:'#FFFDE7',nzf:'#F5F5F5',unsure:'#FFF5E1'};
-  const bg = bgColours[topParty.key] || '#FFF5E1';
-  const trackBg = 'rgba(0,0,0,.06)';
-
   let h = '';
 
-  // THE POKEMON CARD
-  h += `<div class="card" style="background:${bg};">
-    <div class="card-frame" style="background:${bg};">
+  // THE CARD
+  h += `<div class="card" style="background:${typeBg[topParty.key] || '#FFF5E1'};">
 
-      <div class="card-header">
-        <div class="card-party-name" style="color:${topInfo.colour};">${topInfo.name}</div>
-        <div class="card-hp" style="color:${topInfo.colour};"><span>HP </span>${topParty.pct}</div>
-      </div>
+    <!-- Name / HP bar -->
+    <div class="card-name-bar" style="background:${typeBg[topParty.key]};">
+      <div class="card-party-name" style="color:${topInfo.colour};">${topInfo.name}</div>
+      <div class="card-hp"><span>HP </span>${topParty.pct}</div>
+    </div>
 
-      <div class="card-art" style="background:linear-gradient(135deg,${topInfo.colour}22,${topInfo.colour}44);">
-        <div class="card-art-icon">${partyIcons[topParty.key] || '\u2764\uFE0F'}</div>
-        <div class="card-art-label" style="background:${topInfo.colour};color:#fff;">${lvl}</div>
-      </div>
+    <!-- Illustration -->
+    <div class="card-art" style="background:${artBg[topParty.key]};">
+      <img src="${pokeImg}" style="height:130px;position:relative;z-index:1;filter:drop-shadow(0 4px 8px rgba(0,0,0,.15));" alt="" onerror="this.style.display='none'">
+      <div class="card-art-lvl">${lvl}</div>
+    </div>
 
-      <div class="card-info">
-        <div class="card-info-item">${lvl} \u00B7 ${profile.answers.length} questions</div>
-        <div class="card-info-item">${topParty.pct}% alignment</div>
-      </div>`;
+    <!-- Info bar -->
+    <div class="card-info-bar">
+      <span>${lvl} Voter</span>
+      <span>${n} questions answered</span>
+      <span>${topParty.pct}% aligned</span>
+    </div>
 
-  // Stats bars (top issues)
-  h += `<div class="card-stats">`;
-  activeDims.slice(0, 5).forEach(d => {
-    h += `<div class="card-stat">
-      <div class="card-stat-label" style="color:#666;">${d.label}</div>
-      <div class="card-stat-track" style="background:${trackBg};">
-        <div class="card-stat-fill" style="width:${d.pct}%;background:${topInfo.colour};"></div>
-      </div>
-      <div class="card-stat-val" style="color:${topInfo.colour};">${d.pct}</div>
+    <!-- Attacks = top issues -->
+    <div class="card-attacks">`;
+
+  activeDims.slice(0, 3).forEach(d => {
+    h += `<div class="card-attack">
+      <div class="card-attack-cost" style="background:${topInfo.colour}20;font-size:14px;">${dimEmoji[d.key] || '\u2B50'}</div>
+      <div class="card-attack-name">${d.label}</div>
+      <div class="card-attack-dmg" style="color:${topInfo.colour};">${d.pct}</div>
     </div>`;
   });
   h += `</div>`;
 
-  // Description
-  h += `<div class="card-desc" style="color:#888;">${partyDesc[topParty.key] || ''}</div>`;
+  // Weakness / Resistance / Retreat (other parties)
+  const sorted = [...profile.results];
+  const weakest = sorted[sorted.length - 1];
+  const weakInfo = PARTY_KEYS.find(p => p.key === weakest.key);
+  const secondInfo = PARTY_KEYS.find(p => p.key === sorted[1]?.key);
+
+  h += `<div class="card-weak-bar">
+    <div class="card-weak-item">
+      <div class="card-weak-label">Weakest on</div>
+      <div class="card-weak-val" style="color:${weakInfo?.colour || '#888'};">${weakInfo?.name.split(' ')[0] || '-'} ${weakest?.pct || 0}%</div>
+    </div>
+    <div class="card-weak-item">
+      <div class="card-weak-label">Runner up</div>
+      <div class="card-weak-val" style="color:${secondInfo?.colour || '#888'};">${secondInfo?.name.split(' ')[0] || '-'} ${sorted[1]?.pct || 0}%</div>
+    </div>
+    <div class="card-weak-item">
+      <div class="card-weak-label">Questions</div>
+      <div class="card-weak-val">${n}/${QUESTIONS.length}</div>
+    </div>
+  </div>`;
+
+  // Flavour text
+  h += `<div class="card-flavour">${partyDesc[topParty.key] || ''}</div>`;
 
   // Gap callout
   if (chosenInfo && topParty.key !== profile.chosen) {
     const chosenResult = profile.results.find(r => r.key === profile.chosen);
-    h += `<div style="padding:8px 16px;">
-      <div style="font-size:11px;font-weight:400;color:#E94560;line-height:1.5;padding:8px 10px;background:rgba(233,69,96,.06);border-radius:8px;">
+    h += `<div style="padding:0 10px 6px;">
+      <div style="font-size:10px;font-weight:400;color:#E94560;line-height:1.4;padding:6px 8px;background:rgba(233,69,96,.06);border-radius:6px;text-align:center;">
         You picked ${chosenInfo.name} (${chosenResult.pct}%) but your answers say ${topInfo.name}.
       </div>
     </div>`;
   }
 
-  // All parties row
-  h += `<div style="padding:4px 16px 8px;display:flex;gap:4px;flex-wrap:wrap;">`;
-  profile.results.forEach(r => {
-    const info = PARTY_KEYS.find(p => p.key === r.key);
-    const isTop = r.key === topParty.key;
-    h += `<div style="font-size:9px;font-weight:${isTop?'700':'500'};padding:3px 8px;border-radius:100px;background:${isTop?info.colour:'#f0f0f0'};color:${isTop?'#fff':'#999'};">${info.name.split(' ')[0]} ${r.pct}%</div>`;
-  });
-  h += `</div>`;
-
-  h += `<div class="card-bottom">
-        <div class="card-bottom-text">Radical Love \u00B7 ${new Date().getFullYear()}</div>
-        <div class="card-bottom-text" style="color:${topInfo.colour};">\u2606 ${profile.answers.length}/${QUESTIONS.length}</div>
-      </div>
-
-    </div>
+  // Set info
+  h += `<div class="card-set">
+    <span>Radical Love \u00B7 2026</span>
+    <span style="color:${topInfo.colour};">\u2605</span>
+    <span>${n}/${QUESTIONS.length}</span>
   </div>`;
+
+  h += `</div>`; // card
 
   // CTA
   const answeredToday = profile.lastAnswered === new Date().toISOString().slice(0,10);
-  const allDone = profile.answers.length >= QUESTIONS.length;
+  const allDone = n >= QUESTIONS.length;
 
   h += `<div class="card-cta">`;
   if (allDone) {
