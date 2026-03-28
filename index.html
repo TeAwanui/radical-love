@@ -267,7 +267,7 @@
     </video>
     <div class="hdr-overlay">
       <div class="hdr-wordmark">Radical <span>Love</span></div>
-      <div class="hdr-tagline">For the people. By the people.</div>
+      <div class="hdr-tagline">Challenge the narrative</div>
     </div>
   </div>
 
@@ -683,13 +683,18 @@ function learnView() {
     <button class="share-btn" style="margin-top:10px;" onclick="shareCard('dyk','${dayOfYear}')">Share this</button>
   </div>`;
 
-  // Framing
+  // The core challenge
   h += `<div class="sec">
-    <div style="font-size:13px;font-weight:400;color:#777;line-height:1.75;padding:14px;background:#fff;border-radius:10px;border-left:3px solid #E94560;">
-      This app is underpinned by Aotearoa New Zealand\u2019s founding document, <strong style="color:#222;">Te Tiriti o Waitangi</strong>.
+    <div style="background:#111;border-radius:12px;padding:18px;margin-bottom:10px;">
+      <div style="font-size:10px;font-weight:600;letter-spacing:2px;color:#E94560;text-transform:uppercase;margin-bottom:8px;">The system isn\u2019t broken</div>
+      <div style="font-size:14px;font-weight:400;color:rgba(255,255,255,.85);line-height:1.7;">It\u2019s working exactly as it was designed. Wealth flows upward. Public assets get sold. Communities get divided. The narratives we\u2019ve been fed about the economy, about crime, about who deserves what, they keep the system running.</div>
     </div>
-    <div style="font-size:12px;font-weight:400;color:#999;line-height:1.7;padding:12px 14px;background:#fff;border-radius:10px;margin-top:8px;">
-      We understand you may not know much about Te Tiriti. That\u2019s not your fault. New Zealand\u2019s education system has only recently begun to provide comprehensive teaching on this agreement between M\u0101ori tribes and the British Crown, signed in 1840. It\u2019s the foundation of this country, and understanding it changes how you see everything.
+    <div style="background:#fff;border-radius:12px;padding:16px;margin-bottom:10px;">
+      <div style="font-size:14px;font-weight:500;color:#222;line-height:1.7;margin-bottom:8px;">Te Tiriti o Waitangi was designed to protect against exactly this.</div>
+      <div style="font-size:13px;font-weight:400;color:#888;line-height:1.7;">It guaranteed that power would be shared, that communities would have authority over their own lives, and that the Crown could not act without partnership. Understanding Te Tiriti isn\u2019t just M\u0101ori history. It\u2019s everyone\u2019s protection against a system that puts profit over people.</div>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:14px;">
+      <div style="font-size:12px;font-weight:400;color:#999;line-height:1.6;">We understand you may not know much about Te Tiriti. That\u2019s not your fault. NZ\u2019s education system has only recently begun to teach it properly. But once you understand what was promised and what was taken, everything about NZ politics makes more sense.</div>
     </div>
   </div>`;
 
@@ -816,10 +821,20 @@ function pollView() {
 
 function renderOnboarding() {
   let h = '';
+
+  // The opening statement
+  h += `<div style="margin:16px 16px 0;background:#111;border-radius:12px;padding:24px 20px;">
+    <div style="font-size:18px;font-weight:500;color:#fff;line-height:1.6;margin-bottom:12px;">In 1840, an agreement was signed to protect the people of this land from unchecked power.</div>
+    <div style="font-size:14px;font-weight:400;color:rgba(255,255,255,.7);line-height:1.7;margin-bottom:8px;">Te Tiriti o Waitangi guaranteed that M\u0101ori would keep authority over their lives, their land, and their future. It was meant to be a partnership.</div>
+    <div style="font-size:14px;font-weight:400;color:rgba(255,255,255,.7);line-height:1.7;">Since then, that agreement has been broken, rewritten, and ignored to serve a system that concentrates wealth and power in fewer and fewer hands.</div>
+    <div style="font-size:14px;font-weight:500;color:#E94560;line-height:1.7;margin-top:12px;">This app exists to help you see that clearly.</div>
+  </div>`;
+
+  // Party picker
   h += `<div class="sec" id="poll-step1">
-    <div style="text-align:center;margin:20px 0 24px;">
-      <div style="font-size:22px;font-weight:500;color:#222;line-height:1.4;margin-bottom:8px;">Let\u2019s build your card</div>
-      <div style="font-size:14px;font-weight:300;color:#888;line-height:1.6;">Pick who you voted for (or who you\u2019re thinking about). No judgement,we\u2019re just getting started.</div>
+    <div style="margin:16px 0 12px;">
+      <div style="font-size:16px;font-weight:600;color:#222;margin-bottom:4px;">Who did you vote for?</div>
+      <div style="font-size:13px;font-weight:400;color:#999;">Or who are you thinking about. No judgement.</div>
     </div>`;
   PARTY_KEYS.forEach(p => {
     h += `<div class="poll-issue" onclick="pickParty('${p.key}')">
@@ -830,7 +845,7 @@ function renderOnboarding() {
     </div>`;
   });
   h += `<div class="poll-issue" onclick="pickParty('unsure')">
-    <div class="poll-issue-name" style="color:#888;">Not sure yet / didn\u2019t vote</div>
+    <div class="poll-issue-name" style="color:#888;">Not sure yet</div>
   </div></div>`;
   h += `<div class="sec" id="poll-step2" style="display:none;"></div>`;
   return h;
@@ -994,21 +1009,22 @@ function pickParty(key) {
   const container = document.getElementById('poll-step2');
   container.style.display = 'block';
   container.innerHTML = `
-    <div style="text-align:center;padding:24px 4px 16px;">
-      <div style="font-size:32px;margin-bottom:10px;">\u2764\uFE0F</div>
-      <div style="font-size:20px;font-weight:600;color:#222;margin-bottom:6px;">Nice!</div>
-      <div style="font-size:14px;font-weight:400;color:#666;line-height:1.6;margin-bottom:20px;">
-        ${partyInfo ? `You picked <strong style="color:${partyInfo.colour}">${partyName}</strong>.` : 'No worries, that\u2019s what we\u2019re here to figure out.'}
-      </div>
-      <div style="background:#fff;border-radius:12px;padding:16px;text-align:left;margin-bottom:20px;">
-        <div style="font-size:14px;font-weight:400;color:#444;line-height:1.7;">
-          Each day, I\u2019ll ask you <strong>one question</strong> as we lead up to the election. This will help you see whether ${partyInfo ? partyName : 'any party'} actually reflects what you care about.
-        </div>
-        <div style="font-size:13px;font-weight:400;color:#999;line-height:1.6;margin-top:8px;">
-          Not here to change your mind. Just here to show you what parties actually stand for, so you can vote knowing, not guessing.
+    <div style="padding:20px 4px 16px;">
+      <div style="text-align:center;margin-bottom:16px;">
+        <div style="font-size:20px;font-weight:600;color:#222;margin-bottom:4px;">Got it.</div>
+        <div style="font-size:14px;font-weight:400;color:#666;">
+          ${partyInfo ? `You picked <strong style="color:${partyInfo.colour}">${partyName}</strong>.` : 'No worries.'}
         </div>
       </div>
-      <button class="poll-go" style="margin-top:0;" onclick="showQuestion()">Let\u2019s start</button>
+      <div style="background:#fff;border-radius:12px;padding:16px;text-align:left;margin-bottom:16px;">
+        <div style="font-size:14px;font-weight:400;color:#444;line-height:1.7;margin-bottom:10px;">
+          Each day you\u2019ll get <strong>one question</strong> about a real policy issue. Your answers build a profile that shows you which parties actually match what you care about.
+        </div>
+        <div style="font-size:13px;font-weight:400;color:#999;line-height:1.6;">
+          The system we live in was designed to benefit a few. Te Tiriti was designed to protect everyone. Every question connects back to that.
+        </div>
+      </div>
+      <button class="poll-go" style="margin-top:0;" onclick="showQuestion()">First question</button>
     </div>`;
   document.getElementById('scr').scrollTop = 0;
 }
