@@ -899,11 +899,20 @@ function renderCard(profile) {
   </div>`;
   h += `</div>`; // card
 
-  // CTA buttons below card
-  h += `<div class="card-cta">
-    <button class="card-cta-btn" onclick="startQuestions()">Answer more questions</button>
-    <div class="card-cta-sub">The more you answer, the sharper your card gets</div>
-  </div>`;
+  // CTA — daily question or "all done for now"
+  const answeredToday = profile.lastAnswered === new Date().toISOString().slice(0,10);
+  const allDone = profile.answers.length >= QUESTIONS.length;
+
+  h += `<div class="card-cta">`;
+  if (allDone) {
+    h += `<div style="font-size:14px;font-weight:400;color:#888;text-align:center;padding:10px 0;">You\u2019ve answered all ${QUESTIONS.length} questions. New questions coming soon.</div>`;
+  } else if (answeredToday) {
+    h += `<div style="font-size:14px;font-weight:400;color:#888;text-align:center;padding:10px 0;">Come back tomorrow for your next question. Your card evolves daily.</div>`;
+  } else {
+    h += `<button class="card-cta-btn" onclick="startQuestions()">Today\u2019s question</button>
+      <div class="card-cta-sub">Your card evolves with every answer</div>`;
+  }
+  h += `</div>`;
   h += `<div style="text-align:center;padding-bottom:20px;"><button class="poll-reset" onclick="clearProfile()">Start fresh</button></div>`;
 
   return h + signupFooter();
@@ -919,7 +928,30 @@ function pickParty(key) {
   currentQ = 0;
   answers = [];
   document.getElementById('poll-step1').style.display = 'none';
-  showQuestion();
+
+  const partyInfo = key !== 'unsure' ? PARTY_KEYS.find(p => p.key === key) : null;
+  const partyName = partyInfo ? partyInfo.name : 'undecided';
+
+  const container = document.getElementById('poll-step2');
+  container.style.display = 'block';
+  container.innerHTML = `
+    <div style="text-align:center;padding:30px 0 10px;">
+      <div style="font-size:36px;margin-bottom:12px;">\u2764\uFE0F</div>
+      <div style="font-size:20px;font-weight:500;color:#222;margin-bottom:8px;">Nice!</div>
+      <div style="font-size:15px;font-weight:300;color:#555;line-height:1.7;margin-bottom:20px;">
+        ${partyInfo ? `You picked <strong style="color:${partyInfo.colour}">${partyName}</strong>.` : 'No worries \u2014 that\u2019s what we\u2019re here to figure out.'}
+      </div>
+      <div style="background:#FAF7F4;border-radius:12px;padding:18px;text-align:left;margin-bottom:24px;">
+        <div style="font-size:14px;font-weight:400;color:#444;line-height:1.75;">
+          Each day, I\u2019ll ask you <strong>one question</strong> as we lead up to the election. This will help you see if ${partyInfo ? partyName : 'any party'} actually reflects what you care about.
+        </div>
+        <div style="font-size:13px;font-weight:300;color:#888;line-height:1.7;margin-top:10px;">
+          It\u2019s fluid \u2014 your card will evolve as you answer. No pressure, no judgement. Just honest reflection.
+        </div>
+      </div>
+      <button class="poll-go" onclick="showQuestion()">Let\u2019s start</button>
+    </div>`;
+  document.getElementById('scr').scrollTop = 0;
 }
 
 function startQuestions() {
@@ -929,7 +961,6 @@ function startQuestions() {
     chosenParty = profile.chosen;
     answers = profile.answers;
     currentQ = answers.length < QUESTIONS.length ? answers.length : 0;
-    if (currentQ >= QUESTIONS.length) { currentQ = 0; answers = []; }
   }
   const scr = document.getElementById('scr');
   scr.innerHTML = `<div class="sec" id="poll-step2"></div>` + signupFooter();
@@ -996,8 +1027,8 @@ function answerQ(score) {
     </div>`;
   }
 
-  const isLast = currentQ >= QUESTIONS.length - 1;
-  h += `<button class="poll-go" onclick="${isLast ? 'finishPoll()' : 'nextQ()'}">${isLast ? 'See your card' : 'Next question'}</button>`;
+  // Save after every answer and return to card
+  h += `<button class="poll-go" onclick="finishPoll()">See your card</button>`;
 
   container.innerHTML = h;
   document.getElementById('scr').scrollTop = 0;
@@ -1021,8 +1052,8 @@ function finishPoll() {
   });
   results.sort((a, b) => b.pct - a.pct);
 
-  // Save profile
-  const profile = { chosen: chosenParty, answers, results, date: new Date().toISOString() };
+  // Save profile with today's date
+  const profile = { chosen: chosenParty, answers, results, date: new Date().toISOString(), lastAnswered: new Date().toISOString().slice(0,10) };
   localStorage.setItem('rl_profile', JSON.stringify(profile));
 
   // Re-render as card
