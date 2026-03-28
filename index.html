@@ -170,6 +170,28 @@
     .guide-text ul { margin: 8px 0 8px 18px; }
     .guide-text li { margin-bottom: 6px; }
 
+    /* ── POLL ── */
+    .poll-issue { background: #fff; border-radius: 12px; margin-bottom: 10px; padding: 16px; cursor: pointer; transition: all .15s; border: 2px solid transparent; }
+    .poll-issue:hover { border-color: #E94560; }
+    .poll-issue.selected { border-color: #E94560; background: #FFF5F7; }
+    .poll-issue-name { font-size: 15px; font-weight: 500; color: #222; margin-bottom: 2px; }
+    .poll-issue-desc { font-size: 12px; font-weight: 400; color: #888; line-height: 1.5; }
+    .poll-issue .check { float: right; width: 24px; height: 24px; border-radius: 50%; border: 2px solid #ddd; display: flex; align-items: center; justify-content: center; font-size: 14px; color: transparent; transition: all .15s; flex-shrink: 0; }
+    .poll-issue.selected .check { background: #E94560; border-color: #E94560; color: #fff; }
+    .poll-go { width: 100%; padding: 14px; border: none; background: #E94560; color: #fff; font-family: 'Roboto', sans-serif; font-size: 15px; font-weight: 500; border-radius: 10px; cursor: pointer; transition: filter .15s; margin-top: 16px; }
+    .poll-go:hover { filter: brightness(1.15); }
+    .poll-go:disabled { background: #ddd; color: #999; cursor: default; filter: none; }
+    .poll-result { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 10px; }
+    .poll-result-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .poll-result-name { font-size: 16px; font-weight: 500; color: #222; }
+    .poll-result-pct { font-size: 18px; font-weight: 700; }
+    .poll-result-bar { height: 8px; background: #f0ede8; border-radius: 100px; margin-bottom: 10px; overflow: hidden; }
+    .poll-result-fill { height: 100%; border-radius: 100px; transition: width .6s ease; }
+    .poll-result-detail { font-size: 12px; font-weight: 400; color: #666; line-height: 1.7; }
+    .poll-result-match { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 100px; display: inline-block; margin-bottom: 8px; }
+    .poll-reset { background: none; border: 1.5px solid #ddd; color: #888; font-family: 'Roboto', sans-serif; font-size: 13px; font-weight: 500; padding: 10px 20px; border-radius: 100px; cursor: pointer; transition: all .15s; margin-top: 12px; }
+    .poll-reset:hover { border-color: #E94560; color: #E94560; }
+
     /* ── STANCE ── */
     .stance { font-size: 13px; font-weight: 400; color: #555; line-height: 1.75; padding: 16px; background: linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%); border-radius: 12px; margin-bottom: 16px; color: rgba(255,255,255,.9); }
     .stance strong { font-weight: 600; color: #95D5B2; }
@@ -217,11 +239,9 @@
   </div>
 
   <div class="tabs">
-    <button class="tab on" onclick="go(0,this)"><span class="tab-emoji">&#x1F525;</span>Today</button>
-    <button class="tab" onclick="go(1,this)"><span class="tab-emoji">&#x1F4AC;</span>Toolkit</button>
-    <button class="tab" onclick="go(2,this)"><span class="tab-emoji">&#x1F4DC;</span>Te Tiriti</button>
-    <button class="tab" onclick="go(3,this)"><span class="tab-emoji">&#x270A;</span>Action</button>
-    <button class="tab" onclick="go(4,this)"><span class="tab-emoji">&#x1F441;</span>Watch</button>
+    <button class="tab on" onclick="go(0,this)">Poll</button>
+    <button class="tab" onclick="go(1,this)">Learn</button>
+    <button class="tab" onclick="go(2,this)">Watch</button>
   </div>
 
   <div class="scr" id="scr"></div>
@@ -321,6 +341,82 @@ const SEED_BILLS = [
   { id:'fast-track-approvals', name:'Fast-Track Approvals Bill', party:'National', stage:'passed', summary:'Bypasses environmental review for major development projects. Ministers can approve directly, overriding environmental protections and Treaty obligations.', submissionUrl:'' },
   { id:'smokefree-repeal', name:'Smokefree Environments Repeal', party:'National', stage:'passed', summary:'Repealed world-leading smokefree laws that would have created a smoke-free generation. Disproportionately affects M\u0101ori and Pacific communities.', submissionUrl:'' },
   { id:'fair-pay-repeal', name:'Fair Pay Agreements Repeal', party:'National', stage:'passed', summary:'Repealed Fair Pay Agreements before they took effect. Would have set industry-wide minimum conditions, benefiting low-wage workers.', submissionUrl:'' },
+];
+
+/* ── POLL ISSUES + PARTY POSITIONS ── */
+const POLL_ISSUES = [
+  { id:'tiriti', name:'Te Tiriti o Waitangi', desc:'Honouring the partnership, co-governance, M\u0101ori sovereignty',
+    positions: {
+      'Te P\u0101ti M\u0101ori': { stance:'strong', text:'Champions tino rangatiratanga. Opposes Treaty Principles Bill. Advocates for constitutional transformation based on Te Tiriti.' },
+      'Green Party': { stance:'strong', text:'Supports co-governance and Treaty-based policy. Opposed Treaty Principles Bill.' },
+      'Labour Party': { stance:'moderate', text:'Supports Treaty settlements and Waitangi Tribunal but cautious on co-governance language.' },
+      'National Party': { stance:'weak', text:'Supported Treaty Principles Bill to first reading. Favours narrowing Treaty interpretation.' },
+      'ACT Party': { stance:'oppose', text:'Introduced the Treaty Principles Bill. Wants to redefine Treaty principles to remove specific M\u0101ori rights.' },
+      'NZ First': { stance:'weak', text:'Supported Treaty Principles Bill to select committee. Opposes co-governance.' },
+    }},
+  { id:'health', name:'Hauora | Health', desc:'Public healthcare, M\u0101ori health equity, mental health funding',
+    positions: {
+      'Te P\u0101ti M\u0101ori': { stance:'strong', text:'Advocates for M\u0101ori health authority, by-M\u0101ori-for-M\u0101ori health services. Champions health equity.' },
+      'Green Party': { stance:'strong', text:'Supports fully funded public healthcare, mental health investment, and addressing root causes of health inequity.' },
+      'Labour Party': { stance:'moderate', text:'Established M\u0101ori Health Authority (Te Aka Whai Ora). Increased mental health funding but fell short of promises.' },
+      'National Party': { stance:'weak', text:'Disestablished Te Aka Whai Ora. Supports public-private partnerships in health. Focus on targets over equity.' },
+      'ACT Party': { stance:'weak', text:'Wants market-based health reforms. Opposed M\u0101ori Health Authority.' },
+      'NZ First': { stance:'weak', text:'Supported disestablishing M\u0101ori Health Authority.' },
+    }},
+  { id:'education', name:'M\u0101tauranga | Education', desc:'Public schools, te reo, charter schools, university fees',
+    positions: {
+      'Te P\u0101ti M\u0101ori': { stance:'strong', text:'Champions k\u014dhanga reo, kura kaupapa, bilingual education. Education through a te ao M\u0101ori lens.' },
+      'Green Party': { stance:'strong', text:'Free tertiary education, well-funded public schools, opposes charter schools.' },
+      'Labour Party': { stance:'moderate', text:'Increased school funding, fees-free first year tertiary. Closed charter schools (later reopened by National).' },
+      'National Party': { stance:'weak', text:'Reintroduced charter schools. Supports performance-based education funding.' },
+      'ACT Party': { stance:'weak', text:'Strongly supports charter schools and school choice. Wants competition in education.' },
+      'NZ First': { stance:'moderate', text:'Supports public education but not strongly. No clear equity position.' },
+    }},
+  { id:'economy', name:'\u014Changa | Economy', desc:'Wages, housing, tax, inequality, workers\u2019 rights',
+    positions: {
+      'Te P\u0101ti M\u0101ori': { stance:'strong', text:'Advocates for living wage, M\u0101ori economic development, wealth redistribution, and addressing systemic economic exclusion.' },
+      'Green Party': { stance:'strong', text:'Wealth tax, living wage, Fair Pay Agreements, strong worker protections. Most redistributive economic policy.' },
+      'Labour Party': { stance:'moderate', text:'Introduced Fair Pay Agreements (repealed by National). Raised minimum wage. Moderate redistribution.' },
+      'National Party': { stance:'weak', text:'Tax cuts favouring higher earners. Repealed Fair Pay Agreements. Opposes wealth tax.' },
+      'ACT Party': { stance:'oppose', text:'Flat tax advocacy, minimal regulation, opposes minimum wage increases. Most pro-corporate economic policy.' },
+      'NZ First': { stance:'moderate', text:'Populist economic messaging but supports corporate-friendly policy in coalition.' },
+    }},
+  { id:'environment', name:'Taiao | Environment', desc:'Climate action, freshwater, conservation, fast-track approvals',
+    positions: {
+      'Te P\u0101ti M\u0101ori': { stance:'strong', text:'Kaitiakitanga-based environmental policy. Opposes Fast-Track Approvals. Advocates for iwi authority over waterways.' },
+      'Green Party': { stance:'strong', text:'Strongest climate policy. Carbon zero by 2040. Opposes Fast-Track Approvals. Champions biodiversity protection.' },
+      'Labour Party': { stance:'moderate', text:'Declared climate emergency. Moderate emissions targets. Some environmental protections weakened in practice.' },
+      'National Party': { stance:'weak', text:'Passed Fast-Track Approvals Bill bypassing environmental review. Weakened freshwater standards.' },
+      'ACT Party': { stance:'oppose', text:'Wants to repeal Zero Carbon Act. Opposes most environmental regulation as economic burden.' },
+      'NZ First': { stance:'weak', text:'Supported Fast-Track Approvals. Sceptical of climate targets.' },
+    }},
+  { id:'housing', name:'Whare | Housing', desc:'Affordability, social housing, renters\u2019 rights, homelessness',
+    positions: {
+      'Te P\u0101ti M\u0101ori': { stance:'strong', text:'Advocates for pap\u0101kainga housing, iwi-led housing, rent controls, and addressing M\u0101ori homelessness.' },
+      'Green Party': { stance:'strong', text:'Rent controls, large-scale social housing build, capital gains tax, stronger tenant protections.' },
+      'Labour Party': { stance:'moderate', text:'Built social housing but didn\u2019t meet targets. Removed interest deductibility (later reversed). KiwiBuild underdelivered.' },
+      'National Party': { stance:'weak', text:'Restored interest deductibility for landlords. Market-led approach. Opposes rent controls.' },
+      'ACT Party': { stance:'weak', text:'Deregulation-focused. Opposes social housing expansion. Wants to reduce council planning rules.' },
+      'NZ First': { stance:'moderate', text:'Supports some housing investment but no strong equity position.' },
+    }},
+  { id:'rangatahi', name:'Rangatahi | Youth', desc:'Youth mental health, employment, education pathways, political voice',
+    positions: {
+      'Te P\u0101ti M\u0101ori': { stance:'strong', text:'Champions rangatahi voice in policy. Supports lowering voting age, youth employment programmes, and cultural identity programmes.' },
+      'Green Party': { stance:'strong', text:'Supports lowering voting age to 16. Free public transport for under-25s. Youth mental health investment.' },
+      'Labour Party': { stance:'moderate', text:'Increased youth mental health funding. Fees-free first year. But youth engagement could go further.' },
+      'National Party': { stance:'weak', text:'Youth boot camp approach to youth offending. Limited youth-specific policy beyond education.' },
+      'ACT Party': { stance:'weak', text:'Opposes lowering voting age. Market-based approach to youth employment.' },
+      'NZ First': { stance:'weak', text:'Conservative approach to youth policy. Opposes lowering voting age.' },
+    }},
+  { id:'justice', name:'Ture | Justice', desc:'Prisons, policing, M\u0101ori incarceration, restorative justice',
+    positions: {
+      'Te P\u0101ti M\u0101ori': { stance:'strong', text:'Advocates for reducing M\u0101ori incarceration, kaupapa M\u0101ori justice, closing prisons, and addressing root causes.' },
+      'Green Party': { stance:'strong', text:'Restorative justice focus. Reduce prison population. Address poverty as root cause of crime.' },
+      'Labour Party': { stance:'moderate', text:'Some restorative justice investment. Halo project. But prison population remained high.' },
+      'National Party': { stance:'oppose', text:'Tough on crime. More police, longer sentences. Youth boot camps.' },
+      'ACT Party': { stance:'oppose', text:'Three strikes policy. Longer sentences. Opposes cultural programmes in prisons.' },
+      'NZ First': { stance:'oppose', text:'Tough on crime rhetoric. Supports increased policing and longer sentences.' },
+    }},
 ];
 
 const GUIDE = [
@@ -449,7 +545,7 @@ function signupFooter() {
   <div class="foot"><div class="foot-text">Built with aroha in Aotearoa</div></div>`;
 }
 
-function todayView() {
+function learnView() {
   const now = new Date();
   const dayOfYear = Math.floor((now - new Date(now.getFullYear(),0,0)) / 86400000);
   const q = QUOTES[dayOfYear % QUOTES.length];
@@ -457,8 +553,9 @@ function todayView() {
 
   let h = '';
 
+  // Daily quote
   h += `<div class="quote-hero">
-    <div class="quote-label">Quote of the Day</div>
+    <div class="quote-label">K\u014drero o te R\u0101</div>
     <div class="quote-text">\u201C${q.q}\u201D</div>
     <div class="quote-attr">\u2014 ${q.a}</div>
     <div class="quote-src">${q.src}</div>
@@ -468,33 +565,9 @@ function todayView() {
     </div>
   </div>`;
 
-  h += `<div class="sec"><div class="lbl">What\u2019s happening in Parliament</div>
-    <div class="intro">Bills being pushed through right now. Stay informed \u2014 and push back.</div>`;
-  SEED_BILLS.forEach(b => {
-    const sc = b.stage.replace(/\s+/g,'-');
-    h += `<div class="bill-card">
-      <div class="bill-name">${b.name}</div>
-      <div class="bill-meta"><span class="bill-badge ${sc}">${b.stage.replace(/-/g,' ')}</span><span class="bill-badge party">${b.party}</span></div>
-      <div class="bill-summary">${b.summary}</div>
-      <div class="bill-actions">
-        ${b.submissionUrl ? `<a class="bill-link" href="${b.submissionUrl}" target="_blank" rel="noopener">Make a Submission</a>` : ''}
-        <button class="share-btn share-btn-outline" onclick="shareCard('bill','${b.id}')">Share</button>
-      </div>
-    </div>`;
-  });
-  h += `</div>`;
-
-  h += `<div class="sec" style="padding-bottom:20px;">
-    <div class="lbl">Latest from the Beehive</div>
-    <div id="releases-list" class="intro">Loading government releases\u2026</div>
-  </div>`;
-
-  return h + signupFooter();
-}
-
-function toolkitView() {
-  let h = `<div class="sec"><div class="lbl">Conversation Toolkit</div>
-    <div class="intro">Heard something that didn\u2019t sound right? Tap a topic for the data-backed response. Every claim cited.</div>`;
+  // Conversation Toolkit
+  h += `<div class="sec"><div class="lbl">Conversation Toolkit</div>
+    <div class="intro">Heard something that didn\u2019t sound right? Tap for the data-backed response.</div>`;
   TALKING_POINTS.forEach((tp,i) => {
     h += `<div class="tk-card">
       <div class="tk-header" onclick="toggleTk(${i})">
@@ -512,11 +585,8 @@ function toolkitView() {
     </div>`;
   });
   h += `</div>`;
-  return h + signupFooter();
-}
 
-function tiritiView() {
-  let h = '';
+  // Te Tiriti
   h += `<div class="tiriti-hero">
     <div class="tiriti-hero-lbl">${TIRITI.whakaputanga.year}</div>
     <div class="tiriti-hero-title">${TIRITI.whakaputanga.title}</div>
@@ -552,56 +622,175 @@ function tiritiView() {
     h += `<div class="insight-card"><div class="insight-quote">\u201C${a.insight}\u201D</div><div class="insight-author">${a.author}</div><div class="insight-src">${a.src}</div></div>`;
   });
   h += `</div>`;
+
   return h + signupFooter();
 }
 
-function ropuView() {
+function pollView() {
   let h = '';
-  h += `<div class="sec"><div class="stance"><strong>Radical Love</strong> stands for non-violent direct action and civic participation. We uphold the right to defend <strong>mana motuhake</strong> \u2014 the inherent sovereignty of tangata whenua \u2014 as guaranteed by He Whakap\u016btanga and Te Tiriti. Resistance to the suppression of indigenous sovereignty is not violence. It is <strong>tino rangatiratanga</strong>.</div></div>`;
 
-  h += `<div class="sec"><div class="lbl">Party Scorecard</div>
-    <div class="intro">How community-aligned is each party? Based on voting records and funding sources. All from public data.</div>`;
-  PARTIES.forEach(p => {
-    const pct = (p.score/10)*100;
-    const scoreCol = p.score >= 7 ? '#2E7D32' : p.score >= 4 ? '#F9A825' : '#C62828';
-    h += `<div class="party-card">
-      <div class="party-top"><span class="party-name">${p.name}</span><span class="party-score-num" style="color:${scoreCol}">${p.score}/10</span></div>
-      <div class="party-bar"><div class="party-bar-fill" style="width:${pct}%;background:${p.colour};"></div></div>
-      <div class="party-votes">`;
-    p.votes.forEach(v => {
-      const icon = v.vote.includes('opposed') ? '<span class="n">\u2717</span>' : (v.vote.includes('introduced') ? '<span class="n">\u2605</span>' : '<span class="y">\u2713</span>');
-      h += `<div class="party-vote">${icon} ${v.vote.charAt(0).toUpperCase()+v.vote.slice(1)}: ${v.bill} (${v.y})</div>`;
-    });
-    h += `</div><div class="party-donors-lbl">Funding</div>`;
-    p.donors.forEach(d => { h += `<div class="party-donor">${d}</div>`; });
-    h += `<div class="party-source">${p.source}</div>
-      <button class="share-btn share-btn-outline" style="margin-top:8px;" onclick="shareCard('party','${p.name.replace(/\s+/g,'-').toLowerCase()}')">Share</button></div>`;
+  // Intro
+  h += `<div class="sec">
+    <div class="lbl">Who Actually Represents You?</div>
+    <div class="intro">Cut through the soundbites. Pick the issues that matter to you \u2014 we\u2019ll show you where each party actually stands. Based on voting records, not campaign promises.</div>
+    <div style="font-size:12px;font-weight:400;color:#999;line-height:1.6;margin-bottom:16px;padding:12px;background:#FAF7F4;border-radius:8px;border-left:3px solid #E94560;">
+      <strong style="color:#E94560;">Remember:</strong> Parties serve a system built on colonial capitalism. None of them are the revolution \u2014 but some do less harm than others. Know who\u2019s who so you can push from an informed position.
+    </div>
+  </div>`;
+
+  // Issue selection
+  h += `<div class="sec" id="poll-select">
+    <div style="font-size:13px;font-weight:500;color:#555;margin-bottom:12px;">Select the issues that matter most to you (pick 3+)</div>`;
+  POLL_ISSUES.forEach(iss => {
+    h += `<div class="poll-issue" id="pi-${iss.id}" onclick="toggleIssue('${iss.id}')">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div><div class="poll-issue-name">${iss.name}</div><div class="poll-issue-desc">${iss.desc}</div></div>
+        <div class="check">\u2713</div>
+      </div>
+    </div>`;
   });
-  h += `</div>`;
+  h += `<button class="poll-go" id="poll-go-btn" disabled onclick="runPoll()">Select at least 3 issues</button></div>`;
 
-  h += `<div class="sec" style="padding-bottom:20px;"><div class="lbl">Organising Guide</div>
-    <div class="intro">Practical stuff. How to protest, submit, organise, stay safe.</div>`;
+  // Results container (hidden until poll runs)
+  h += `<div class="sec" id="poll-results" style="display:none;padding-bottom:20px;"></div>`;
+
+  // Organising guide below
+  h += `<div class="sec" style="padding-bottom:20px;"><div class="lbl">Take Action</div>
+    <div class="intro">Now you know who stands where \u2014 here\u2019s how to make your voice count.</div>`;
   GUIDE.forEach((g,i) => {
     h += `<div class="guide-card">
       <div class="guide-header" onclick="toggleGuide(${i})">
-        <span class="guide-emoji">${g.emoji}</span><span class="guide-title">${g.title}</span>
+        <span class="guide-title">${g.title}</span>
         <span class="guide-arrow" id="guide-arrow-${i}">\u25BE</span>
       </div>
       <div class="guide-body" id="guide-body-${i}"><div class="guide-text">${g.body}</div></div>
     </div>`;
   });
   h += `</div>`;
+
   return h + signupFooter();
 }
 
+/* ── POLL LOGIC ── */
+let selectedIssues = new Set();
 
-function watchView() {
+function toggleIssue(id) {
+  const el = document.getElementById('pi-' + id);
+  if (selectedIssues.has(id)) {
+    selectedIssues.delete(id);
+    el.classList.remove('selected');
+  } else {
+    selectedIssues.add(id);
+    el.classList.add('selected');
+  }
+  const btn = document.getElementById('poll-go-btn');
+  if (selectedIssues.size >= 3) {
+    btn.disabled = false;
+    btn.textContent = `Show me who matches (${selectedIssues.size} issues)`;
+  } else {
+    btn.disabled = true;
+    btn.textContent = `Select at least 3 issues (${selectedIssues.size} selected)`;
+  }
+}
+
+function runPoll() {
+  const partyNames = ['Te P\u0101ti M\u0101ori','Green Party','Labour Party','National Party','ACT Party','NZ First'];
+  const stanceScore = { strong: 3, moderate: 2, weak: 1, oppose: 0 };
+  const stanceLabel = { strong: 'Strongly aligned', moderate: 'Somewhat aligned', weak: 'Weakly aligned', oppose: 'Opposes your position' };
+  const stanceCol = { strong: '#2E7D32', moderate: '#F9A825', weak: '#E65100', oppose: '#C62828' };
+
+  // Calculate scores
+  const results = partyNames.map(name => {
+    let total = 0;
+    let max = 0;
+    let details = [];
+    selectedIssues.forEach(issId => {
+      const iss = POLL_ISSUES.find(i => i.id === issId);
+      const pos = iss.positions[name];
+      if (pos) {
+        total += stanceScore[pos.stance];
+        max += 3;
+        details.push({ issue: iss.name, stance: pos.stance, text: pos.text });
+      }
+    });
+    const pct = max > 0 ? Math.round((total / max) * 100) : 0;
+    const party = PARTIES.find(p => p.name === name);
+    return { name, pct, details, colour: party ? party.colour : '#888' };
+  });
+
+  results.sort((a, b) => b.pct - a.pct);
+
+  // Render results
+  let h = `<div class="lbl">Your Results</div>
+    <div class="intro">Based on your ${selectedIssues.size} selected issues. Ranked by how closely each party\u2019s <strong>actual voting record</strong> aligns with community-positive positions on these issues.</div>`;
+
+  results.forEach((r, i) => {
+    const matchLabel = r.pct >= 75 ? 'Strong match' : r.pct >= 50 ? 'Partial match' : r.pct >= 25 ? 'Weak match' : 'Poor match';
+    const matchBg = r.pct >= 75 ? '#E8F5EE' : r.pct >= 50 ? '#FFF8E1' : r.pct >= 25 ? '#FFF3E0' : '#FFEBEE';
+    const matchCol = r.pct >= 75 ? '#1B5E3A' : r.pct >= 50 ? '#856404' : r.pct >= 25 ? '#E65100' : '#C62828';
+
+    h += `<div class="poll-result">
+      <div class="poll-result-top">
+        <span class="poll-result-name">${i === 0 ? '\u2B50 ' : ''}${r.name}</span>
+        <span class="poll-result-pct" style="color:${matchCol}">${r.pct}%</span>
+      </div>
+      <div class="poll-result-bar"><div class="poll-result-fill" style="width:${r.pct}%;background:${r.colour};"></div></div>
+      <span class="poll-result-match" style="background:${matchBg};color:${matchCol};">${matchLabel}</span>`;
+
+    r.details.forEach(d => {
+      const col = stanceCol[d.stance];
+      h += `<div class="poll-result-detail"><strong style="color:${col}">${stanceLabel[d.stance]}</strong> on ${d.issue}: ${d.text}</div>`;
+    });
+
+    h += `<button class="share-btn share-btn-outline" style="margin-top:10px;" onclick="shareCard('party','${r.name.replace(/\s+/g,'-').toLowerCase()}')">Share</button>
+    </div>`;
+  });
+
+  h += `<div style="text-align:center;"><button class="poll-reset" onclick="resetPoll()">Start over</button></div>`;
+
+  document.getElementById('poll-results').innerHTML = h;
+  document.getElementById('poll-results').style.display = 'block';
+  document.getElementById('poll-select').style.display = 'none';
+
+  // Scroll to results
+  document.getElementById('scr').scrollTop = 0;
+}
+
+function resetPoll() {
+  selectedIssues.clear();
+  // Re-render the whole tab
+  const tabs = document.querySelectorAll('.tab');
+  go(0, tabs[0]);
+}
+
+
+function watchMergedView() {
   let h = '';
 
-  // Intro
-  h += `<div class="sec"><div class="lbl">Matakitaki \u00B7 Watch</div>
-    <div class="intro">What the right is saying, why it sounds convincing, and how to respond. Know the playbook.</div>
+  // Bills
+  h += `<div class="sec"><div class="lbl">What\u2019s happening in Parliament</div>
+    <div class="intro">Bills being pushed through right now. Stay informed \u2014 and push back.</div>`;
+  SEED_BILLS.forEach(b => {
+    const sc = b.stage.replace(/\s+/g,'-');
+    h += `<div class="bill-card">
+      <div class="bill-name">${b.name}</div>
+      <div class="bill-meta"><span class="bill-badge ${sc}">${b.stage.replace(/-/g,' ')}</span><span class="bill-badge party">${b.party}</span></div>
+      <div class="bill-summary">${b.summary}</div>
+      <div class="bill-actions">
+        ${b.submissionUrl ? `<a class="bill-link" href="${b.submissionUrl}" target="_blank" rel="noopener">Make a Submission</a>` : ''}
+        <button class="share-btn share-btn-outline" onclick="shareCard('bill','${b.id}')">Share</button>
+      </div>
+    </div>`;
+  });
+  h += `</div>`;
+
+  // Beehive releases
+  h += `<div class="sec">
+    <div class="lbl">Latest from the Beehive</div>
+    <div id="releases-list" class="intro">Loading government releases\u2026</div>
   </div>`;
+
+  // Narratives
 
   // Narratives
   h += `<div class="sec"><div class="lbl">This Week\u2019s Narratives</div>`;
@@ -671,7 +860,7 @@ function toggleWatch(i) {
  * APP LOGIC
  * ══════════════════════════════════════════════════════════════════════════════ */
 
-const views = [todayView, toolkitView, tiritiView, ropuView, watchView];
+const views = [pollView, learnView, watchMergedView];
 
 function go(i, el) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
@@ -679,7 +868,7 @@ function go(i, el) {
   const scr = document.getElementById('scr');
   scr.innerHTML = views[i]();
   scr.scrollTop = 0;
-  if (i === 0) fetchReleases();
+  if (i === 2) fetchReleases();
 }
 
 function toggleTk(i) {
@@ -820,8 +1009,7 @@ function setDate() {
 }
 
 setDate();
-document.getElementById('scr').innerHTML = todayView();
-fetchReleases();
+document.getElementById('scr').innerHTML = pollView();
 
 if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
 </script>
