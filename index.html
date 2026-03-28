@@ -757,7 +757,8 @@ function renderCard(profile) {
   const topInfo = PARTY_KEYS.find(p => p.key === topParty.key);
 
   // Issue areas for spectrum
-  const areas = ['Te Tiriti','\u014Changa','Ture','Taiao','M\u0101tauranga','Rangatahi','Hauora','Whare'];
+  const areas = ['Te Tiriti','\u014Changa','Ture','Taiao','M\u0101tauranga','Rangatahi','Hauora','Whare','Community'];
+  const areaEnglish = {'Te Tiriti':'Treaty','\u014Changa':'Economy','Ture':'Justice','Taiao':'Environment','M\u0101tauranga':'Education','Rangatahi':'Youth','Hauora':'Health','Whare':'Housing','Community':'Community'};
   const areaScores = {};
   areas.forEach(a => { areaScores[a] = { user: 0, count: 0 }; });
   profile.answers.forEach(ans => {
@@ -820,7 +821,7 @@ function renderCard(profile) {
     });
 
     h += `<div class="card-spec-row">
-      <div class="card-spec-label">${area}</div>
+      <div class="card-spec-label">${areaEnglish[area] || area}</div>
       <div class="card-spec-track">
         <div class="card-spec-fill" style="width:${userPct}%;background:${bestParty ? bestParty.colour : '#E94560'};border-radius:100px;"></div>
       </div>
