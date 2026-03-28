@@ -837,121 +837,105 @@ function renderOnboarding() {
 }
 
 function renderCard(profile) {
-  const now = new Date();
-  const dayOfYear = Math.floor((now - new Date(now.getFullYear(),0,0)) / 86400000);
-  const q = QUOTES[dayOfYear % QUOTES.length];
-  const originLabel = {aotearoa:'Aotearoa',pacific:'Pacific',indigenous:'Indigenous',intl:'International'};
-
   const topParty = profile.results[0];
   const chosenInfo = profile.chosen !== 'unsure' ? PARTY_KEYS.find(p => p.key === profile.chosen) : null;
   const topInfo = PARTY_KEYS.find(p => p.key === topParty.key);
 
-  // Issue areas for spectrum — using dim/dimLabel from new question bank
+  // Get top 3 issues the user cares most about
   const dims = [{key:'treaty',label:'Treaty'},{key:'whanau',label:'Wh\u0101nau'},{key:'economy',label:'Economy'},{key:'justice',label:'Justice'},{key:'environ',label:'Environment'},{key:'education',label:'Education'},{key:'health',label:'Health'},{key:'housing',label:'Housing'}];
   const dimScores = {};
   dims.forEach(d => { dimScores[d.key] = { user: 0, count: 0 }; });
   profile.answers.forEach(ans => {
     const qq = QUESTIONS[ans.qIdx];
     if (dimScores[qq.dim]) {
-      dimScores[qq.dim].user += ans.score / 4; // 5-point scale now
+      dimScores[qq.dim].user += ans.score / 4;
       dimScores[qq.dim].count++;
     }
   });
 
+  // Sort dimensions by engagement (most answered + highest scores)
+  const activeDims = dims.filter(d => dimScores[d.key].count > 0)
+    .map(d => ({ ...d, pct: Math.round((dimScores[d.key].user / dimScores[d.key].count) * 100), count: dimScores[d.key].count }))
+    .sort((a,b) => b.count - a.count || b.pct - a.pct);
+  const top3 = activeDims.slice(0, 3);
+
   let h = '';
 
-  // THE CARD
+  // SIMPLE CARD
   h += `<div class="card">
     <div class="card-inner">
       <div class="card-top">
-        <div class="card-type">Your Political Profile</div>
-        <div class="card-level">${profile.answers.length} questions answered</div>
+        <div class="card-type">Your Pulse</div>
+        <div class="card-level">${profile.answers.length} answered</div>
       </div>
 
-      <div class="card-name">Your heart says\u2026</div>
-      <div class="card-party" style="color:${topInfo.colour};font-weight:600;font-size:18px;">${topInfo.name},${topParty.pct}% match</div>`;
+      <div style="font-size:13px;font-weight:400;color:rgba(255,255,255,.5);margin-bottom:4px;">Based on your answers, you align most with</div>
+      <div style="color:${topInfo.colour};font-weight:700;font-size:24px;margin-bottom:4px;">${topInfo.name}</div>
+      <div style="font-size:14px;font-weight:500;color:rgba(255,255,255,.7);margin-bottom:16px;">${topParty.pct}% match</div>`;
 
-  // Gap callout if different from chosen
+  // Gap callout
   if (chosenInfo && topParty.key !== profile.chosen) {
     const chosenResult = profile.results.find(r => r.key === profile.chosen);
-    h += `<div style="background:rgba(233,69,96,.15);border-radius:8px;padding:10px 12px;margin-bottom:14px;">
-      <div style="font-size:12px;font-weight:400;color:rgba(255,255,255,.85);line-height:1.5;">You picked <strong>${chosenInfo.name}</strong> (${chosenResult.pct}% alignment) but based on your answers, <strong style="color:${topInfo.colour}">${topInfo.name}</strong> (${topResult.pct}%) most closely reflects what you care about. This isn\u2019t about telling you who to vote for,it\u2019s about making sure you know.</div>
+    h += `<div style="background:rgba(233,69,96,.12);border-radius:8px;padding:10px 12px;margin-bottom:14px;">
+      <div style="font-size:12px;font-weight:400;color:rgba(255,255,255,.8);line-height:1.5;">You picked ${chosenInfo.name} (${chosenResult.pct}%) but your answers point to ${topInfo.name}.</div>
     </div>`;
   }
 
-  // Daily quote inside card
-  h += `<div style="border-top:1px solid rgba(255,255,255,.1);padding-top:12px;margin-bottom:14px;">
-    <div style="font-size:9px;font-weight:500;letter-spacing:2px;color:#E94560;text-transform:uppercase;margin-bottom:6px;">K\u014drero o te R\u0101</div>
-    <div class="card-quote">\u201C${q.q}\u201D</div>
-    <div class="card-quote-attr">\u2014 ${q.a} \u00B7 <span style="color:rgba(255,255,255,.3);">${originLabel[q.origin]}</span></div>
-  </div>`;
-
-  // Issue spectrum
-  h += `<div style="border-top:1px solid rgba(255,255,255,.1);padding-top:12px;">
-    <div style="font-size:9px;font-weight:500;letter-spacing:2px;color:rgba(255,255,255,.4);text-transform:uppercase;margin-bottom:10px;">Your Issue Map</div>
-    <div class="card-spectrum">`;
-
-  dims.forEach(dim => {
-    const data = dimScores[dim.key];
-    if (data.count === 0) return;
-    const userPct = Math.round((data.user / data.count) * 100);
-    // Find which party is closest on this dimension
-    let bestParty = null; let bestDiff = 999;
-    PARTY_KEYS.forEach(pk => {
-      let partyTotal = 0; let partyCount = 0;
-      profile.answers.forEach(ans => {
-        const qq = QUESTIONS[ans.qIdx];
-        if (qq.dim === dim.key) { partyTotal += qq.scores[pk.key] / 3; partyCount++; }
+  // Top 3 issues
+  if (top3.length > 0) {
+    h += `<div style="border-top:1px solid rgba(255,255,255,.1);padding-top:12px;">
+      <div style="font-size:9px;font-weight:600;letter-spacing:2px;color:rgba(255,255,255,.4);text-transform:uppercase;margin-bottom:10px;">Your top issues</div>`;
+    top3.forEach(d => {
+      // Find closest party on this issue
+      let bestParty = null; let bestDiff = 999;
+      PARTY_KEYS.forEach(pk => {
+        let pt = 0; let pc = 0;
+        profile.answers.forEach(ans => {
+          const qq = QUESTIONS[ans.qIdx];
+          if (qq.dim === d.key) { pt += qq.scores[pk.key] / 3; pc++; }
+        });
+        if (pc > 0) { const diff = Math.abs((pt/pc) - (dimScores[d.key].user / dimScores[d.key].count)); if (diff < bestDiff) { bestDiff = diff; bestParty = pk; } }
       });
-      if (partyCount > 0) {
-        const diff = Math.abs((partyTotal / partyCount) - (data.user / data.count));
-        if (diff < bestDiff) { bestDiff = diff; bestParty = pk; }
-      }
+      h += `<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+        <div style="width:6px;height:6px;border-radius:50%;background:${bestParty ? bestParty.colour : '#E94560'};flex-shrink:0;"></div>
+        <div style="font-size:14px;font-weight:500;color:#fff;flex:1;">${d.label}</div>
+        <div style="font-size:12px;font-weight:600;color:${bestParty ? bestParty.colour : '#E94560'};">${d.pct}%</div>
+      </div>`;
     });
+    h += `</div>`;
+  }
 
-    h += `<div class="card-spec-row">
-      <div class="card-spec-label">${dim.label}</div>
-      <div class="card-spec-track">
-        <div class="card-spec-fill" style="width:${userPct}%;background:${bestParty ? bestParty.colour : '#E94560'};border-radius:100px;"></div>
-      </div>
-      <div style="font-size:10px;color:${bestParty ? bestParty.colour : '#E94560'};font-weight:600;width:28px;text-align:right;">${userPct}%</div>
-    </div>`;
-  });
-  h += `</div></div>`;
-
-  // Party overlap list
-  h += `<div class="card-overlap">
-    <div class="card-overlap-title">You overlap with</div>`;
+  // All parties
+  h += `<div style="border-top:1px solid rgba(255,255,255,.1);padding-top:12px;margin-top:8px;">
+    <div style="font-size:9px;font-weight:600;letter-spacing:2px;color:rgba(255,255,255,.4);text-transform:uppercase;margin-bottom:8px;">All parties</div>`;
   profile.results.forEach(r => {
     const info = PARTY_KEYS.find(p => p.key === r.key);
-    const isChosen = r.key === profile.chosen;
-    h += `<div class="card-overlap-row">
-      <div class="card-overlap-dot" style="background:${info.colour};"></div>
-      <div class="card-overlap-name">${info.name}${isChosen ? ' (your pick)' : ''}</div>
-      <div class="card-overlap-pct" style="color:${r.pct >= 60 ? '#2E7D32' : r.pct >= 40 ? '#F9A825' : '#C62828'};">${r.pct}%</div>
+    h += `<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+      <div style="width:6px;height:6px;border-radius:50%;background:${info.colour};flex-shrink:0;"></div>
+      <div style="font-size:12px;font-weight:400;color:rgba(255,255,255,.6);flex:1;">${info.name}</div>
+      <div style="font-size:12px;font-weight:600;color:${r.pct >= 60 ? '#4CAF50' : r.pct >= 40 ? '#F9A825' : '#E94560'};">${r.pct}%</div>
     </div>`;
   });
   h += `</div>`;
 
   h += `</div>`; // card-inner
   h += `<div class="card-footer">
-    <div class="card-footer-text">Radical Love \u00B7 ${new Date().toLocaleDateString('en-NZ',{day:'numeric',month:'short',year:'numeric'})}</div>
+    <div class="card-footer-text">Radical Love</div>
     <div class="card-footer-text" style="color:#E94560;">Share</div>
   </div>`;
   h += `</div>`; // card
 
-  // CTA — daily question or "all done for now"
+  // CTA
   const answeredToday = profile.lastAnswered === new Date().toISOString().slice(0,10);
   const allDone = profile.answers.length >= QUESTIONS.length;
 
   h += `<div class="card-cta">`;
   if (allDone) {
-    h += `<div style="font-size:14px;font-weight:400;color:#888;text-align:center;padding:10px 0;">You\u2019ve answered all ${QUESTIONS.length} questions. New questions coming soon.</div>`;
+    h += `<div style="font-size:13px;font-weight:400;color:#999;text-align:center;padding:10px 0;">All ${QUESTIONS.length} questions answered. New ones coming soon.</div>`;
   } else if (answeredToday) {
-    h += `<div style="font-size:14px;font-weight:400;color:#888;text-align:center;padding:10px 0;">Come back tomorrow for your next question. Your card evolves daily.</div>`;
+    h += `<div style="font-size:13px;font-weight:400;color:#999;text-align:center;padding:10px 0;">Come back tomorrow for your next question.</div>`;
   } else {
-    h += `<button class="card-cta-btn" onclick="startQuestions()">Today\u2019s question</button>
-      <div class="card-cta-sub">Your card evolves with every answer</div>`;
+    h += `<button class="card-cta-btn" onclick="startQuestions()">Today\u2019s question</button>`;
   }
   h += `</div>`;
   h += `<div style="text-align:center;padding-bottom:20px;"><button class="poll-reset" onclick="clearProfile()">Start fresh</button></div>`;
@@ -1267,17 +1251,8 @@ function answerQ(score) {
     <div style="font-size:13px;font-weight:400;color:rgba(255,255,255,.9);line-height:1.75;">${q.consider}</div>
   </div>`;
 
-  // Salience weighting
-  h += `<div style="margin-bottom:14px;">
-    <div style="font-size:12px;font-weight:500;color:#555;margin-bottom:8px;">How much does this matter to you?</div>
-    <div style="display:flex;gap:6px;">
-      <button onclick="setSalience(1)" style="flex:1;padding:10px;border:2px solid #ddd;background:none;color:#888;font-family:'Roboto',sans-serif;font-size:12px;border-radius:8px;cursor:pointer;">A little</button>
-      <button onclick="setSalience(2)" style="flex:1;padding:10px;border:2px solid #ddd;background:none;color:#666;font-family:'Roboto',sans-serif;font-size:12px;border-radius:8px;cursor:pointer;">Quite a bit</button>
-      <button onclick="setSalience(3)" style="flex:1;padding:10px;border:2px solid #E94560;background:rgba(233,69,96,.08);color:#E94560;font-family:'Roboto',sans-serif;font-size:12px;font-weight:500;border-radius:8px;cursor:pointer;">A lot</button>
-    </div>
-  </div>`;
-
-  h += `<div id="salience-next" style="display:none;"><button class="poll-go" onclick="finishPoll()">See your card</button></div>`;
+  // See your card button (always visible)
+  h += `<button class="poll-go" onclick="finishPoll()">See your card</button>`;
 
   container.innerHTML = h;
   document.getElementById('scr').scrollTop = 0;
