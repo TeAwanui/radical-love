@@ -56,8 +56,11 @@
     .hdr-wordmark span { color: #FFD700; }
     .hdr-tagline { font-family: 'Press Start 2P', monospace; font-size: 7px; color: rgba(255,255,255,.8); margin-top: 6px; letter-spacing: 0.5px; text-transform: uppercase; }
 
-    /* ── TABS (hidden, single screen app) ── */
-    .tabs { display: none; }
+    /* ── TABS ── */
+    .tabs { display: flex; background: #D8D4C0; flex-shrink: 0; position: sticky; top: 0; z-index: 10; border-bottom: 3px solid #B8B4A0; }
+    .tab { flex: 1; padding: 10px 2px 8px; border: none; background: none; cursor: pointer; font-family: 'Press Start 2P', monospace; font-size: 8px; color: #888; border-bottom: 3px solid transparent; transition: all .1s; text-align: center; text-transform: uppercase; }
+    .tab:hover { color: #555; }
+    .tab.on { color: #E94560; border-bottom-color: #E94560; background: #E8E4D0; }
 
     /* ── SCROLL ── */
     .scr { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; background: #E8E4D0; }
@@ -206,7 +209,7 @@
     .card-party-name { font-family: 'Press Start 2P', monospace; font-size: 10px; color: #2C2137; }
     .card-hp { font-family: 'Press Start 2P', monospace; font-size: 10px; color: #E94560; }
     .card-hp span { font-size: 7px; }
-    .card-art { margin: 4px 6px; border: 3px solid #C4B454; height: 150px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .card-art { margin: 4px 6px; border: 3px solid #C4B454; height: 220px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
     .card-art-icon { font-size: 72px; position: relative; z-index: 1; }
     .card-art-lvl { position: absolute; bottom: 4px; right: 6px; font-family: 'Press Start 2P', monospace; font-size: 6px; text-transform: uppercase; padding: 3px 8px; background: rgba(255,255,255,.9); color: #555; border: 2px solid #C4B454; }
     .card-info-bar { display: flex; justify-content: center; gap: 12px; padding: 5px; font-family: 'Press Start 2P', monospace; font-size: 6px; color: #888; }
@@ -272,7 +275,10 @@
     </div>
   </div>
 
-  <!-- No tabs. One screen. -->
+  <div class="tabs" style="display:flex;">
+    <button class="tab on" onclick="goTab(0,this)">Deck</button>
+    <button class="tab" onclick="goTab(1,this)">Pulse</button>
+  </div>
 
   <div class="scr" id="scr"></div>
 </div>
@@ -905,7 +911,7 @@ function renderCard(profile) {
 
     <!-- Illustration -->
     <div class="card-art" style="background:${artBg[topParty.key]};">
-      <img src="${pokeImg}" style="height:130px;position:relative;z-index:1;filter:drop-shadow(0 4px 8px rgba(0,0,0,.15));" alt="" onerror="this.style.display='none'">
+      <img src="${pokeImg}" style="height:200px;position:relative;z-index:1;filter:drop-shadow(0 4px 12px rgba(0,0,0,.2));" alt="" onerror="this.style.display='none'">
       <div class="card-art-lvl">${lvl}</div>
     </div>
 
@@ -1477,10 +1483,71 @@ function toggleWatch(i) {
 
 const views = [pollView, learnView, watchMergedView];
 
-function go() {
+function goTab(i, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  if (el) el.classList.add('on');
   const scr = document.getElementById('scr');
-  scr.innerHTML = pollView();
+  scr.innerHTML = i === 0 ? deckView() : pollView();
   scr.scrollTop = 0;
+}
+function go() { goTab(1); }
+
+function deckView() {
+  const saved = localStorage.getItem('rl_profile');
+  const profile = saved ? JSON.parse(saved) : null;
+
+  // Party data for cards
+  const partyData = {
+    tpm: { icon: '\u2764\uFE0F', desc: 'Fights for Te Tiriti, community-led health and housing, and making sure M\u0101ori have real power over their own lives.' },
+    grn: { icon: '\u{1F331}', desc: 'Strongest on climate and closing the wealth gap. Wants free education, rent controls, and restorative justice.' },
+    lab: { icon: '\u{1F528}', desc: 'Middle ground. Created some good policies (Fair Pay, M\u0101ori Health Authority) but both got scrapped by the next government.' },
+    nat: { icon: '\u{1F4BC}', desc: 'Tax cuts, less government involvement. Big corporate donors. Scrapped smokefree laws and worker protections.' },
+    act: { icon: '\u{1F4B5}', desc: 'Wants less rules, lower taxes, and introduced the Treaty Principles Bill. Most business-friendly party in Parliament.' },
+    nzf: { icon: '\u{1F5C3}\uFE0F', desc: 'Changes position depending on who they\u2019re in government with. Hard to pin down.' },
+  };
+
+  // Order: if user has profile, sort by their alignment. Otherwise by community score.
+  let ordered;
+  if (profile && profile.results) {
+    ordered = profile.results.map(r => ({ ...r, ...PARTY_KEYS.find(p => p.key === r.key) }));
+  } else {
+    const defaultOrder = ['tpm','grn','lab','nzf','nat','act'];
+    ordered = defaultOrder.map(key => ({ key, pct: 0, ...PARTY_KEYS.find(p => p.key === key) }));
+  }
+
+  let h = `<div class="sec">
+    <div style="font-family:'Press Start 2P',monospace;font-size:10px;color:#2C2137;margin-bottom:4px;">Party Deck</div>
+    <div style="font-size:12px;color:#888;margin-bottom:14px;">${profile ? 'Ordered by how closely they match your answers.' : 'All 6 parties. Take the quiz to see which one matches you.'}</div>
+  </div>`;
+
+  ordered.forEach((p, idx) => {
+    const pd = partyData[p.key] || { icon: '\u2753', desc: '' };
+    const pokeId = ((idx + 1) * 25) % 151 + 1; // Different pokemon per party
+    const pokeImg = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/' + pokeId + '.png';
+    const typeBg = {tpm:'#FBE3EB',grn:'#E3F8E8',lab:'#FDE8E8',nat:'#E3EDF8',act:'#FFF9DB',nzf:'#EDEDEE'};
+    const artBg = {tpm:'linear-gradient(135deg,#F8BBD0,#F48FB1)',grn:'linear-gradient(135deg,#C8E6C9,#81C784)',lab:'linear-gradient(135deg,#FFCDD2,#EF9A9A)',nat:'linear-gradient(135deg,#BBDEFB,#64B5F6)',act:'linear-gradient(135deg,#FFF9C4,#FFF176)',nzf:'linear-gradient(135deg,#E0E0E0,#BDBDBD)'};
+
+    h += `<div class="card" style="background:${typeBg[p.key] || '#F8F4E0'};">
+      <div class="card-name-bar">
+        <div class="card-party-name" style="color:${p.colour};">${p.name}</div>
+        <div class="card-hp">${profile ? '<span>HP </span>' + p.pct : ''}</div>
+      </div>
+      <div class="card-art" style="background:${artBg[p.key] || '#eee'};">
+        <img src="${pokeImg}" style="height:200px;position:relative;z-index:1;filter:drop-shadow(0 4px 12px rgba(0,0,0,.2));" alt="" onerror="this.style.display='none'">
+      </div>
+      <div class="card-flavour" style="font-style:normal;color:#555;text-align:left;padding:10px 12px;font-size:11px;line-height:1.6;">${pd.desc}</div>
+      <div class="card-set">
+        <span>Radical Love 2026</span>
+        <span style="color:${p.colour};">${profile ? p.pct + '% match' : '#' + (idx+1)}</span>
+      </div>
+    </div>`;
+  });
+
+  h += `<div style="text-align:center;padding:16px 12px 24px;">
+    <button class="poll-go" onclick="goTab(1,document.querySelectorAll('.tab')[1])">Take the quiz</button>
+  </div>`;
+
+  return h;
 }
 
 function toggleTk(i) {
@@ -1615,7 +1682,7 @@ async function submitSignup(e) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('scr').innerHTML = pollView();
+  document.getElementById('scr').innerHTML = deckView();
   if('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js').then(reg => {
       // Store registration for push subscription later
@@ -1705,7 +1772,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Fallback if DOMContentLoaded already fired
 if (document.readyState !== 'loading') {
   const scr = document.getElementById('scr');
-  if (scr && !scr.innerHTML) scr.innerHTML = pollView();
+  if (scr && !scr.innerHTML) scr.innerHTML = deckView();
 }
 </script>
 </body>
