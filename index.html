@@ -328,9 +328,9 @@ const QUOTES = [
 const TALKING_POINTS = [
   { id:'economy', emoji:'\u{1F4B0}', topic:'The Economy', theySay:'\u201CThe economy is strong. Tax cuts put more money in your pocket.\u201D', reality:'Tax cuts mostly benefit the top earners. The top 10% of NZ households hold more wealth than the bottom 70% combined. GDP growth doesn\u2019t tell you who\u2019s winning,wages for most people have barely kept up with living costs, while corporate profits have surged.', keyStat:'70%', keyStatCtx:'of NZ\u2019s wealth is held by the top 10%', source:'Stats NZ, Household Economic Survey 2022; NZIER, Income Inequality in Aotearoa, 2023',
     worldview:'In M\u0101ori economic models, wealth is redistributed through koha and manaakitanga. An economy that only measures GDP ignores whether people are actually thriving. Te Whare Tapa Wh\u0101 tells us wellbeing has four walls,financial security is only one of them.' },
-  { id:'immigration', emoji:'\u{1F30F}', topic:'Immigration', theySay:'\u201CImmigrants take our jobs and strain services.\u201D', reality:'Immigrants are net contributors,they pay more in tax than they receive in services. NZ relies on migrant labour in healthcare, construction, and agriculture. Housing pressure comes from speculation and underbuilding, not immigration.', keyStat:'$2.9B', keyStatCtx:'annual net fiscal contribution of recent migrants', source:'MBIE, Migration and Labour Market Outcomes, 2023; Treasury, Long-Term Fiscal Model, 2022',
+  { id:'immigration', emoji:'\u{1F30F}', topic:'Immigration', theySay:'\u201CImmigrants take our jobs and strain services.\u201D', reality:'Immigrants are net contributors,they pay more in tax than they receive in services. NZ relies on migrant labour in healthcare, construction, and agriculture. Housing pressure comes from speculation and underbuilding, not immigration.', keyStat:'$2.9B', keyStatCtx:'annual tax contribution (more paid in than taken out) of recent migrants', source:'MBIE, Migration and Labour Market Outcomes, 2023; Treasury, Long-Term Fiscal Model, 2022',
     worldview:'Manaakitanga,hospitality and care for others,is a core M\u0101ori value. Pacific and M\u0101ori communities have always understood that looking after people who arrive on your shores strengthens everyone. Blaming newcomers divides the community the powerful rely on staying divided.' },
-  { id:'maori-privilege', emoji:'\u{1F91D}', topic:'\u201CTe Tiriti Gives Special Treatment\u201D', theySay:'\u201CWe should all be treated the same. No race-based policies.\u201D', reality:'Te Tiriti o Waitangi is not a race-based policy. It\u2019s a constitutional agreement, signed in 1840 between M\u0101ori tribes and the British Crown. The rights it guarantees are partnership rights, not privileges. The 7-year life expectancy gap between M\u0101ori and non-M\u0101ori exists because of 180+ years of broken promises, not because of culture.', keyStat:'7 yrs', keyStatCtx:'life expectancy gap between M\u0101ori and non-M\u0101ori', source:'Ministry of Health, 2023; Waitangi Tribunal, Hauora Report (Wai 2575), 2019',
+  { id:'maori-privilege', emoji:'\u{1F91D}', topic:'\u201CTe Tiriti Gives Special Treatment\u201D', theySay:'\u201CWe should all be treated the same. No race-based policies.\u201D', reality:'Te Tiriti o Waitangi is not a race-based policy. It\u2019s a founding agreement, signed in 1840 between M\u0101ori tribes and the British Crown. The rights it guarantees are partnership rights, not privileges. The 7-year life expectancy gap between M\u0101ori and non-M\u0101ori exists because of 180+ years of broken promises, not because of culture.', keyStat:'7 yrs', keyStatCtx:'life expectancy gap between M\u0101ori and non-M\u0101ori', source:'Ministry of Health, 2023; Waitangi Tribunal, Hauora Report (Wai 2575), 2019',
     worldview:'When tangata whenua thrive, the whole country thrives. M\u0101ori-led solutions in health, education, and justice consistently outperform one-size-fits-all approaches because they\u2019re built by the community they serve. Equity isn\u2019t favouritism. It\u2019s honouring an agreement that built this country.' },
   { id:'taxpayer', emoji:'\u{1F4CA}', topic:'Taxpayer Money', theySay:'\u201CGovernment wastes our money on handouts.\u201D', reality:'The biggest spend is health, education, and super,stuff everyone uses. NZ Super alone costs $18.6B,more than all welfare benefits combined. Corporate tax breaks get way less scrutiny.', keyStat:'$18.6B', keyStatCtx:'spent on NZ Super in 2023,more than all benefits combined', source:'Treasury, Budget Economic and Fiscal Update, 2023',
     worldview:'In a wh\u0101nau-centred worldview, looking after each other isn\u2019t waste,it\u2019s the whole point. The \u201Chandout\u201D narrative turns community support into something shameful. But we all rely on public systems: roads, hospitals, schools. The real question is who\u2019s getting the biggest handouts,and it\u2019s not beneficiaries.' },
@@ -340,7 +340,7 @@ const TALKING_POINTS = [
     worldview:'Pap\u0101kainga,M\u0101ori communal housing on ancestral land,existed for centuries before the Crown arrived. Housing was never meant to be an investment vehicle. It was meant to be a home for wh\u0101nau. The fact that this is now \u201Cradical\u201D shows how far the system has drifted from common sense.' },
   { id:'free-speech', emoji:'\u{1F5E3}', topic:'Free Speech', theySay:'\u201CYou can\u2019t say anything anymore.\u201D', reality:'The Bill of Rights protects your speech. What\u2019s changed is that people with less power now have platforms to respond. The most extreme speech restrictions in NZ history were imposed on M\u0101ori: the Tohunga Suppression Act (1907) literally criminalised M\u0101ori knowledge holders.', keyStat:'1907', keyStatCtx:'Tohunga Suppression Act,M\u0101ori healers were criminalised', source:'NZ Bill of Rights Act 1990, s14; Te Ara, 2017',
     worldview:'The people most silenced in NZ\u2019s history are M\u0101ori. Their language was beaten out of children. Their healers were criminalised. Their land was taken without consent. When someone says \u201Cyou can\u2019t say anything anymore,\u201D ask: compared to whom? True free speech means everyone\u2019s voice is heard,especially those who were silenced the longest.' },
-  { id:'one-nz', emoji:'\u{1F1F3}\u{1F1FF}', topic:'\u201CWe\u2019re All New Zealanders\u201D', theySay:'\u201CStop dividing people by race. We\u2019re all one country.\u201D', reality:'Colour-blindness doesn\u2019t create equality, it erases specific harms done to specific peoples. M\u0101ori are tangata whenua with a constitutional relationship with the Crown through Te Tiriti o Waitangi, signed in 1840. Unity requires justice first, not the silence of those seeking it.', keyStat:'$100B+', keyStatCtx:'estimated value of confiscated M\u0101ori land, less than 3% returned', source:'Waitangi Tribunal; Boast, R. "Buying the Land", Victoria University Press, 2008',
+  { id:'one-nz', emoji:'\u{1F1F3}\u{1F1FF}', topic:'\u201CWe\u2019re All New Zealanders\u201D', theySay:'\u201CStop dividing people by race. We\u2019re all one country.\u201D', reality:'Colour-blindness doesn\u2019t create equality, it erases specific harms done to specific peoples. M\u0101ori are tangata whenua with a founding relationship with the Crown through Te Tiriti o Waitangi, signed in 1840. Unity requires justice first, not the silence of those seeking it.', keyStat:'$100B+', keyStatCtx:'estimated value of confiscated M\u0101ori land, less than 3% returned', source:'Waitangi Tribunal; Boast, R. "Buying the Land", Victoria University Press, 2008',
     worldview:'Whakapapa teaches us that identity and connection are strengths, not divisions. Knowing who you are and where you come from makes you a better community member, not a worse one. \u201CWe\u2019re all in this together\u201D is true,but together means honouring what makes each of us who we are, not erasing it.' },
 ];
 
@@ -373,19 +373,19 @@ const TIRITI = {
 };
 
 const PARTIES = [
-  { name:'Te P\u0101ti M\u0101ori', score:9, colour:'#E94560', votes:[{bill:'Treaty Principles Bill',vote:'opposed',y:2024},{bill:'Smokefree repeal',vote:'opposed',y:2023}], donors:['Primarily membership and small donations'], source:'Electoral Commission; Hansard' },
+  { name:'Te P\u0101ti M\u0101ori', score:9, colour:'#E94560', votes:[{bill:'Treaty Principles Bill',vote:'opposed',y:2024},{bill:'Smokefree scrap',vote:'opposed',y:2023}], donors:['Primarily membership and small donations'], source:'Electoral Commission; Hansard' },
   { name:'Green Party', score:7, colour:'#2E7D32', votes:[{bill:'Treaty Principles Bill',vote:'opposed',y:2024},{bill:'Wealth Tax proposal',vote:'supported',y:2023}], donors:['Small individual donations; no corporate donations'], source:'Electoral Commission; Hansard' },
   { name:'Labour Party', score:5, colour:'#D32F2F', votes:[{bill:'Treaty Principles Bill',vote:'opposed',y:2024},{bill:'Fair Pay Agreements',vote:'supported',y:2022}], donors:['Union affiliations + individual donors'], source:'Electoral Commission; Hansard' },
   { name:'National Party', score:2, colour:'#1565C0', votes:[{bill:'Treaty Principles Bill',vote:'supported to first reading',y:2024},{bill:'Fair Pay Agreements Repeal',vote:'supported',y:2023}], donors:['Significant corporate + high-net-worth donations'], source:'Electoral Commission; Hansard' },
   { name:'ACT Party', score:1, colour:'#F9A825', votes:[{bill:'Treaty Principles Bill',vote:'introduced',y:2024},{bill:'Charter schools',vote:'supported',y:2024}], donors:['Significant corporate + high-net-worth donations'], source:'Electoral Commission; Hansard' },
-  { name:'NZ First', score:2, colour:'#555', votes:[{bill:'Treaty Principles Bill',vote:'supported to select committee',y:2024},{bill:'Smokefree repeal',vote:'supported',y:2023}], donors:['Mixed; NZ First Foundation controversy 2020'], source:'Electoral Commission; Hansard; NZ Herald' },
+  { name:'NZ First', score:2, colour:'#555', votes:[{bill:'Treaty Principles Bill',vote:'supported to select committee',y:2024},{bill:'Smokefree scrap',vote:'supported',y:2023}], donors:['Mixed; NZ First Foundation controversy 2020'], source:'Electoral Commission; Hansard; NZ Herald' },
 ];
 
 const SEED_BILLS = [
   { id:'treaty-principles', name:'Treaty Principles Bill', party:'ACT', stage:'select-committee', summary:'Seeks to redefine Treaty principles in legislation, effectively reducing M\u0101ori rights guaranteed under Te Tiriti. Proposes a narrow English-text interpretation.', submissionUrl:'https://www.parliament.nz/en/pb/sc/make-a-submission/' },
   { id:'fast-track-approvals', name:'Fast-Track Approvals Bill', party:'National', stage:'passed', summary:'Bypasses environmental review for major development projects. Ministers can approve directly, overriding environmental protections and Treaty obligations.', submissionUrl:'' },
-  { id:'smokefree-repeal', name:'Smokefree Environments Repeal', party:'National', stage:'passed', summary:'Repealed world-leading smokefree laws that would have created a smoke-free generation. Disproportionately affects M\u0101ori and Pacific communities.', submissionUrl:'' },
-  { id:'fair-pay-repeal', name:'Fair Pay Agreements Repeal', party:'National', stage:'passed', summary:'Repealed Fair Pay Agreements before they took effect. Would have set industry-wide minimum conditions, benefiting low-wage workers.', submissionUrl:'' },
+  { id:'smokefree-scrap', name:'Smokefree Environments Repeal', party:'National', stage:'passed', summary:'Scrapped world-leading smokefree laws that would have created a smoke-free generation. Hits hardest for M\u0101ori and Pacific communities.', submissionUrl:'' },
+  { id:'fair-pay-scrap', name:'Fair Pay Agreements Repeal', party:'National', stage:'passed', summary:'Scrapped Fair Pay Agreements before they took effect. Would have set industry-wide minimum conditions, benefiting low-wage workers.', submissionUrl:'' },
 ];
 
 
@@ -443,7 +443,7 @@ const QUESTIONS = [
   { q:'Hap\u016b and iwi should have the final say on what happens to their ancestral land', dim:'treaty', dimLabel:'Treaty', disc:1.6, collective:true,
     consider:'Before the Crown arrived, land decisions were made by the community who held mana whenua. The NZ Settlements Act 1863 legalised confiscation. Less than 3% of the estimated value has been returned through settlements.',
     scores:{tpm:3,grn:3,lab:1,nat:0,act:0,nzf:0} },
-  { q:'New Zealand should move towards a constitutional framework based on Te Tiriti', dim:'treaty', dimLabel:'Treaty', disc:1.9,
+  { q:'New Zealand should move towards a set of rules for how the country is run based on Te Tiriti', dim:'treaty', dimLabel:'Treaty', disc:1.9,
     consider:'The Matike Mai report (2016) proposed constitutional models based on the Treaty relationship,not replacing Parliament but creating genuine power-sharing. NZ is one of the few democracies without a written constitution.',
     scores:{tpm:3,grn:2,lab:1,nat:0,act:0,nzf:0} },
 
@@ -452,7 +452,7 @@ const QUESTIONS = [
     consider:'GDP measures total economic output but not how it\u2019s distributed. Te Whare Tapa Wh\u0101 (Mason Durie) measures wellbeing across four dimensions: taha tinana, taha hinengaro, taha wh\u0101nau, taha wairua. Only one is financial.',
     scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:1} },
   { q:'Communities should have more power over local decisions, not central government', dim:'whanau', dimLabel:'Wh\u0101nau', disc:1.2, collective:true,
-    consider:'Centralisation concentrates power in Wellington. M\u0101ori governance traditions placed decision-making at the hap\u016b level,closer to the people affected. Three Waters reform tried to give communities more control over water,it was repealed.',
+    consider:'Centralisation concentrates power in Wellington. M\u0101ori governance traditions placed decision-making at the hap\u016b level,closer to the people affected. Three Waters reform tried to give communities more control over water,it was scrapped.',
     scores:{tpm:3,grn:2,lab:2,nat:1,act:1,nzf:1} },
   { q:'Welfare should be enough for a family to live on with dignity, not just survive', dim:'whanau', dimLabel:'Wh\u0101nau', disc:1.5, collective:true,
     consider:'Current benefit levels are below the poverty line. The Welfare Expert Advisory Group (2019) recommended increases of 12-47%. Manaakitanga,caring for those who need support,is not charity. It\u2019s a responsibility.',
@@ -466,7 +466,7 @@ const QUESTIONS = [
     consider:'NZ has no capital gains tax (except bright-line). The top 10% hold 70% of all wealth. A wealth tax would affect about 6% of the population.',
     scores:{tpm:2,grn:3,lab:1,nat:0,act:0,nzf:1} },
   { q:'Workers should have the right to industry-wide pay agreements', dim:'economy', dimLabel:'Economy', disc:1.6,
-    consider:'Fair Pay Agreements were passed in 2022 and repealed in 2023 before taking effect. They would have set minimum conditions across whole industries,benefiting the lowest-paid workers most.',
+    consider:'Fair Pay Agreements were passed in 2022 and scrapped in 2023 before taking effect. They would have set minimum conditions across whole industries,benefiting the lowest-paid workers most.',
     scores:{tpm:3,grn:3,lab:3,nat:0,act:0,nzf:0} },
   { q:'Tax cuts are more important than increasing public services', dim:'economy', dimLabel:'Economy', disc:1.9,
     consider:'NZ\u2019s 2024 tax cuts gave the top 2% of earners the largest benefit. Meanwhile, hospitals, schools, and social services face funding cuts.',
@@ -477,7 +477,7 @@ const QUESTIONS = [
 
   // ── JUSTICE (3 questions) ──
   { q:'Prisons should focus on rehabilitation and restoring relationships, not punishment', dim:'justice', dimLabel:'Justice', disc:1.7,
-    consider:'NZ\u2019s recidivism rate is around 60%. Countries with rehabilitation-focused systems (Norway) have rates below 20%. M\u0101ori justice traditions are restorative,utu is about restoring balance, not revenge.',
+    consider:'NZ\u2019s reoffending rate is around 60%. Countries with rehabilitation-focused systems (Norway) have rates below 20%. M\u0101ori justice traditions are restorative,utu is about restoring balance, not revenge.',
     scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:0} },
   { q:'Wh\u0101nau and community should be involved in justice decisions, not just judges and police', dim:'justice', dimLabel:'Justice', disc:1.5, collective:true,
     consider:'M\u0101ori dispute resolution involved the whole community. Restorative justice conferencing,where offenders face the people they\u2019ve harmed,has better outcomes than court. But it\u2019s used in less than 5% of cases.',
@@ -493,7 +493,7 @@ const QUESTIONS = [
   { q:'Rivers and lakes should have legal rights,like the Whanganui River', dim:'environ', dimLabel:'Environment', disc:1.4, collective:true,
     consider:'The Whanganui River was granted legal personhood in 2017,a world first, recognising the M\u0101ori worldview that the river is a living ancestor. Te Awa Tupua. If a river can be a person, why can\u2019t a forest?',
     scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:0} },
-  { q:'The Fast-Track Approvals Bill should be repealed', dim:'environ', dimLabel:'Environment', disc:1.9, timely:true,
+  { q:'The Fast-Track Approvals Bill should be scrapped', dim:'environ', dimLabel:'Environment', disc:1.9, timely:true,
     consider:'The bill lets ministers approve major projects without standard environmental review, overriding local government, environmental protections, and Treaty settlement obligations.',
     scores:{tpm:3,grn:3,lab:2,nat:0,act:0,nzf:0} },
 
@@ -532,7 +532,7 @@ const QUESTIONS = [
 
   // ── COMMUNITY / IMMIGRATION (1 question) ──
   { q:'Immigration levels should be significantly reduced', dim:'economy', dimLabel:'Economy', disc:1.3,
-    consider:'Migrants are net fiscal contributors. NZ\u2019s healthcare, construction, and aged care sectors rely heavily on migrant workers. The housing crisis is driven by speculation, not immigration. Manaakitanga means caring for those who arrive on your shores.',
+    consider:'Migrants are pay more in tax than they get back in services. NZ\u2019s healthcare, construction, and aged care sectors rely heavily on migrant workers. The housing crisis is driven by speculation, not immigration. Manaakitanga means caring for those who arrive on your shores.',
     scores:{tpm:1,grn:0,lab:1,nat:2,act:1,nzf:3} },
 ];
 
@@ -560,7 +560,7 @@ const THINK_TANKS = [
   {
     name: 'Atlas Network',
     type: 'Global network',
-    desc: 'A US-based network of 500+ free-market think tanks in 100 countries. Coordinates policy agendas worldwide,privatisation, deregulation, reduced public services. Several NZ organisations are Atlas partners.',
+    desc: 'A US-based network of 500+ free-market think tanks in 100 countries. Coordinates policy agendas worldwide,selling off public stuff to private companies, removing rules that protect workers and the environment, reduced public services. Several NZ organisations are Atlas partners.',
     nzLinks: ['NZ Initiative', 'Taxpayers\u2019 Union (informal alignment)'],
     funding: 'Koch family foundations, donor-advised funds, corporate donors. Exact NZ funding opaque.',
     source: 'Atlas Network website; Sourcewatch; The Guardian investigations, 2023',
@@ -569,7 +569,7 @@ const THINK_TANKS = [
   {
     name: 'NZ Initiative',
     type: 'NZ think tank',
-    desc: 'Formerly the NZ Business Roundtable. Directly advises government on economic policy. Consistently pushes deregulation, lower corporate tax, reduced worker protections, and market-based solutions to public services.',
+    desc: 'Formerly the NZ Business Roundtable. Directly advises government on economic policy. Consistently pushes removing rules that protect workers and the environment, lower corporate tax, reduced worker protections, and market-based solutions to public services.',
     nzLinks: ['Atlas Network partner', 'Major corporate members: ANZ, Fonterra, Fletcher Building, etc.'],
     funding: 'Corporate membership fees. Members include NZ\u2019s largest companies.',
     source: 'NZ Initiative annual reports; membership lists (public)',
@@ -587,7 +587,7 @@ const THINK_TANKS = [
   {
     name: 'Maxim Institute',
     type: 'NZ think tank',
-    desc: 'Socially conservative think tank. Positions on education, family, and religious freedom often align with restricting progressive policy. More moderate than some but consistently opposes equity-based legislation.',
+    desc: 'Socially conservative think tank. Positions on education, family, and religious freedom often align with restricting progressive policy. More moderate than some but consistently opposes laws that try to level the playing field.',
     nzLinks: ['Links to conservative church networks', 'Submissions on most social legislation'],
     funding: 'Charitable trust. Donors not publicly disclosed.',
     source: 'Maxim Institute publications; charity register',
@@ -631,7 +631,7 @@ const NARRATIVES = [
     who: 'NZ Initiative, National Party, business lobby groups',
     whatTheySay: 'Lower taxes create jobs, stimulate investment, and the benefits trickle down to everyone.',
     whyItWorks: 'It\u2019s simple and intuitive,more money in my pocket sounds good. The language of \u201Cgrowth\u201D feels positive.',
-    theReality: 'Decades of international evidence show trickle-down economics doesn\u2019t work. A 2020 London School of Economics study of 50 years of tax cuts in 18 countries found they increased income inequality without improving employment or economic growth. In NZ, the 2024 tax cuts disproportionately benefited high earners.',
+    theReality: 'Decades of international evidence show trickle-down economics doesn\u2019t work. A 2020 London School of Economics study of 50 years of tax cuts in 18 countries found they increased income inequality without improving employment or economic growth. In NZ, the 2024 tax cuts unfairly benefited high earners.',
     howToRespond: 'The question isn\u2019t whether tax cuts feel good,it\u2019s who they actually help. The evidence from 50 years of data is clear: they widen the gap. Ask: \u201CIf trickle-down worked, why are there more food banks than ever after decades of it?\u201D',
     source: 'Hope & Limberg, \u201CThe Economic Consequences of Major Tax Cuts for the Rich\u201D, LSE, 2020; Treasury BEFU 2024',
   },
@@ -892,9 +892,9 @@ function renderCard(profile) {
   const partyDesc = {
     tpm:'Champions Te Tiriti o Waitangi, tino rangatiratanga, and community-led solutions.',
     grn:'Strongest on climate, wealth redistribution, and social equity.',
-    lab:'Centre-left. Moderate on most issues. Introduced key equity legislation.',
+    lab:'Centre-left. Moderate on most issues. Introduced key fairness laws.',
     nat:'Centre-right. Tax cuts, market-led solutions. Corporate donor base.',
-    act:'Free market, deregulation. Introduced the Treaty Principles Bill.',
+    act:'Free market, removing rules that protect workers and the environment. Introduced the Treaty Principles Bill.',
     nzf:'Populist. Positions shift depending on coalition partner.',
     unsure:'Still figuring it out. That\u2019s what this is for.',
   };
