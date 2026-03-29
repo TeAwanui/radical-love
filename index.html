@@ -275,10 +275,7 @@
     </div>
   </div>
 
-  <div class="tabs" style="display:flex;">
-    <button class="tab on" onclick="goTab(0,this)">Deck</button>
-    <button class="tab" onclick="goTab(1,this)">Pulse</button>
-  </div>
+  <!-- Single screen. No tabs. -->
 
   <div class="scr" id="scr"></div>
 </div>
@@ -825,19 +822,16 @@ function pollView() {
 function renderOnboarding() {
   let h = '';
 
-  // The opening statement
-  h += `<div style="margin:16px 16px 0;background:#111;border-radius:12px;padding:24px 20px;">
-    <div style="font-size:18px;font-weight:500;color:#fff;line-height:1.6;margin-bottom:12px;">In 1840, an agreement was signed to protect the people of this land from unchecked power.</div>
-    <div style="font-size:14px;font-weight:400;color:rgba(255,255,255,.7);line-height:1.7;margin-bottom:8px;">Te Tiriti o Waitangi guaranteed that M\u0101ori would keep authority over their lives, their land, and their future. It was meant to be a partnership.</div>
-    <div style="font-size:14px;font-weight:400;color:rgba(255,255,255,.7);line-height:1.7;">Since then, that agreement has been broken, rewritten, and ignored to serve a system that concentrates wealth and power in fewer and fewer hands.</div>
-    <div style="font-size:14px;font-weight:500;color:#E94560;line-height:1.7;margin-top:12px;">This app exists to help you see that clearly.</div>
+  // One line opener
+  h += `<div style="margin:20px 12px 0;text-align:center;">
+    <div style="font-family:'Press Start 2P',monospace;font-size:12px;color:#2C2137;line-height:2;margin-bottom:16px;">One question a day.<br>Find out what you<br>actually stand for.</div>
   </div>`;
 
   // Party picker
   h += `<div class="sec" id="poll-step1">
-    <div style="margin:16px 0 12px;">
-      <div style="font-size:16px;font-weight:600;color:#222;margin-bottom:4px;">Who did you vote for?</div>
-      <div style="font-size:13px;font-weight:400;color:#999;">Or who are you thinking about. No judgement.</div>
+    <div style="margin:8px 0 10px;">
+      <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:#E94560;margin-bottom:6px;">FIRST UP</div>
+      <div style="font-size:14px;font-weight:400;color:#666;">Who did you vote for last time?</div>
     </div>`;
   PARTY_KEYS.forEach(p => {
     h += `<div class="poll-issue" onclick="pickParty('${p.key}')">
@@ -917,8 +911,9 @@ function renderCard(profile) {
 
     <!-- Info bar -->
     <div class="card-info-bar">
-      <span>${lvl} Voter</span>
-      <span>${n} questions answered</span>
+      <span>${lvl}</span>
+      <span>${n} Qs</span>
+      <span>\u{1F525} ${profile.streak || 1} day streak</span>
       <span>${topParty.pct}% aligned</span>
     </div>
 
@@ -1016,22 +1011,14 @@ function pickParty(key) {
   const container = document.getElementById('poll-step2');
   container.style.display = 'block';
   container.innerHTML = `
-    <div style="padding:20px 4px 16px;">
-      <div style="text-align:center;margin-bottom:16px;">
-        <div style="font-size:20px;font-weight:600;color:#222;margin-bottom:4px;">Got it.</div>
-        <div style="font-size:14px;font-weight:400;color:#666;">
-          ${partyInfo ? `You picked <strong style="color:${partyInfo.colour}">${partyName}</strong>.` : 'No worries.'}
-        </div>
+    <div style="padding:20px 4px 16px;text-align:center;">
+      <div style="font-family:'Press Start 2P',monospace;font-size:10px;color:#2C2137;margin-bottom:12px;">
+        ${partyInfo ? partyName : 'No worries'}
       </div>
-      <div style="background:#fff;border-radius:12px;padding:16px;text-align:left;margin-bottom:16px;">
-        <div style="font-size:14px;font-weight:400;color:#444;line-height:1.7;margin-bottom:10px;">
-          Each day you\u2019ll get <strong>one question</strong> about a real policy issue. Your answers build a profile that shows you which parties actually match what you care about.
-        </div>
-        <div style="font-size:13px;font-weight:400;color:#999;line-height:1.6;">
-          The system we live in was designed to benefit a few. Te Tiriti was designed to protect everyone. Every question connects back to that.
-        </div>
+      <div style="font-size:13px;font-weight:400;color:#888;line-height:1.7;margin-bottom:20px;">
+        One question a day. Your card builds over time. Let\u2019s see where you really stand.
       </div>
-      <button class="poll-go" style="margin-top:0;" onclick="showQuestion()">First question</button>
+      <button class="poll-go" onclick="showQuestion()">First question</button>
     </div>`;
   document.getElementById('scr').scrollTop = 0;
 }
@@ -1345,7 +1332,15 @@ function finishPoll() {
   results.sort((a, b) => b.pct - a.pct);
 
   // Save profile with today's date
-  const profile = { chosen: chosenParty, answers, results, date: new Date().toISOString(), lastAnswered: new Date().toISOString().slice(0,10) };
+  // Streak tracking
+  const today = new Date().toISOString().slice(0,10);
+  const oldProfile = JSON.parse(localStorage.getItem('rl_profile') || '{}');
+  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0,10);
+  let streak = oldProfile.streak || 0;
+  if (oldProfile.lastAnswered === yesterday) streak++;
+  else if (oldProfile.lastAnswered !== today) streak = 1;
+
+  const profile = { chosen: chosenParty, answers, results, date: new Date().toISOString(), lastAnswered: today, streak };
   localStorage.setItem('rl_profile', JSON.stringify(profile));
 
   // Re-render as card
@@ -1483,14 +1478,11 @@ function toggleWatch(i) {
 
 const views = [pollView, learnView, watchMergedView];
 
-function goTab(i, el) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
-  if (el) el.classList.add('on');
+function go() {
   const scr = document.getElementById('scr');
-  scr.innerHTML = i === 0 ? deckView() : pollView();
+  scr.innerHTML = pollView();
   scr.scrollTop = 0;
 }
-function go() { goTab(1); }
 
 function deckView() {
   const saved = localStorage.getItem('rl_profile');
@@ -1682,7 +1674,7 @@ async function submitSignup(e) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('scr').innerHTML = deckView();
+  document.getElementById('scr').innerHTML = pollView();
   if('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js').then(reg => {
       // Store registration for push subscription later
@@ -1772,7 +1764,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Fallback if DOMContentLoaded already fired
 if (document.readyState !== 'loading') {
   const scr = document.getElementById('scr');
-  if (scr && !scr.innerHTML) scr.innerHTML = deckView();
+  if (scr && !scr.innerHTML) scr.innerHTML = pollView();
 }
 </script>
 </body>
