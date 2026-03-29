@@ -56,11 +56,8 @@
     .hdr-wordmark span { color: #FFD700; }
     .hdr-tagline { font-family: 'Press Start 2P', monospace; font-size: 7px; color: rgba(255,255,255,.8); margin-top: 6px; letter-spacing: 0.5px; text-transform: uppercase; }
 
-    /* ── TABS ── */
-    .tabs { display: flex; background: #D8D4C0; flex-shrink: 0; position: sticky; top: 0; z-index: 10; border-bottom: 3px solid #B8B4A0; }
-    .tab { flex: 1; padding: 10px 2px 8px; border: none; background: none; cursor: pointer; font-family: 'Press Start 2P', monospace; font-size: 8px; color: #888; border-bottom: 3px solid transparent; transition: all .1s; text-align: center; text-transform: uppercase; }
-    .tab:hover { color: #555; }
-    .tab.on { color: #E94560; border-bottom-color: #E94560; background: #E8E4D0; }
+    /* ── TABS (hidden, single screen app) ── */
+    .tabs { display: none; }
 
     /* ── SCROLL ── */
     .scr { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; background: #E8E4D0; }
@@ -275,11 +272,7 @@
     </div>
   </div>
 
-  <div class="tabs">
-    <button class="tab on" onclick="go(0,this)">Pulse</button>
-    <button class="tab" onclick="go(1,this)">Learn</button>
-    <button class="tab" onclick="go(2,this)">Watch</button>
-  </div>
+  <!-- No tabs. One screen. -->
 
   <div class="scr" id="scr"></div>
 </div>
@@ -806,7 +799,7 @@ function learnView() {
 
   h += `</div>`; // close sec
 
-  return h + signupFooter();
+  return h;
 }
 
 function toggleLearn(i) {
@@ -991,6 +984,10 @@ function renderCard(profile) {
     h += `<button class="card-cta-btn" onclick="startQuestions()">Today\u2019s question</button>`;
   }
   h += `</div>`;
+  // Share with friends
+  h += `<div style="text-align:center;margin:12px 12px 8px;">
+    <button class="poll-go" style="background:#2C2137;border-color:#4A3F5C;" onclick="shareWithFriend()">Send to a friend</button>
+  </div>`;
   h += `<div style="text-align:center;padding-bottom:20px;"><button class="poll-reset" onclick="clearProfile()">Start fresh</button></div>`;
 
   return h;
@@ -1041,7 +1038,7 @@ function startQuestions() {
     answers = profile.answers;
   }
   const scr = document.getElementById('scr');
-  scr.innerHTML = `<div class="sec" id="poll-step2"></div>` + signupFooter();
+  scr.innerHTML = `<div class="sec" id="poll-step2"></div>`;
   selectAndShowQuestion();
 }
 
@@ -1346,8 +1343,7 @@ function finishPoll() {
   localStorage.setItem('rl_profile', JSON.stringify(profile));
 
   // Re-render as card
-  const tabs = document.querySelectorAll('.tab');
-  go(0, tabs[0]);
+  go();
 
   // Ask for push notifications after first answer (only once)
   if (!localStorage.getItem('rl_push_asked') && 'Notification' in window && Notification.permission !== 'denied') {
@@ -1355,11 +1351,29 @@ function finishPoll() {
   }
 }
 
+async function shareWithFriend() {
+  const saved = localStorage.getItem('rl_profile');
+  const profile = saved ? JSON.parse(saved) : null;
+  const topParty = profile ? PARTY_KEYS.find(p => p.key === profile.results[0].key) : null;
+  const text = topParty
+    ? `I took the Radical Love quiz and I\u2019m ${profile.results[0].pct}% aligned with ${topParty.name}. What about you?`
+    : 'Take the Radical Love quiz and find out which party actually matches what you care about.';
+
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: 'Radical Love', text, url: 'https://radical-love.vercel.app' });
+    } catch {}
+  } else {
+    navigator.clipboard.writeText(`${text} https://radical-love.vercel.app`).then(() => {
+      alert('Link copied!');
+    });
+  }
+}
+
 function clearProfile() {
   localStorage.removeItem('rl_profile');
   chosenParty = null; currentQ = 0; answers = [];
-  const tabs = document.querySelectorAll('.tab');
-  go(0, tabs[0]);
+  go();
 }
 
 function resetPoll() { clearProfile(); } // kept as alias for onclick references
@@ -1448,7 +1462,7 @@ function watchMergedView() {
   });
   h += `</div>`;
 
-  return h + signupFooter();
+  return h;
 }
 
 function toggleWatch(i) {
@@ -1463,13 +1477,10 @@ function toggleWatch(i) {
 
 const views = [pollView, learnView, watchMergedView];
 
-function go(i, el) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
-  el.classList.add('on');
+function go() {
   const scr = document.getElementById('scr');
-  scr.innerHTML = views[i]();
+  scr.innerHTML = pollView();
   scr.scrollTop = 0;
-  if (i === 2) fetchReleases();
 }
 
 function toggleTk(i) {
